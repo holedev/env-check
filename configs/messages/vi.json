@@ -1,0 +1,61 @@
+{
+  "common": {
+    "locale": {
+      "en": "Tiếng Anh",
+      "vi": "Tiếng Việt"
+    },
+    "theme": {
+      "light": "Sáng",
+      "dark": "Tối",
+      "system": "Hệ thống"
+    }
+  },
+  "tools": {
+    "groups": {
+      "database": {
+        "name": "Cơ sở dữ liệu",
+        "description": "Công cụ cơ sở dữ liệu"
+      },
+      "ai": {
+        "name": "Trí tuệ nhân tạo",
+        "description": "Công cụ AI"
+      },
+      "storage": {
+        "name": "Lưu trữ",
+        "description": "Công cụ lưu trữ"
+      }
+    },
+    "items": {
+      "mongodb": {
+        "name": "MongoDB",
+        "description": "MongoDB"
+      },
+      "mysql": {
+        "name": "MySQL",
+        "description": "MySQL"
+      },
+      "gemini": {
+        "name": "Gemini API (AI Studio)",
+        "description": "Gemini API (AI Studio)"
+      },
+      "minio": {
+        "name": "MinIO",
+        "description": "MinIO"
+      }
+    }
+  },
+  "defaultPage": {
+    "error": {
+      "title": "Đã có lỗi xảy ra!",
+      "description": "Một lỗi nho nhỏ do Server!",
+      "reminder": "Vui lòng thông báo đến quản trị viên!",
+      "tryAgain": "Thử lại",
+      "redirect": "Quay về trang chủ"
+    },
+    "notFound": {
+      "title": "Trang không tồn tại!",
+      "description": "Xin lỗi, chúng tôi không thể tìm thấy trang bạn đang tìm kiếm. Nó có thể đã bị di chuyển hoặc không tồn tại.",
+      "redirect": "Quay về trang chủ"
+    }
+  }
+}
