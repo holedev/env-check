@@ -1,0 +1,224 @@
+{
+  "common": {
+    "locale": {
+      "en": "English",
+      "vi": "Vietnamese"
+    },
+    "theme": {
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System"
+    },
+    "site": {
+      "logoText": "ENV Check"
+    }
+  },
+  "tools": {
+    "groups": {
+      "cloud": {
+        "name": "Cloud Provider",
+        "description": "Cloud Provider"
+      },
+      "ai": {
+        "name": "AI",
+        "description": "AI tools"
+      },
+      "database": {
+        "name": "Database",
+        "description": "Database services and APIs"
+      },
+      "payment": {
+        "name": "Payment & Finance",
+        "description": "Payment gateways and financial APIs"
+      },
+      "messaging": {
+        "name": "Messaging & Communication",
+        "description": "Email, SMS, chat APIs"
+      },
+      "analytics": {
+        "name": "Analytics & Monitoring",
+        "description": "Tools for logging, metrics, and performance tracking"
+      },
+      "others": {
+        "name": "Others",
+        "description": "Other tools and services"
+      }
+    },
+    "items": {
+      "aws": {
+        "name": "AWS",
+        "description": "Amazon Web Services"
+      },
+      "google-cloud": {
+        "name": "Google Cloud",
+        "description": "Google Cloud Platform"
+      },
+      "cloudflare": {
+        "name": "Cloudflare",
+        "description": "Cloudflare"
+      },
+      "digital-ocean": {
+        "name": "DigitalOcean",
+        "description": "DigitalOcean"
+      },
+      "supabase": {
+        "name": "Supabase",
+        "description": "Supabase"
+      },
+      "firebase": {
+        "name": "Firebase",
+        "description": "Firebase"
+      },
+      "mongodb": {
+        "name": "MongoDB",
+        "description": "MongoDB Atlas"
+      },
+      "planetscale": {
+        "name": "PlanetScale",
+        "description": "PlanetScale"
+      },
+      "faunadb": {
+        "name": "FaunaDB",
+        "description": "FaunaDB"
+      },
+      "openai": {
+        "name": "OpenAI",
+        "description": "OpenAI API"
+      },
+      "anthropic": {
+        "name": "Anthropic",
+        "description": "Claude by Anthropic"
+      },
+      "google-gemini": {
+        "name": "Gemini",
+        "description": "Gemini API (AI Studio)"
+      },
+      "hugging-face": {
+        "name": "Hugging Face",
+        "description": "Hugging Face Inference API"
+      },
+      "cohere": {
+        "name": "Cohere",
+        "description": "Cohere NLP API"
+      },
+      "stripe": {
+        "name": "Stripe",
+        "description": "Stripe Payment Gateway"
+      },
+      "paypal": {
+        "name": "PayPal",
+        "description": "PayPal API"
+      },
+      "plaid": {
+        "name": "Plaid",
+        "description": "Plaid Financial API"
+      },
+      "wise": {
+        "name": "Wise",
+        "description": "Wise Money Transfer API"
+      },
+      "infura": {
+        "name": "Infura",
+        "description": "Infura Ethereum API"
+      },
+      "alchemy": {
+        "name": "Alchemy",
+        "description": "Alchemy Blockchain API"
+      },
+      "twilio": {
+        "name": "Twilio",
+        "description": "Twilio Messaging API"
+      },
+      "sendgrid": {
+        "name": "SendGrid",
+        "description": "SendGrid Email API"
+      },
+      "mailgun": {
+        "name": "Mailgun",
+        "description": "Mailgun Email API"
+      },
+      "slack": {
+        "name": "Slack",
+        "description": "Slack App Token"
+      },
+      "discord": {
+        "name": "Discord",
+        "description": "Discord Bot Token"
+      },
+      "google_analytics": {
+        "name": "Google Analytics",
+        "description": "Google Analytics API"
+      },
+      "mixpanel": {
+        "name": "Mixpanel",
+        "description": "Mixpanel API"
+      },
+      "datadog": {
+        "name": "Datadog",
+        "description": "Datadog Monitoring API"
+      },
+      "sentry": {
+        "name": "Sentry",
+        "description": "Sentry Error Tracking API"
+      },
+      "logrocket": {
+        "name": "LogRocket",
+        "description": "LogRocket API"
+      },
+      "github": {
+        "name": "GitHub",
+        "description": "GitHub Token"
+      },
+      "vercel": {
+        "name": "Vercel",
+        "description": "Vercel API"
+      },
+      "netlify": {
+        "name": "Netlify",
+        "description": "Netlify API"
+      },
+      "render": {
+        "name": "Render",
+        "description": "Render Hosting API"
+      },
+      "railway": {
+        "name": "Railway",
+        "description": "Railway API"
+      },
+      "minio": {
+        "name": "MinIO",
+        "description": "MinIO"
+      },
+      "gmail-smtp": {
+        "name": "Gmail SMTP",
+        "description": "Gmail SMTP"
+      },
+      "google-analytics": {
+        "name": "Google Analytics",
+        "description": "Google Analytics"
+      },
+      "postgresql": {
+        "name": "PostgreSQL",
+        "description": "PostgreSQL"
+      },
+      "mysql": {
+        "name": "MySQL",
+        "description": "MySQL"
+      }
+    }
+  },
+  "defaultPage": {
+    "error": {
+      "title": "Oops! Something went wrong!",
+      "description": "An error occurred in the Server!",
+      "reminder": "Please contact administrator of this website!",
+      "tryAgain": "Try again",
+      "redirect": "Go to the homepage"
+    },
+    "notFound": {
+      "title": "Oops! Page Not Found!",
+      "description": "Sorry, we can't find the page you're looking for. It may have been moved or does not exist.",
+      "redirect": "Go to the homepage"
+    }
+  }
+}
