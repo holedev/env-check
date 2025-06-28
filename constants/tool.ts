@@ -25,6 +25,11 @@ export const _TOOL_LIST = defineToolList([
     path: "aws"
   },
   {
+    icon: "minio",
+    path: "s3-compatible",
+    progress: "completed"
+  },
+  {
     icon: "googlecloud",
     path: "google-cloud"
   },
@@ -103,7 +108,17 @@ export const _TOOL_GROUP_LIST: ToolGroupType[] = [
   },
   {
     path: "cloud",
-    tools: ["google-cloud", "aws", "cloudflare", "digital-ocean", "supabase", "firebase", "github", "vercel"]
+    tools: [
+      "google-cloud",
+      "aws",
+      "s3-compatible",
+      "cloudflare",
+      "digital-ocean",
+      "supabase",
+      "firebase",
+      "github",
+      "vercel"
+    ]
   },
   {
     path: "database",

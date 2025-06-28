@@ -197,6 +197,36 @@
       "mysql": {
         "name": "MySQL",
         "description": "MySQL"
+      },
+      "s3-compatible": {
+        "name": "S3 Compatible",
+        "description": "Dịch vụ lưu trữ tương thích S3 (AWS S3, MinIO, DigitalOcean Spaces, v.v.)",
+        "form": {
+          "endpoint": {
+            "label": "URL Endpoint",
+            "placeholder": "https://s3.amazonaws.com",
+            "description": "URL endpoint S3 (để trống cho AWS S3)"
+          },
+          "region": {
+            "label": "Vùng",
+            "placeholder": "us-east-1",
+            "description": "Vùng AWS hoặc tương đương cho các nhà cung cấp khác"
+          },
+          "accessKey": {
+            "label": "Access Key ID",
+            "placeholder": "AKIAIOSFODNN7EXAMPLE",
+            "description": "Access key ID S3 của bạn"
+          },
+          "secretKey": {
+            "label": "Secret Access Key",
+            "placeholder": "Nhập secret access key của bạn",
+            "description": "Secret access key S3 của bạn"
+          },
+          "submit": "Kiểm Tra Kết Nối S3"
+        },
+        "validCredentials": "Kết nối S3 thành công!",
+        "invalidCredentials": "Kết nối S3 thất bại!",
+        "connectionDetails": "Chi Tiết Kết Nối"
       }
     },
     "progress": {
