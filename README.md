@@ -47,12 +47,6 @@ docker rm env-check
 You can deploy this application to Vercel with a single click:
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fhole-dev%2Fenv-check)
 
-## Usage
-
-1. Select a service from the dashboard
-2. Paste your API key
-3. Get instant validation results
-
 ## Development
 
 This project uses:
@@ -66,24 +60,12 @@ Available commands:
 pnpm dev         # Start development server
 pnpm build       # Build for production
 pnpm test        # Run tests
-pnpm lint:fix    # Fix linting issues
+pnpm check:fix    # Run Biome formatter and linter
 ```
 
 ## Contributing
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'feat: add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-### Adding New Service Support
-
-1. Add service configuration in `constants/tool.ts`
-2. Create new service component in `app/tools/[category]/[service]`
-3. Implement key validation logic
-4. Add i18n strings
-5. Update tests (if needed)
+We welcome contributions! Please read our [contributing guidelines](CONTRIBUTING.md) before submitting a pull request.
 
 ## License
 
