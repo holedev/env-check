@@ -24,6 +24,10 @@ Thank you for your interest in contributing to env-check! This document provides
 
 ## Development Standards
 
+### AI Assistance
+
+We use [Roo Code with Memory Bank](https://github.com/GreatScottyMac/roo-code-memory-bank) to accelerate development workflows and maintain code consistency. You can access the memory bank for this project at folder `./memory-bank`.
+
 ### Code Style
 
 We use Biome for formatting and linting with the following key rules:
