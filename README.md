@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# env-check
 
-## Getting Started
+A developer tool for quickly validating API keys across multiple popular services. Stop wondering if your API keys are working - just paste and check!
 
-First, run the development server:
+## Features
+
+- 🔑 Instant API key validation for 15+ popular services
+- 🚀 Clean, modern interface built with Next.js
+- 🔒 Client-side only - your API keys never touch our servers
+- 🌙 Dark/Light mode support
+- 🌍 i18n support (English/Vietnamese)
+
+## Quick Start
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+# Install dependencies
+pnpm install
+
+# Start development server
 pnpm dev
-# or
-bun dev
+
+# Open http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Usage
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Select a service from the dashboard
+2. Paste your API key
+3. Get instant validation results
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Development
 
-## Learn More
+This project uses:
+- Next.js with TypeScript
+- Tailwind CSS for styling
+- Biome for formatting and linting
+- Conventional commits with Husky hooks
 
-To learn more about Next.js, take a look at the following resources:
+Available commands:
+```bash
+pnpm dev         # Start development server
+pnpm build       # Build for production
+pnpm test        # Run tests
+pnpm lint:fix    # Fix linting issues
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Contributing
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'feat: add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-## Deploy on Vercel
+### Adding New Service Support
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Add service configuration in `constants/tool.ts`
+2. Create new service component in `app/tools/[category]/[service]`
+3. Implement key validation logic
+4. Add i18n strings
+5. Update tests (if needed)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## License
+
+[GNU GPLv3](LICENSE)

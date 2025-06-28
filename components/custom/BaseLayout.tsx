@@ -1,4 +1,5 @@
 import "@/app/globals.css";
+import { Toaster } from "@/components/ui/sonner";
 import { cn } from "@/lib/utils";
 import type { locale } from "@/types/global";
 import { NextIntlClientProvider } from "next-intl";
@@ -7,7 +8,6 @@ import { Roboto } from "next/font/google";
 import type { ReactNode } from "react";
 import { ThemeProvider } from "../theme-provider";
 import { SidebarProvider } from "../ui/sidebar";
-import { Toaster } from "../ui/sonner";
 import { TooltipProvider } from "../ui/tooltip";
 import { AppSidebar } from "./AppSidebar";
 import { Header } from "./Header";
@@ -21,11 +21,11 @@ export async function BaseLayout({ children, locale }: BaseLayoutType) {
 
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body className={cn(roboto.className, "w-screen h-screen")}>
+      <body className={cn(roboto.className, "w-full h-screen")}>
         <ThemeProvider attribute='class' defaultTheme='system' enableSystem disableTransitionOnChange>
           <TooltipProvider>
             <NextIntlClientProvider messages={messages}>
-              <SidebarProvider>
+              <SidebarProvider defaultOpen={true}>
                 <AppSidebar />
                 <div className='w-full'>
                   <Header />
@@ -34,7 +34,7 @@ export async function BaseLayout({ children, locale }: BaseLayoutType) {
               </SidebarProvider>
             </NextIntlClientProvider>
           </TooltipProvider>
-          <Toaster />
+          <Toaster position='bottom-right' richColors />
         </ThemeProvider>
       </body>
     </html>

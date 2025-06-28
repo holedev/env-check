@@ -1,21 +1,13 @@
 import enMessages from "@/configs/messages/en.json";
+import { _TOOL_GROUP_LIST, _TOOL_LIST } from "@/constants/tool";
 import type { ToolPath } from "@/types/tool";
-import { _TOOL_GROUP_LIST, _TOOL_LIST } from "./tool";
 
 describe("Tools", () => {
   describe("_TOOL_LIST", () => {
     it("should contain valid tool definitions", () => {
       for (const tool of _TOOL_LIST) {
-        expect(tool).toHaveProperty("nameKey");
-        expect(tool).toHaveProperty("descriptionKey");
         expect(tool).toHaveProperty("icon");
         expect(tool).toHaveProperty("path");
-
-        expect(typeof tool.nameKey).toBe("string");
-        expect(tool.nameKey.length).toBeGreaterThan(0);
-
-        expect(typeof tool.descriptionKey).toBe("string");
-        expect(tool.descriptionKey.length).toBeGreaterThan(0);
 
         expect(typeof tool.icon).toBe("string");
         expect(tool.icon.length).toBeGreaterThan(0);
@@ -32,22 +24,9 @@ describe("Tools", () => {
       expect(uniquePaths.size).toBe(_TOOL_LIST.length);
     });
 
-    it("should have properly formatted i18n keys", () => {
-      for (const tool of _TOOL_LIST) {
-        // Check that nameKey and descriptionKey follow the expected format
-        expect(tool.nameKey).toMatch(/^tools\.items\.[a-z_]+\.name$/);
-        expect(tool.descriptionKey).toMatch(/^tools\.items\.[a-z_]+\.description$/);
-
-        // Check that the middle part of the keys (the tool identifier) is consistent
-        const nameKeyParts = tool.nameKey.split(".");
-        const descKeyParts = tool.descriptionKey.split(".");
-        expect(nameKeyParts[2]).toBe(descKeyParts[2]);
-      }
-    });
-
     it("should have valid i18n keys in en.json", () => {
       for (const tool of _TOOL_LIST) {
-        const item = enMessages.tools.items[tool.path];
+        const item = enMessages.tools.items[tool.path as keyof typeof enMessages.tools.items];
         if (!item) {
           throw new Error(`Missing i18n default for tool: ${tool.path}`);
         }
@@ -62,13 +41,9 @@ describe("Tools", () => {
     it("should contain valid group definitions", () => {
       for (const group of _TOOL_GROUP_LIST) {
         expect(group).toHaveProperty("path");
-        expect(group).toHaveProperty("nameKey");
-        expect(group).toHaveProperty("descriptionKey");
         expect(group).toHaveProperty("tools");
 
         expect(typeof group.path).toBe("string");
-        expect(typeof group.nameKey).toBe("string");
-        expect(typeof group.descriptionKey).toBe("string");
         expect(Array.isArray(group.tools)).toBeTruthy();
       }
     });
@@ -78,17 +53,6 @@ describe("Tools", () => {
       const uniquePaths = new Set(paths);
 
       expect(uniquePaths.size).toBe(_TOOL_GROUP_LIST.length);
-    });
-
-    it("should have properly formatted i18n keys", () => {
-      for (const group of _TOOL_GROUP_LIST) {
-        expect(group.nameKey).toMatch(/^tools\.groups\.[a-z_]+\.name$/);
-        expect(group.descriptionKey).toMatch(/^tools\.groups\.[a-z_]+\.description$/);
-
-        const nameKeyParts = group.nameKey.split(".");
-        const descKeyParts = group.descriptionKey.split(".");
-        expect(nameKeyParts[2]).toBe(descKeyParts[2]);
-      }
     });
 
     it("should have valid i18n keys in en.json", () => {

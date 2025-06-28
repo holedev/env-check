@@ -8,40 +8,162 @@
       "light": "Sáng",
       "dark": "Tối",
       "system": "Hệ thống"
+    },
+    "site": {
+      "logoText": "ENV Check",
+      "slogan": "ENV có đang hoạt động?"
+    },
+    "search": {
+      "placeholder": "Tìm tools...",
+      "shortcut": "Ctrl + K để tìm kiếm",
+      "empty": "Không tìm thấy tools",
+      "filter": "Lọc tools..."
+    },
+    "notify": {
+      "success": {
+        "title": "Thành công",
+        "message": "Thao tác thành công."
+      },
+      "error": {
+        "title": "Lỗi",
+        "message": "Thao tác thất bại.",
+        "unknownError": "Lỗi không xác định. Vui lòng liên hệ quản trị viên."
+      }
     }
   },
   "tools": {
     "groups": {
-      "database": {
-        "name": "Cơ sở dữ liệu",
-        "description": "Công cụ cơ sở dữ liệu"
+      "cloud": {
+        "name": "Cloud Provider",
+        "description": "Cloud Provider"
       },
       "ai": {
-        "name": "Trí tuệ nhân tạo",
-        "description": "Công cụ AI"
+        "name": "AI",
+        "description": "AI tools"
       },
-      "storage": {
-        "name": "Lưu trữ",
-        "description": "Công cụ lưu trữ"
+      "database": {
+        "name": "Database",
+        "description": "Database"
+      },
+      "payment": {
+        "name": "Payment",
+        "description": "Payment"
+      },
+      "messaging": {
+        "name": "Messaging & Communication",
+        "description": "Email, SMS, chat APIs"
+      },
+      "analytics": {
+        "name": "Analytics & Monitoring",
+        "description": "Tools for logging, metrics, and performance tracking"
+      },
+      "others": {
+        "name": "Others",
+        "description": "Other tools and services"
       }
     },
     "items": {
+      "aws": {
+        "name": "AWS",
+        "description": "Amazon Web Services"
+      },
+      "google-cloud": {
+        "name": "Google Cloud",
+        "description": "Google Cloud Platform"
+      },
+      "cloudflare": {
+        "name": "Cloudflare",
+        "description": "Cloudflare"
+      },
+      "digital-ocean": {
+        "name": "Digital Ocean",
+        "description": "Digital Ocean"
+      },
+      "supabase": {
+        "name": "Supabase",
+        "description": "Supabase"
+      },
+      "firebase": {
+        "name": "Firebase",
+        "description": "Firebase"
+      },
       "mongodb": {
         "name": "MongoDB",
         "description": "MongoDB"
       },
-      "mysql": {
-        "name": "MySQL",
-        "description": "MySQL"
+      "google-gemini": {
+        "name": "Gemini",
+        "description": "Gemini API (AI Studio)",
+        "form": {
+          "apiKey": {
+            "label": "API Key",
+            "placeholder": "Nhập API Key",
+            "description": "API Key của bạn có thể được tìm thấy tại https://aistudio.google.com/apikey."
+          },
+          "submit": "Kiểm tra"
+        },
+        "availableModels": "Các model khả dụng",
+        "noAvailableModels": "Không tìm thấy model nào khả dụng!",
+        "validKey": "API Key của bạn hợp lệ!",
+        "invalidApiKey": "API Key của bạn không hợp lệ!"
       },
-      "gemini": {
-        "name": "Gemini API (AI Studio)",
-        "description": "Gemini API (AI Studio)"
+      "stripe": {
+        "name": "Stripe",
+        "description": "Stripe Payment"
+      },
+      "slack": {
+        "name": "Slack",
+        "description": "Slack"
+      },
+      "discord": {
+        "name": "Discord",
+        "description": "Discord"
+      },
+      "sentry": {
+        "name": "Sentry",
+        "description": "Sentry"
+      },
+      "github": {
+        "name": "GitHub",
+        "description": "GitHub Token"
+      },
+      "vercel": {
+        "name": "Vercel",
+        "description": "Vercel API"
+      },
+      "netlify": {
+        "name": "Netlify",
+        "description": "Netlify API"
+      },
+      "render": {
+        "name": "Render",
+        "description": "Render Hosting API"
       },
       "minio": {
         "name": "MinIO",
         "description": "MinIO"
+      },
+      "gmail-smtp": {
+        "name": "Gmail SMTP",
+        "description": "Gmail SMTP"
+      },
+      "google-analytics": {
+        "name": "Google Analytics",
+        "description": "Google Analytics"
+      },
+      "postgresql": {
+        "name": "PostgreSQL",
+        "description": "PostgreSQL"
+      },
+      "mysql": {
+        "name": "MySQL",
+        "description": "MySQL"
       }
+    },
+    "progress": {
+      "notStarted": "Chưa bắt đầu",
+      "inProgress": "Đang tiến hành",
+      "completed": "Đã hoàn thành"
     }
   },
   "defaultPage": {

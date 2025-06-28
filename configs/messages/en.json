@@ -10,7 +10,25 @@
       "system": "System"
     },
     "site": {
-      "logoText": "ENV Check"
+      "logoText": "ENV Check",
+      "slogan": "Environment Check: Is it working?"
+    },
+    "search": {
+      "placeholder": "Search tools...",
+      "shortcut": "Press Ctrl + K to search",
+      "empty": "No tools found",
+      "filter": "Filter tools..."
+    },
+    "notify": {
+      "success": {
+        "title": "Success",
+        "message": "Action was successful."
+      },
+      "error": {
+        "title": "Error",
+        "message": "Action was failed.",
+        "unknownError": "Unknown error. Please contact admin."
+      }
     }
   },
   "tools": {
@@ -25,11 +43,11 @@
       },
       "database": {
         "name": "Database",
-        "description": "Database services and APIs"
+        "description": "Database"
       },
       "payment": {
-        "name": "Payment & Finance",
-        "description": "Payment gateways and financial APIs"
+        "name": "Payment",
+        "description": "Payment"
       },
       "messaging": {
         "name": "Messaging & Communication",
@@ -58,8 +76,8 @@
         "description": "Cloudflare"
       },
       "digital-ocean": {
-        "name": "DigitalOcean",
-        "description": "DigitalOcean"
+        "name": "Digital Ocean",
+        "description": "Digital Ocean"
       },
       "supabase": {
         "name": "Supabase",
@@ -71,99 +89,39 @@
       },
       "mongodb": {
         "name": "MongoDB",
-        "description": "MongoDB Atlas"
-      },
-      "planetscale": {
-        "name": "PlanetScale",
-        "description": "PlanetScale"
-      },
-      "faunadb": {
-        "name": "FaunaDB",
-        "description": "FaunaDB"
-      },
-      "openai": {
-        "name": "OpenAI",
-        "description": "OpenAI API"
-      },
-      "anthropic": {
-        "name": "Anthropic",
-        "description": "Claude by Anthropic"
+        "description": "MongoDB"
       },
       "google-gemini": {
         "name": "Gemini",
-        "description": "Gemini API (AI Studio)"
-      },
-      "hugging-face": {
-        "name": "Hugging Face",
-        "description": "Hugging Face Inference API"
-      },
-      "cohere": {
-        "name": "Cohere",
-        "description": "Cohere NLP API"
+        "description": "Gemini API (AI Studio)",
+        "form": {
+          "apiKey": {
+            "label": "API Key",
+            "placeholder": "Enter your Gemini API Key",
+            "description": "Your Gemini API Key can be found in https://aistudio.google.com/apikey."
+          },
+          "submit": "Submit"
+        },
+        "availableModels": "Available Models",
+        "noAvailableModels": "No available models found!",
+        "validKey": "Your API Key is valid!",
+        "invalidApiKey": "Your API Key is invalid!"
       },
       "stripe": {
         "name": "Stripe",
-        "description": "Stripe Payment Gateway"
-      },
-      "paypal": {
-        "name": "PayPal",
-        "description": "PayPal API"
-      },
-      "plaid": {
-        "name": "Plaid",
-        "description": "Plaid Financial API"
-      },
-      "wise": {
-        "name": "Wise",
-        "description": "Wise Money Transfer API"
-      },
-      "infura": {
-        "name": "Infura",
-        "description": "Infura Ethereum API"
-      },
-      "alchemy": {
-        "name": "Alchemy",
-        "description": "Alchemy Blockchain API"
-      },
-      "twilio": {
-        "name": "Twilio",
-        "description": "Twilio Messaging API"
-      },
-      "sendgrid": {
-        "name": "SendGrid",
-        "description": "SendGrid Email API"
-      },
-      "mailgun": {
-        "name": "Mailgun",
-        "description": "Mailgun Email API"
+        "description": "Stripe Payment"
       },
       "slack": {
         "name": "Slack",
-        "description": "Slack App Token"
+        "description": "Slack"
       },
       "discord": {
         "name": "Discord",
-        "description": "Discord Bot Token"
-      },
-      "google_analytics": {
-        "name": "Google Analytics",
-        "description": "Google Analytics API"
-      },
-      "mixpanel": {
-        "name": "Mixpanel",
-        "description": "Mixpanel API"
-      },
-      "datadog": {
-        "name": "Datadog",
-        "description": "Datadog Monitoring API"
+        "description": "Discord"
       },
       "sentry": {
         "name": "Sentry",
-        "description": "Sentry Error Tracking API"
-      },
-      "logrocket": {
-        "name": "LogRocket",
-        "description": "LogRocket API"
+        "description": "Sentry"
       },
       "github": {
         "name": "GitHub",
@@ -180,10 +138,6 @@
       "render": {
         "name": "Render",
         "description": "Render Hosting API"
-      },
-      "railway": {
-        "name": "Railway",
-        "description": "Railway API"
       },
       "minio": {
         "name": "MinIO",
@@ -205,6 +159,11 @@
         "name": "MySQL",
         "description": "MySQL"
       }
+    },
+    "progress": {
+      "notStarted": "Not started",
+      "inProgress": "In progress",
+      "completed": "Completed"
     }
   },
   "defaultPage": {

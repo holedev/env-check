@@ -1,10 +1,14 @@
 import type { _TOOL_LIST } from "@/constants/tool";
 
+export type ToolProgressCategory = "notStarted" | "inProgress" | "completed";
+
 export type ToolType = {
   path: string;
-  nameKey: string;
-  descriptionKey: string;
   icon: string;
+};
+
+export type ToolWithProgressType = ToolType & {
+  progress?: ToolProgressCategory;
 };
 
 export function defineToolList<T extends readonly ToolType[]>(tools: T) {
@@ -13,9 +17,9 @@ export function defineToolList<T extends readonly ToolType[]>(tools: T) {
 
 export type ToolPath = (typeof _TOOL_LIST)[number]["path"];
 
+export type ToolGroupCategory = "ai" | "cloud" | "database" | "payment" | "messaging" | "analytics" | "others";
+
 export type ToolGroupType = {
-  path: string;
-  nameKey: string;
-  descriptionKey: string;
+  path: ToolGroupCategory;
   tools: ToolPath[];
 };
