@@ -20,3 +20,22 @@ This file tracks the project's current status, including recent changes, current
 * Integration testing strategy for multiple API providers
 * Security considerations for handling API keys
 * Caching strategy for API validation results
+
+## Current Focus
+
+* 2025-06-28 16:09:57 - Establishing test organization architectural pattern
+* Planning co-location of tool-specific tests with their implementations
+* Updating project patterns to support scalable test structure
+
+## Recent Changes
+
+* 2025-06-28 16:09:57 - Documented test organization decision in decision log
+* 2025-06-28 16:09:57 - Added test organization patterns to system patterns
+* 2025-06-28 16:09:57 - Analyzed current test structure and proposed improvements
+
+## Open Questions/Issues
+
+* Jest configuration update needed to support new test file locations
+* Tool-specific test templates should be created for consistency
+* Migration strategy for any existing tool tests (if they exist)
+* Test coverage reporting configuration for the new structure

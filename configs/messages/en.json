@@ -145,7 +145,46 @@
       },
       "gmail-smtp": {
         "name": "Gmail SMTP",
-        "description": "Gmail SMTP"
+        "description": "Gmail SMTP for sending emails",
+        "form": {
+          "host": {
+            "label": "SMTP Host",
+            "placeholder": "smtp.gmail.com",
+            "description": "Gmail SMTP server hostname"
+          },
+          "port": {
+            "label": "SMTP Port",
+            "placeholder": "465",
+            "description": "SMTP port (587 for TLS, 465 for SSL)"
+          },
+          "username": {
+            "label": "Username",
+            "placeholder": "your-email@gmail.com",
+            "description": "Your Gmail email address"
+          },
+          "password": {
+            "label": "App Password",
+            "placeholder": "Enter your Gmail App Password",
+            "description": "Generate an App Password at https://myaccount.google.com/apppasswords (2FA must be enabled)"
+          },
+          "secure": {
+            "label": "Use SSL/TLS",
+            "description": "Enable secure connection (recommended)"
+          },
+          "testType": {
+            "label": "Test Type",
+            "options": {
+              "verify": "Verify Connection Only",
+              "sendEmail": "Send Test Email"
+            },
+            "description": "Choose whether to only verify the connection or send a test email"
+          },
+          "submit": "Test Connection"
+        },
+        "validCredentials": "Gmail SMTP connection successful!",
+        "invalidCredentials": "Gmail SMTP connection failed!",
+        "connectionDetails": "Connection Details",
+        "testEmailSent": "Test email sent successfully!"
       },
       "google-analytics": {
         "name": "Google Analytics",

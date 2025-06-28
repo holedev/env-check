@@ -65,3 +65,23 @@ This file records architectural and implementation decisions using a list format
 * Language selection component
 * Default language handling
 * Dynamic content translation
+
+## Test File Organization
+### Decision
+* Tool-specific tests should be co-located with their implementations in `/app/tools/` directory structure
+* General/shared tests remain in root `/test/` directory
+
+### Rationale
+* Improves discoverability and maintainability of tool-specific tests
+* Follows modern development practices of keeping related code together
+* Scales better as more tools are added to the project
+* Clear separation between shared concerns and tool-specific functionality
+
+### Implementation Details
+* Tool tests co-located: `/app/tools/{category}/{tool}/file.test.ts`
+* Alternative pattern: `/app/tools/{category}/{tool}/__tests__/`
+* Jest configuration updated to recognize new test patterns
+* Shared tests (i18n, tool constants) remain in `/test/`
+* Testing templates established for new tool development
+
+[2025-06-28 16:07:32] - Test organization architectural decision

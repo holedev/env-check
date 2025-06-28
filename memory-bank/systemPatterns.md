@@ -62,3 +62,25 @@ This file documents recurring patterns and standards used in the project.
 * Pre-commit hooks validation
 * Commitlint message standards
 * Continuous testing during development
+
+## Test Organization Patterns
+
+### Test File Co-location
+* Tool-specific tests co-located with implementation files
+* Pattern: `{filename}.test.ts` adjacent to `{filename}.ts`
+* Alternative: `__tests__/` directory within tool folder
+* Shared/general tests remain in root `/test/` directory
+
+### Test File Naming
+* Co-located tests: `actions.test.ts`, `form.client.test.tsx`, `page.test.tsx`
+* Integration tests: `__tests__/integration.test.ts`
+* API tests: `__tests__/api.test.ts`
+* General tests: `/test/{feature}.test.ts`
+
+### Test Discovery Pattern
+* Jest configured to find tests in multiple locations:
+  - `/test/**/*.test.ts`
+  - `/app/tools/**/*.test.ts`
+  - `/app/tools/**/__tests__/*.test.ts`
+
+[2025-06-28 16:08:25] - Test organization patterns documented

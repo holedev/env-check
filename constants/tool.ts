@@ -59,7 +59,8 @@ export const _TOOL_LIST = defineToolList([
   },
   {
     icon: "gmail",
-    path: "gmail-smtp"
+    path: "gmail-smtp",
+    progress: "completed"
   },
   {
     icon: "slack",
