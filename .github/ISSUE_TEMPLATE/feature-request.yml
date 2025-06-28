@@ -1,0 +1,70 @@
+name: 💡 Suggest New Tool
+description: Suggest a new tool to be added to the platform.
+labels: ['enhancement', 'new-tool']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a new tool! Please provide the following information to help us evaluate and implement it.
+
+  - type: input
+    id: tool-name
+    attributes:
+      label: Tool Name
+      description: What is the name of the tool you're suggesting?
+      placeholder: e.g., Google Gemini, AWS Lambda
+    validations:
+      required: true
+
+  - type: input
+    id: tool-url
+    attributes:
+      label: Tool URL
+      description: Please provide the official URL/documentation of the tool
+      placeholder: e.g., https://ai.google.dev/docs/gemini
+    validations:
+      required: true
+
+  - type: dropdown
+    id: tool-category
+    attributes:
+      label: Tool Category
+      description: Which category best fits this tool?
+      options:
+        - AI
+        - Analytics
+        - Cloud
+        - Database
+        - Messaging
+        - Payment
+        - Others
+        - ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: tool-description
+    attributes:
+      label: Tool Description
+      description: Please describe what this tool does and why it would be useful
+      placeholder: A clear description of the tool's functionality and benefits
+    validations:
+      required: true
+
+  - type: textarea
+    id: lib-suggestions
+    attributes:
+      label: Library Suggestions
+      description: Are there any specific libraries or SDKs you recommend for implementing this tool?
+      placeholder: e.g., @google/generative-ai, openai
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Information
+      description: Any other context or screenshots about the tool suggestion
+      placeholder: Example use cases, implementation ideas, etc.
+    validations:
+      required: false
