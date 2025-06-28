@@ -22,6 +22,31 @@ pnpm dev
 # Open http://localhost:3000
 ```
 
+## Docker
+
+```bash
+# Run using the pre-built image
+docker run -d \
+  --name env-check \
+  -p 3000:3000 \
+  holedev/env-check
+
+# Access the application at http://localhost:3000
+```
+
+You can also stop and remove the container:
+```bash
+# Stop the container
+docker stop env-check
+
+# Remove the container
+docker rm env-check
+```
+
+## Vercel Deployment
+You can deploy this application to Vercel with a single click:
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fhole-dev%2Fenv-check)
+
 ## Usage
 
 1. Select a service from the dashboard
