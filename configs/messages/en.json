@@ -89,7 +89,17 @@
       },
       "mongodb": {
         "name": "MongoDB",
-        "description": "MongoDB"
+        "description": "MongoDB",
+        "form": {
+          "connectionString": {
+            "label": "Connection String",
+            "placeholder": "mongodb+srv://user:pass@host/db",
+            "description": "Your MongoDB connection string"
+          },
+          "submit": "Test Connection"
+        },
+        "validCredentials": "MongoDB connection successful!",
+        "invalidCredentials": "MongoDB connection failed!"
       },
       "google-gemini": {
         "name": "Gemini",

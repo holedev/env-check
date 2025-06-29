@@ -51,7 +51,8 @@ export const _TOOL_LIST = defineToolList([
   },
   {
     icon: "mongodb",
-    path: "mongodb"
+    path: "mongodb",
+    progress: "inProgress"
   },
   {
     icon: "googlegemini",

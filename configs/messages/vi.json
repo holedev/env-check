@@ -89,7 +89,17 @@
       },
       "mongodb": {
         "name": "MongoDB",
-        "description": "MongoDB"
+        "description": "MongoDB",
+        "form": {
+          "connectionString": {
+            "label": "Chuỗi kết nối",
+            "placeholder": "mongodb+srv://user:pass@host/db",
+            "description": "Chuỗi kết nối MongoDB của bạn"
+          },
+          "submit": "Kiểm tra kết nối"
+        },
+        "validCredentials": "Kết nối MongoDB thành công!",
+        "invalidCredentials": "Kết nối MongoDB thất bại!"
       },
       "google-gemini": {
         "name": "Gemini",
