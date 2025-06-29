@@ -1,6 +1,6 @@
 import enMessages from "@/configs/messages/en.json";
 import { _TOOL_GROUP_LIST, _TOOL_LIST } from "@/constants/tool";
-import type { ToolPath } from "@/types/tool";
+import type { ToolPath, ToolWithProgressType } from "@/types/tool";
 
 describe("Tools", () => {
   describe("_TOOL_LIST", () => {
@@ -109,6 +109,114 @@ describe("Tools", () => {
       if (unassignedTools.length > 0) {
         throw new Error(`The following tools are not assigned to any group: ${unassignedTools.join(", ")}`);
       }
+    });
+  });
+
+  describe("Tool Requirements Validation", () => {
+    describe("Tools with progress inProgress or completed", () => {
+      const toolsWithProgress = _TOOL_LIST.filter((tool) => {
+        const toolProgress = (tool as ToolWithProgressType).progress;
+        return toolProgress === "inProgress" || toolProgress === "completed";
+      });
+
+      it("should have page.tsx files for tools with inProgress or completed status", () => {
+        const fs = require("node:fs");
+        const path = require("node:path");
+
+        for (const tool of toolsWithProgress) {
+          // Find the tool's group
+          const group = _TOOL_GROUP_LIST.find((g) => g.tools.includes(tool.path));
+
+          if (group) {
+            const pagePath = path.join(process.cwd(), "app", "tools", group.path, tool.path, "page.tsx");
+            expect(fs.existsSync(pagePath)).toBe(true);
+          }
+        }
+      });
+
+      it("should have test files for completed tools", () => {
+        const fs = require("node:fs");
+        const path = require("node:path");
+        const completedTools = toolsWithProgress.filter(
+          (tool) => (tool as ToolWithProgressType).progress === "completed"
+        );
+
+        for (const tool of completedTools) {
+          // Find the tool's group
+          const group = _TOOL_GROUP_LIST.find((g) => g.tools.includes(tool.path));
+
+          if (group) {
+            const toolDir = path.join(process.cwd(), "app", "tools", group.path, tool.path);
+
+            // Check for various test file patterns
+            const possibleTestFiles = ["page.test.tsx", "actions.test.ts", "form.client.test.tsx", "index.test.ts"];
+
+            let hasTestFiles = false;
+
+            for (const testFile of possibleTestFiles) {
+              const testPath = path.join(toolDir, testFile);
+              if (fs.existsSync(testPath)) {
+                hasTestFiles = true;
+                break;
+              }
+            }
+
+            expect(hasTestFiles).toBe(true);
+          }
+        }
+      });
+    });
+
+    describe("Tool file structure validation", () => {
+      it("should validate completed tools have required files", () => {
+        const fs = require("node:fs");
+        const path = require("node:path");
+        const completedTools = _TOOL_LIST.filter((tool) => (tool as ToolWithProgressType).progress === "completed");
+
+        for (const tool of completedTools) {
+          const group = _TOOL_GROUP_LIST.find((g) => g.tools.includes(tool.path));
+
+          if (group) {
+            const toolDir = path.join(process.cwd(), "app", "tools", group.path, tool.path);
+
+            // Required files for completed tools
+            const requiredFiles = ["page.tsx", "actions.ts", "form.client.tsx"];
+
+            for (const file of requiredFiles) {
+              const filePath = path.join(toolDir, file);
+              expect(fs.existsSync(filePath)).toBe(true);
+            }
+          }
+        }
+      });
+    });
+
+    describe("Test coverage for completed tools", () => {
+      it("should have comprehensive test coverage", () => {
+        const fs = require("node:fs");
+        const path = require("node:path");
+        const completedTools = _TOOL_LIST.filter((tool) => (tool as ToolWithProgressType).progress === "completed");
+
+        expect(completedTools.length).toBeGreaterThan(0);
+
+        for (const tool of completedTools) {
+          const group = _TOOL_GROUP_LIST.find((g) => g.tools.includes(tool.path));
+
+          if (group) {
+            const toolDir = path.join(process.cwd(), "app", "tools", group.path, tool.path);
+
+            const testFiles = [
+              { file: "page.test.tsx", exists: fs.existsSync(path.join(toolDir, "page.test.tsx")) },
+              { file: "actions.test.ts", exists: fs.existsSync(path.join(toolDir, "actions.test.ts")) }
+            ];
+
+            const testCoverage = testFiles.filter((t) => t.exists).length;
+
+            // Each completed tool should have at least page and actions tests
+            expect(testCoverage).toBeGreaterThanOrEqual(2);
+          }
+        }
+      });
     });
   });
 });

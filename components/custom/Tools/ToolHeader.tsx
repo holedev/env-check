@@ -5,7 +5,7 @@ import Link from "next/link";
 import type React from "react";
 import { ToolProgress } from "./ToolProgress";
 
-type Props = React.HTMLAttributes<HTMLDivElement> & {
+export type ToolHeaderProps = React.HTMLAttributes<HTMLDivElement> & {
   toolPath: ToolPath;
   libInfo: {
     packageName: string;
@@ -13,7 +13,7 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
   };
 };
 
-const ToolHeader = ({ toolPath, libInfo }: Props) => {
+const ToolHeader = ({ toolPath, libInfo }: ToolHeaderProps) => {
   const t = useTranslations();
   const tool = _TOOL_LIST.find((item) => item.path === toolPath) as ToolWithProgressType;
 

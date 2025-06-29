@@ -84,3 +84,24 @@ This file documents recurring patterns and standards used in the project.
   - `/app/tools/**/__tests__/*.test.ts`
 
 [2025-06-28 16:08:25] - Test organization patterns documented
+## Tool Creation Pattern
+
+### Standard Process
+1. Add service configuration in `constants/tool.ts`
+2. Create service components in `app/tools/[category]/[service-path]/`
+3. Add i18n strings in `configs/messages/`
+4. Update tests to cover new service functionality
+
+### Key Files
+* `page.tsx`: Main page component
+* `actions.ts`: Server actions for key validation
+* `form.client.tsx`: Optional form component for API key input
+
+### Configuration Requirements
+* Must include in `_TOOL_LIST` with icon, path, and progress status
+* Must be added to appropriate category in `_TOOL_GROUP_LIST`
+* Progress status determines required test files:
+  - "inProgress": Requires page test file
+  - "completed": Requires both page and actions test files
+
+2025-06-29 15:23:53 - Documented tool creation pattern from TOOL_TODO.md

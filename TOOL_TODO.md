@@ -73,4 +73,6 @@
    Remember to add strings in both `en.json` and `vi.json`.
 
 4. **Tests**
-   Ensure all tests pass with `pnpm test`. If needed, add new tests in `tests/tools/[category]/[service-path].test.ts`.
+   Ensure all tests pass with `pnpm test`. 
+   If status is "isProgress", you must create a file at `tests/tools/[category]/[service-path]/page.tsx`.
+   If status is "completed", you must create test file at `tests/tools/[category]/[service-path]/page.test.tsx` and `tests/tools/[category]/[service-path]/actions.test.tsx`.
