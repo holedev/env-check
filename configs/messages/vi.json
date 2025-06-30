@@ -135,7 +135,19 @@
       },
       "github": {
         "name": "GitHub",
-        "description": "GitHub Token"
+        "description": "GitHub Token",
+        "form": {
+          "token": {
+            "label": "Token",
+            "placeholder": "GitHub PAT hoặc token OAuth App"
+          },
+          "submit": "Kiểm tra"
+        },
+        "result": {
+          "title": "Chi tiết"
+        },
+        "validApiKey": "API Key của bạn hợp lệ.",
+        "invalidApiKey": "API Key của bạn không hợp lệ!"
       },
       "vercel": {
         "name": "Vercel",

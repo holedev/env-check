@@ -1,4 +1,4 @@
-import { checkSMTPConnection } from "./actions";
+import { checkSMTPConnection } from "../actions";
 
 // Mock nodemailer
 jest.mock("nodemailer", () => {

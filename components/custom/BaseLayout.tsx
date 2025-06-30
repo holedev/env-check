@@ -7,9 +7,7 @@ import { getMessages } from "next-intl/server";
 import { Roboto } from "next/font/google";
 import type { ReactNode } from "react";
 import { ThemeProvider } from "../theme-provider";
-import { SidebarProvider } from "../ui/sidebar";
 import { TooltipProvider } from "../ui/tooltip";
-import { AppSidebar } from "./AppSidebar";
 import { Header } from "./Header";
 
 const roboto = Roboto({ subsets: ["latin"], weight: ["300", "400", "500", "700"], style: ["italic", "normal"] });
@@ -25,13 +23,13 @@ export async function BaseLayout({ children, locale }: BaseLayoutType) {
         <ThemeProvider attribute='class' defaultTheme='system' enableSystem disableTransitionOnChange>
           <TooltipProvider>
             <NextIntlClientProvider messages={messages}>
-              <SidebarProvider defaultOpen={true}>
-                <AppSidebar />
-                <div className='w-full'>
-                  <Header />
-                  <main className='p-4'>{children}</main>
-                </div>
-              </SidebarProvider>
+              {/* <SidebarProvider defaultOpen={true}> */}
+              {/* <AppSidebar /> */}
+              <div className='w-full'>
+                <Header />
+                <main className='p-4'>{children}</main>
+              </div>
+              {/* </SidebarProvider> */}
             </NextIntlClientProvider>
           </TooltipProvider>
           <Toaster position='bottom-right' richColors />

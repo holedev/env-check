@@ -1,4 +1,4 @@
-import { checkS3Connection } from "./actions";
+import { checkS3Connection } from "../actions";
 
 // Mock the AWS SDK
 jest.mock("@aws-sdk/client-s3", () => {

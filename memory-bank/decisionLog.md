@@ -78,10 +78,22 @@ This file records architectural and implementation decisions using a list format
 * Clear separation between shared concerns and tool-specific functionality
 
 ### Implementation Details
-* Tool tests co-located: `/app/tools/{category}/{tool}/file.test.ts`
-* Alternative pattern: `/app/tools/{category}/{tool}/__tests__/`
+* Tool tests co-located: `/app/tools/{category}/{tool}/__tests__/file.test.ts(x)`
 * Jest configuration updated to recognize new test patterns
 * Shared tests (i18n, tool constants) remain in `/test/`
 * Testing templates established for new tool development
 
 [2025-06-28 16:07:32] - Test organization architectural decision
+[2025-06-30 14:58:00] - [Secure Input Component]
+## UI Architecture
+### Decision
+* Created a secure input component with a show/hide toggle for sensitive data.
+
+### Rationale
+* Improves security by masking sensitive information by default.
+* Enhances user experience by allowing users to view their input if needed.
+* Centralizes the implementation in the `InputWithPaste` component for reusability.
+
+### Implementation Details
+* The `InputWithPaste` component now includes a `hidden` prop to control visibility.
+* The component uses absolute positioning for the toggle and paste buttons to ensure a consistent look and feel.

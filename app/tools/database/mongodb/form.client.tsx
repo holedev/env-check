@@ -63,15 +63,16 @@ const FormClient = () => {
   return (
     <div className='space-y-8 w-fit mx-auto min-w-[400px]'>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col gap-4'>
+        <form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col items-end gap-4'>
           <FormField
             control={form.control}
             name='connectionString'
             render={({ field }) => (
-              <FormItem>
+              <FormItem className='w-full'>
                 <FormLabel>{t("form.connectionString.label")}</FormLabel>
                 <FormControl>
                   <InputWithPaste
+                    hidden
                     placeholder={t("form.connectionString.placeholder")}
                     autoComplete='off'
                     onPasteClick={(value) => field.onChange(value)}
@@ -84,9 +85,7 @@ const FormClient = () => {
             )}
           />
 
-          <Button type='submit' className='self-end'>
-            {t("form.submit")}
-          </Button>
+          <Button type='submit'>{t("form.submit")}</Button>
         </form>
       </Form>
 

@@ -86,7 +86,8 @@ export const _TOOL_LIST = defineToolList([
   },
   {
     icon: "github",
-    path: "github"
+    path: "github",
+    progress: "inProgress"
   },
   {
     icon: "vercel",

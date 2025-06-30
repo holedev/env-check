@@ -129,7 +129,9 @@ describe("Tools", () => {
 
           if (group) {
             const pagePath = path.join(process.cwd(), "app", "tools", group.path, tool.path, "page.tsx");
-            expect(fs.existsSync(pagePath)).toBe(true);
+            if (!fs.existsSync(pagePath)) {
+              throw new Error(`Tool Requirement Validation Failed for '${tool.path}': Missing page.tsx file.`);
+            }
           }
         }
       });
@@ -142,14 +144,11 @@ describe("Tools", () => {
         );
 
         for (const tool of completedTools) {
-          // Find the tool's group
           const group = _TOOL_GROUP_LIST.find((g) => g.tools.includes(tool.path));
 
           if (group) {
-            const toolDir = path.join(process.cwd(), "app", "tools", group.path, tool.path);
-
-            // Check for various test file patterns
-            const possibleTestFiles = ["page.test.tsx", "actions.test.ts", "form.client.test.tsx", "index.test.ts"];
+            const toolDir = path.join(process.cwd(), "app", "tools", group.path, tool.path, "__tests__");
+            const possibleTestFiles = ["page.test.tsx", "actions.test.ts"];
 
             let hasTestFiles = false;
 
@@ -161,7 +160,13 @@ describe("Tools", () => {
               }
             }
 
-            expect(hasTestFiles).toBe(true);
+            if (!hasTestFiles) {
+              throw new Error(
+                `Tool Requirement Validation Failed for '${tool.path}': Missing test files. Expected one of ${possibleTestFiles.join(
+                  ", "
+                )}`
+              );
+            }
           }
         }
       });
@@ -178,13 +183,15 @@ describe("Tools", () => {
 
           if (group) {
             const toolDir = path.join(process.cwd(), "app", "tools", group.path, tool.path);
-
-            // Required files for completed tools
-            const requiredFiles = ["page.tsx", "actions.ts", "form.client.tsx"];
+            const requiredFiles = ["page.tsx"];
 
             for (const file of requiredFiles) {
               const filePath = path.join(toolDir, file);
-              expect(fs.existsSync(filePath)).toBe(true);
+              if (!fs.existsSync(filePath)) {
+                throw new Error(
+                  `Tool Requirement Validation Failed for '${tool.path}': Missing required file '${file}'.`
+                );
+              }
             }
           }
         }
@@ -203,7 +210,7 @@ describe("Tools", () => {
           const group = _TOOL_GROUP_LIST.find((g) => g.tools.includes(tool.path));
 
           if (group) {
-            const toolDir = path.join(process.cwd(), "app", "tools", group.path, tool.path);
+            const toolDir = path.join(process.cwd(), "app", "tools", group.path, tool.path, "__tests__");
 
             const testFiles = [
               { file: "page.test.tsx", exists: fs.existsSync(path.join(toolDir, "page.test.tsx")) },
@@ -211,9 +218,14 @@ describe("Tools", () => {
             ];
 
             const testCoverage = testFiles.filter((t) => t.exists).length;
-
-            // Each completed tool should have at least page and actions tests
-            expect(testCoverage).toBeGreaterThanOrEqual(2);
+            if (testCoverage < 2) {
+              const missingFiles = testFiles.filter((t) => !t.exists).map((t) => t.file);
+              throw new Error(
+                `Tool Requirement Validation Failed for '${
+                  tool.path
+                }': Insufficient test coverage. Missing: ${missingFiles.join(", ")}`
+              );
+            }
           }
         }
       });

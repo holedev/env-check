@@ -1,4 +1,4 @@
-import { checkAPIKey } from "./actions";
+import { checkAPIKey } from "../actions";
 
 // Mock the OpenAI SDK
 jest.mock("openai", () => {

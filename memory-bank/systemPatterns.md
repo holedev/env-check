@@ -72,16 +72,12 @@ This file documents recurring patterns and standards used in the project.
 * Shared/general tests remain in root `/test/` directory
 
 ### Test File Naming
-* Co-located tests: `actions.test.ts`, `form.client.test.tsx`, `page.test.tsx`
-* Integration tests: `__tests__/integration.test.ts`
-* API tests: `__tests__/api.test.ts`
-* General tests: `/test/{feature}.test.ts`
+* Co-located tests: `__tests__/actions.test.ts`, `__tests__/page.test.tsx`
 
 ### Test Discovery Pattern
 * Jest configured to find tests in multiple locations:
   - `/test/**/*.test.ts`
-  - `/app/tools/**/*.test.ts`
-  - `/app/tools/**/__tests__/*.test.ts`
+  - `/app/tools/**/__tests__/*.test.ts(x)`
 
 [2025-06-28 16:08:25] - Test organization patterns documented
 ## Tool Creation Pattern
@@ -105,3 +101,11 @@ This file documents recurring patterns and standards used in the project.
   - "completed": Requires both page and actions test files
 
 2025-06-29 15:23:53 - Documented tool creation pattern from TOOL_TODO.md
+[2025-06-30 14:57:00] - [New Secure Input Pattern]
+## Component Patterns
+
+### Secure Input Handling
+* Implemented a show/hide toggle for sensitive fields like API keys and passwords.
+* The `InputWithPaste` component now accepts a `hidden` prop (defaulting to `true`) to enable this functionality.
+* When `hidden` is `true`, the input defaults to `type="password"` and displays an eye icon to toggle visibility.
+* Buttons are positioned absolutely within the input field for a cleaner UI.

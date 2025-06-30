@@ -74,5 +74,13 @@
 
 4. **Tests**
    Ensure all tests pass with `pnpm test`. 
+   
    If status is "isProgress", you must create a file at `tests/tools/[category]/[service-path]/page.tsx`.
-   If status is "completed", you must create test file at `tests/tools/[category]/[service-path]/page.test.tsx` and `tests/tools/[category]/[service-path]/actions.test.tsx`.
+   
+   If status is "completed", you must create test file at 
+   
+   `tests/tools/[category]/[service-path]/__tests__/page.test.tsx` and 
+   
+   `tests/tools/[category]/[service-path]/__tests__/actions.test.tsx`.
+   
+   You can see examples in existing test files for reference.
