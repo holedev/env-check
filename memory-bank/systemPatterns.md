@@ -101,11 +101,22 @@ This file documents recurring patterns and standards used in the project.
   - "completed": Requires both page and actions test files
 
 2025-06-29 15:23:53 - Documented tool creation pattern from TOOL_TODO.md
-[2025-06-30 14:57:00] - [New Secure Input Pattern]
+[2025-07-01 15:24:54] - [Finalized Secure Input Pattern]
 ## Component Patterns
 
 ### Secure Input Handling
-* Implemented a show/hide toggle for sensitive fields like API keys and passwords.
-* The `InputWithPaste` component now accepts a `hidden` prop (defaulting to `true`) to enable this functionality.
-* When `hidden` is `true`, the input defaults to `type="password"` and displays an eye icon to toggle visibility.
-* Buttons are positioned absolutely within the input field for a cleaner UI.
+* Standard pattern for handling sensitive input data (API keys, passwords, tokens)
+* `InputWithPaste` component features:
+  - `hidden` prop (defaults to true) for visibility control
+  - Password masking by default with eye icon toggle
+  - Paste functionality with absolute positioned buttons
+  - Consistent styling across all forms
+* Implementation requirements:
+  - Must be used for all sensitive data inputs
+  - Submit buttons must maintain consistent alignment
+  - Tool forms must follow standardized layout
+* Usage examples:
+  - API keys (Google Gemini)
+  - Access tokens (GitHub)
+  - Secret keys (S3-Compatible)
+  - Connection strings (MongoDB)

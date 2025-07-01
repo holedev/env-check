@@ -21,10 +21,6 @@ import type { ToolGroupType } from "@/types/tool";
 
 export const _TOOL_LIST = defineToolList([
   {
-    icon: "awslambda",
-    path: "aws"
-  },
-  {
     icon: "minio",
     path: "s3-compatible",
     progress: "completed",
@@ -35,16 +31,8 @@ export const _TOOL_LIST = defineToolList([
     }
   },
   {
-    icon: "googlecloud",
-    path: "google-cloud"
-  },
-  {
     icon: "cloudflare",
     path: "cloudflare"
-  },
-  {
-    icon: "digitalocean",
-    path: "digital-ocean"
   },
   {
     icon: "supabase",
@@ -75,10 +63,6 @@ export const _TOOL_LIST = defineToolList([
     }
   },
   {
-    icon: "stripe",
-    path: "stripe"
-  },
-  {
     icon: "gmail",
     path: "gmail-smtp",
     progress: "completed",
@@ -89,20 +73,12 @@ export const _TOOL_LIST = defineToolList([
     }
   },
   {
-    icon: "slack",
-    path: "slack"
-  },
-  {
     icon: "discord",
     path: "discord"
   },
   {
     icon: "googleanalytics",
     path: "google-analytics"
-  },
-  {
-    icon: "sentry",
-    path: "sentry"
   },
   {
     icon: "github",
@@ -113,18 +89,6 @@ export const _TOOL_LIST = defineToolList([
       url: "https://www.npmjs.com/package/@octokit/rest",
       version: "22.0.0"
     }
-  },
-  {
-    icon: "vercel",
-    path: "vercel"
-  },
-  {
-    icon: "postgresql",
-    path: "postgresql"
-  },
-  {
-    icon: "mysql",
-    path: "mysql"
   }
 ] as const);
 
@@ -135,33 +99,23 @@ export const _TOOL_GROUP_LIST: ToolGroupType[] = [
   },
   {
     path: "cloud",
-    tools: [
-      "google-cloud",
-      "aws",
-      "s3-compatible",
-      "cloudflare",
-      "digital-ocean",
-      "supabase",
-      "firebase",
-      "github",
-      "vercel"
-    ]
+    tools: ["s3-compatible", "cloudflare", "supabase", "firebase", "github"]
   },
   {
     path: "database",
-    tools: ["mongodb", "postgresql", "mysql"]
+    tools: ["mongodb"]
   },
   {
     path: "payment",
-    tools: ["stripe"]
+    tools: []
   },
   {
     path: "messaging",
-    tools: ["gmail-smtp", "slack", "discord"]
+    tools: ["gmail-smtp", "discord"]
   },
   {
     path: "analytics",
-    tools: ["google-analytics", "sentry"]
+    tools: ["google-analytics"]
   },
   {
     path: "others",
