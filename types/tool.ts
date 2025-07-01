@@ -2,9 +2,16 @@ import type { _TOOL_LIST } from "@/constants/tool";
 
 export type ToolProgressCategory = "notStarted" | "inProgress" | "completed";
 
+export type ToolLibInfo = {
+  packageName: string;
+  url: string;
+  version: string;
+};
+
 export type ToolType = {
   path: string;
   icon: string;
+  libInfo?: ToolLibInfo;
 };
 
 export type ToolWithProgressType = ToolType & {

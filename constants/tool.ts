@@ -27,7 +27,12 @@ export const _TOOL_LIST = defineToolList([
   {
     icon: "minio",
     path: "s3-compatible",
-    progress: "completed"
+    progress: "completed",
+    libInfo: {
+      packageName: "@aws-sdk/client-s3",
+      url: "https://www.npmjs.com/package/@aws-sdk/client-s3",
+      version: "3.839.0"
+    }
   },
   {
     icon: "googlecloud",
@@ -52,12 +57,22 @@ export const _TOOL_LIST = defineToolList([
   {
     icon: "mongodb",
     path: "mongodb",
-    progress: "inProgress"
+    progress: "inProgress",
+    libInfo: {
+      packageName: "mongodb",
+      url: "https://www.npmjs.com/package/mongodb",
+      version: "6.17.0"
+    }
   },
   {
     icon: "googlegemini",
     path: "google-gemini",
-    progress: "completed"
+    progress: "completed",
+    libInfo: {
+      packageName: "openai",
+      url: "https://www.npmjs.com/package/openai",
+      version: "5.7.0"
+    }
   },
   {
     icon: "stripe",
@@ -66,7 +81,12 @@ export const _TOOL_LIST = defineToolList([
   {
     icon: "gmail",
     path: "gmail-smtp",
-    progress: "completed"
+    progress: "completed",
+    libInfo: {
+      packageName: "nodemailer",
+      url: "https://www.npmjs.com/package/nodemailer",
+      version: "7.0.3"
+    }
   },
   {
     icon: "slack",
@@ -87,7 +107,12 @@ export const _TOOL_LIST = defineToolList([
   {
     icon: "github",
     path: "github",
-    progress: "inProgress"
+    progress: "inProgress",
+    libInfo: {
+      packageName: "@octokit/rest",
+      url: "https://www.npmjs.com/package/@octokit/rest",
+      version: "22.0.0"
+    }
   },
   {
     icon: "vercel",

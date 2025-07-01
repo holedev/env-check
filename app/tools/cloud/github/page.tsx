@@ -9,15 +9,11 @@ import type { ToolPath } from "@/types/tool";
  */
 
 const _TOOL_PATH: ToolPath = "github";
-const _LIB_INFO = {
-  packageName: "@octokit/rest",
-  url: "https://www.npmjs.com/package/@octokit/rest"
-};
 
 export default function GithubPage() {
   return (
     <div>
-      <ToolHeader toolPath={_TOOL_PATH} libInfo={_LIB_INFO} />
+      <ToolHeader toolPath={_TOOL_PATH} />
       <GithubForm />
     </div>
   );

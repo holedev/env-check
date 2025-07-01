@@ -113,6 +113,32 @@ describe("Tools", () => {
   });
 
   describe("Tool Requirements Validation", () => {
+    describe("Tool Library Version Validation", () => {
+      it("should have matching versions with package.json dependencies", () => {
+        const pkg = require("../package.json");
+        const toolsWithLibInfo = _TOOL_LIST.filter((tool) => "libInfo" in tool);
+
+        for (const tool of toolsWithLibInfo) {
+          const libInfo = tool.libInfo;
+          const pkgVersion = pkg.dependencies[libInfo.packageName];
+
+          if (!pkgVersion) {
+            throw new Error(`Package ${libInfo.packageName} not found in dependencies`);
+          }
+
+          // Remove ^ from version strings for comparison
+          const cleanPkgVersion = pkgVersion.replace("^", "");
+          const cleanToolVersion = libInfo.version;
+
+          if (cleanPkgVersion !== cleanToolVersion) {
+            throw new Error(
+              `Version mismatch for ${libInfo.packageName}: tool.ts is ${cleanToolVersion}, package.json is ${cleanPkgVersion}`
+            );
+          }
+        }
+      });
+    });
+
     describe("Tools with progress inProgress or completed", () => {
       const toolsWithProgress = _TOOL_LIST.filter((tool) => {
         const toolProgress = (tool as ToolWithProgressType).progress;

@@ -3,11 +3,7 @@ import { render, screen } from "@testing-library/react";
 import Page from "../page";
 
 jest.mock("@/components/custom/Tools/ToolHeader", () => ({
-  ToolHeader: ({ toolPath, libInfo }: ToolHeaderProps) => (
-    <div data-testid='tool-header'>
-      {toolPath} - {libInfo.packageName}
-    </div>
-  )
+  ToolHeader: ({ toolPath }: ToolHeaderProps) => <div data-testid='tool-header'>{toolPath}</div>
 }));
 
 jest.mock("../form.client", () => ({
