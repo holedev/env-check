@@ -13,6 +13,9 @@ const ToolHeader = ({ toolPath }: ToolHeaderProps) => {
   const t = useTranslations();
   const tool = _TOOL_LIST.find((item) => item.path === toolPath) as ToolWithProgressType;
 
+  const _DEFAULT_FETCH_URL = "https://nodejs.org/en/learn/getting-started/fetch";
+  const isFetchLib = tool.libInfo?.packageName === "fetch";
+
   return (
     <div className='mb-4 text-center space-y-1'>
       <h1 className='text-2xl font-bold'>{t(`tools.items.${toolPath}.name`)}</h1>
@@ -22,11 +25,11 @@ const ToolHeader = ({ toolPath }: ToolHeaderProps) => {
           Library:{" "}
           <Link
             className='font-semibold'
-            href={`${tool.libInfo.url}/v/${tool.libInfo.version}`}
+            href={isFetchLib ? _DEFAULT_FETCH_URL : `${tool.libInfo.url}/v/${tool.libInfo.version}`}
             target='_blank'
             rel='noopener noreferrer'
           >
-            {tool.libInfo.packageName}@{tool.libInfo.version}
+            {isFetchLib ? tool.libInfo.packageName : `${tool.libInfo.packageName}@${tool.libInfo.version}`}
           </Link>
         </p>
       )}

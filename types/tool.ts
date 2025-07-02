@@ -3,9 +3,9 @@ import type { _TOOL_LIST } from "@/constants/tool";
 export type ToolProgressCategory = "notStarted" | "inProgress" | "completed";
 
 export type ToolLibInfo = {
-  packageName: string;
-  url: string;
-  version: string;
+  packageName: string | "fetch";
+  url?: string;
+  version?: string;
 };
 
 export type ToolType = {

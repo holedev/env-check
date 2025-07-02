@@ -74,7 +74,11 @@ export const _TOOL_LIST = defineToolList([
   },
   {
     icon: "discord",
-    path: "discord"
+    path: "discord",
+    progress: "inProgress",
+    libInfo: {
+      packageName: "fetch"
+    }
   },
   {
     icon: "googleanalytics",

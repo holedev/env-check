@@ -127,7 +127,18 @@
       },
       "discord": {
         "name": "Discord",
-        "description": "Discord"
+        "description": "Discord",
+        "form": {
+          "token": {
+            "label": "Bot Token",
+            "placeholder": "Nhập Bot Token của bạn",
+            "description": "Bot Token của bạn có thể được tìm thấy tại https://discord.com/developers/applications."
+          },
+          "submit": "Kiểm tra Token"
+        },
+        "validCredentials": "Bot Token Discord hợp lệ",
+        "invalidCredentials": "Bot Token Discord không hợp lệ!",
+        "details": "Chi tiết"
       },
       "sentry": {
         "name": "Sentry",

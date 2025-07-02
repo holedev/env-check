@@ -127,7 +127,18 @@
       },
       "discord": {
         "name": "Discord",
-        "description": "Discord"
+        "description": "Discord",
+        "form": {
+          "token": {
+            "label": "Bot Token",
+            "placeholder": "Enter your Discord Bot Token",
+            "description": "Your Discord Bot Token can be found in https://discord.com/developers/applications."
+          },
+          "submit": "Check Token"
+        },
+        "validCredentials": "Discord Bot Token is valid",
+        "invalidCredentials": "Discord Bot Token is invalid!",
+        "details": "Details"
       },
       "sentry": {
         "name": "Sentry",

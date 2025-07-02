@@ -119,6 +119,9 @@ describe("Tools", () => {
         const toolsWithLibInfo = _TOOL_LIST.filter((tool) => "libInfo" in tool);
 
         for (const tool of toolsWithLibInfo) {
+          // Skip fetch as it doesn't have a version in package.json
+          if (tool.libInfo.packageName === "fetch") continue;
+
           const libInfo = tool.libInfo;
           const pkgVersion = pkg.dependencies[libInfo.packageName];
 
