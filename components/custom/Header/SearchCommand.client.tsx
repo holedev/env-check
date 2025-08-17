@@ -7,7 +7,8 @@ import {
   CommandGroup,
   CommandInput,
   CommandItem,
-  CommandList
+  CommandList,
+  CommandShortcut
 } from "@/components/ui/command";
 import { _TOOL_GROUP_LIST, _TOOL_LIST } from "@/constants/tool";
 import type { ToolPath, ToolWithProgressType } from "@/types/tool";
@@ -22,16 +23,13 @@ const SearchCommand = () => {
   const router = useRouter();
   const t = useTranslations();
 
-  useEffect(() => {
-    const down = (e: KeyboardEvent) => {
-      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
-        e.preventDefault();
-        setOpen((open) => !open);
-      }
-    };
-    document.addEventListener("keydown", down);
-    return () => document.removeEventListener("keydown", down);
-  }, []);
+  // Get sorted tools list for consistent ordering
+  const sortedTools = [..._TOOL_LIST].sort((a, b) => {
+    const progressOrder = { completed: 0, inProgress: 1, notStarted: 2 };
+    const aProgress = (a as ToolWithProgressType).progress || "notStarted";
+    const bProgress = (b as ToolWithProgressType).progress || "notStarted";
+    return progressOrder[aProgress] - progressOrder[bProgress];
+  });
 
   const getToolGroup = useCallback((toolPath: ToolPath) => {
     return _TOOL_GROUP_LIST.find((group) => group.tools.includes(toolPath))?.path;
@@ -47,6 +45,28 @@ const SearchCommand = () => {
     },
     [router, getToolGroup]
   );
+
+  useEffect(() => {
+    const down = (e: KeyboardEvent) => {
+      // Handle Ctrl+K to toggle search dialog
+      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        setOpen((open) => !open);
+        return;
+      }
+      // Handle Ctrl+Number shortcuts when search dialog is open
+      if (open && (e.metaKey || e.ctrlKey) && /^[1-9]$/.test(e.key)) {
+        e.preventDefault();
+        const index = Number.parseInt(e.key) - 1;
+        if (index < sortedTools.length) {
+          const tool = sortedTools[index];
+          runCommand(tool.path);
+        }
+      }
+    };
+    document.addEventListener("keydown", down);
+    return () => document.removeEventListener("keydown", down);
+  }, [open, sortedTools, runCommand]);
 
   return (
     <>
@@ -66,33 +86,29 @@ const SearchCommand = () => {
         <CommandList>
           <CommandEmpty>{t("common.search.empty")}</CommandEmpty>
           <CommandGroup>
-            {[..._TOOL_LIST]
-              .sort((a, b) => {
-                const progressOrder = { completed: 0, inProgress: 1, notStarted: 2 };
-                const aProgress = (a as ToolWithProgressType).progress || "notStarted";
-                const bProgress = (b as ToolWithProgressType).progress || "notStarted";
-                return progressOrder[aProgress] - progressOrder[bProgress];
-              })
-              .map((tool) => (
-                <CommandItem
-                  key={tool.path}
-                  value={t(`tools.items.${tool.path}.name`)}
-                  onSelect={() => runCommand(tool.path)}
-                  className='flex items-center gap-2 justify-between'
-                >
-                  <div className='flex gap-2'>
-                    <Image
-                      src={`https://cdn.simpleicons.org/${tool.icon}`}
-                      alt={tool.path}
-                      width={18}
-                      height={18}
-                      className='dark:invert'
-                    />
-                    <span>{t(`tools.items.${tool.path}.name`)}</span>
-                  </div>
+            {sortedTools.map((tool, index) => (
+              <CommandItem
+                key={tool.path}
+                value={t(`tools.items.${tool.path}.name`)}
+                onSelect={() => runCommand(tool.path)}
+                className='flex items-center gap-2 justify-between'
+              >
+                <div className='flex gap-2'>
+                  <Image
+                    src={`https://cdn.simpleicons.org/${tool.icon}`}
+                    alt={tool.path}
+                    width={18}
+                    height={18}
+                    className='dark:invert'
+                  />
+                  <span>{t(`tools.items.${tool.path}.name`)}</span>
+                </div>
+                <div className='flex items-center gap-2'>
                   <ToolProgress progress={(tool as ToolWithProgressType).progress || "notStarted"} />
-                </CommandItem>
-              ))}
+                  {index < 9 && <CommandShortcut>Ctrl+{index + 1}</CommandShortcut>}
+                </div>
+              </CommandItem>
+            ))}
           </CommandGroup>
         </CommandList>
       </CommandDialog>
