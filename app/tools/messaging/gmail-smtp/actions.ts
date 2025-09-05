@@ -1,7 +1,7 @@
 "use server";
 
-import { handleErrorServerNoAuth } from "@/utils/handleErrorServer";
 import * as nodemailer from "nodemailer";
+import { handleErrorServerNoAuth } from "@/utils/handleErrorServer";
 
 interface SMTPConfig {
   host: string;

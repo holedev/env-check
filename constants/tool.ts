@@ -16,8 +16,8 @@ Tool progress:
 - completed: Completed
 */
 
-import { defineToolList } from "@/types/tool";
 import type { ToolGroupType } from "@/types/tool";
+import { defineToolList } from "@/types/tool";
 
 export const _TOOL_LIST = defineToolList([
   {

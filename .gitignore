@@ -46,4 +46,3 @@ next-env.d.ts
 
 .pnpm-store
 .swc
-configs/messages/*.d.json.ts

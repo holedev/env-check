@@ -1,7 +1,7 @@
 "use server";
 
-import { handleErrorServerNoAuth } from "@/utils/handleErrorServer";
 import { Octokit } from "@octokit/rest";
+import { handleErrorServerNoAuth } from "@/utils/handleErrorServer";
 
 type GithubToken = {
   token: string;

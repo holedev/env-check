@@ -1,7 +1,7 @@
+import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import type { ToolProgressCategory } from "@/types/tool";
-import { useTranslations } from "next-intl";
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
   progress: ToolProgressCategory;

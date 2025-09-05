@@ -1,7 +1,7 @@
 "use server";
 
-import { handleErrorServerNoAuth } from "@/utils/handleErrorServer";
 import OpenAI from "openai";
+import { handleErrorServerNoAuth } from "@/utils/handleErrorServer";
 
 const _GEMINI_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/openai/";
 

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.0.6/schema.json",
   "vcs": {
     "enabled": false,
     "clientKind": "git",
@@ -7,8 +7,19 @@
   },
   "files": {
     "ignoreUnknown": false,
-    "ignore": ["node_modules", "dist", ".next", "memory-bank", ".pnpm-store", "pnpm-lock.yaml", "components/ui/*"]
+    "includes": [
+      "app/**",
+      "components/custom/**",
+      "configs/**",
+      "constants/**",
+      "hooks/**",
+      "lib/**",
+      "test/**",
+      "types/**",
+      "utils/**"
+    ]
   },
+  "assist": { "actions": { "source": { "organizeImports": "on" } } },
   "formatter": {
     "enabled": true,
     "formatWithErrors": false,
@@ -17,9 +28,6 @@
     "lineWidth": 120,
     "lineEnding": "lf"
   },
-  "organizeImports": {
-    "enabled": true
-  },
   "linter": {
     "enabled": true,
     "rules": {
@@ -27,6 +35,21 @@
       "correctness": {
         "noUnusedImports": "error",
         "noUnusedVariables": "error"
+      },
+      "style": {
+        "noParameterAssign": "error",
+        "useAsConstAssertion": "error",
+        "useDefaultParameterLast": "error",
+        "useEnumInitializers": "error",
+        "useSelfClosingElements": "error",
+        "useSingleVarDeclarator": "error",
+        "noUnusedTemplateLiteral": "error",
+        "useNumberNamespace": "error",
+        "noInferrableTypes": "error",
+        "noUselessElse": "error"
+      },
+      "suspicious": {
+        "noDocumentCookie": "off"
       }
     }
   },

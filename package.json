@@ -51,7 +51,7 @@
     "zod": "^3.25.67"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.9.4",
+    "@biomejs/biome": "2.0.6",
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
     "@commitlint/types": "^19.8.1",
@@ -73,7 +73,9 @@
     "typescript": "^5"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,json}": ["pnpm check:fix"]
+    "*.{js,jsx,ts,tsx,json}": [
+      "pnpm check:fix"
+    ]
   },
   "packageManager": "pnpm@10.6.4"
 }

@@ -1,11 +1,11 @@
 import "@/app/globals.css";
+import { Roboto } from "next/font/google";
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages } from "next-intl/server";
+import type { ReactNode } from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { cn } from "@/lib/utils";
 import type { locale } from "@/types/global";
-import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
-import { Roboto } from "next/font/google";
-import type { ReactNode } from "react";
 import { ThemeProvider } from "../theme-provider";
 import { TooltipProvider } from "../ui/tooltip";
 import { Header } from "./Header";

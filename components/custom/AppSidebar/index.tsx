@@ -1,3 +1,7 @@
+import { ChevronDownIcon } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import {
   Sidebar,
@@ -12,10 +16,6 @@ import {
   SidebarMenuItem
 } from "@/components/ui/sidebar";
 import { _TOOL_GROUP_LIST, _TOOL_LIST } from "@/constants/tool";
-import { ChevronDownIcon } from "lucide-react";
-import { useTranslations } from "next-intl";
-import Image from "next/image";
-import Link from "next/link";
 
 const AppSidebar = () => {
   const t = useTranslations();

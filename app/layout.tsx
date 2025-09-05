@@ -1,8 +1,8 @@
 import "@/app/globals.css";
-import { BaseLayout } from "@/components/custom/BaseLayout";
-import type { locale } from "@/types/global";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import { BaseLayout } from "@/components/custom/BaseLayout";
+import type { locale } from "@/types/global";
 
 export const metadata: Metadata = {
   title: {

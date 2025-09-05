@@ -1,9 +1,9 @@
+import Image from "next/image";
+import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { _TOOL_GROUP_LIST, _TOOL_LIST } from "@/constants/tool";
 import type { ToolGroupCategory, ToolWithProgressType } from "@/types/tool";
-import { useTranslations } from "next-intl";
-import Image from "next/image";
-import Link from "next/link";
 import { ToolProgress } from "./ToolProgress";
 
 type Props = {

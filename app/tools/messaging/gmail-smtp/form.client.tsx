@@ -1,10 +1,11 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { AlertCircleIcon, CheckCircle2Icon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
 import { InputWithPaste } from "@/components/custom/InputWithPaste";
 import { LoadingComponent } from "@/components/custom/Loading";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -14,8 +15,6 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useHandleError } from "@/hooks/useHandleError";
-import { AlertCircleIcon, CheckCircle2Icon } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { checkSMTPConnection } from "./actions";
 
 const formSchema = z.object({

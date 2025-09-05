@@ -1,10 +1,10 @@
 "use client";
 
+import { ClipboardIcon, EyeIcon, EyeOffIcon } from "lucide-react";
+import * as React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { ClipboardIcon, EyeIcon, EyeOffIcon } from "lucide-react";
-import * as React from "react";
 
 interface InputWithPasteProps extends React.ComponentProps<typeof Input> {
   onPasteClick?: (value: string) => void;

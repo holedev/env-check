@@ -1,7 +1,7 @@
 "use server";
 
-import { handleErrorServerNoAuth } from "@/utils/handleErrorServer";
 import { MongoClient } from "mongodb";
+import { handleErrorServerNoAuth } from "@/utils/handleErrorServer";
 
 interface MongoDbConfig {
   connectionString: string;

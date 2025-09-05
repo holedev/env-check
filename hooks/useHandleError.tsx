@@ -1,6 +1,6 @@
-import type { ErrorResponseType, ResponseType, SuccessResponseType } from "@/types/response";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
+import type { ErrorResponseType, ResponseType, SuccessResponseType } from "@/types/response";
 
 type handleErrorType = {
   cb: () => Promise<ResponseType>;

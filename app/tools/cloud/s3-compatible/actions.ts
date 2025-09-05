@@ -1,7 +1,7 @@
 "use server";
 
-import { handleErrorServerNoAuth } from "@/utils/handleErrorServer";
 import { ListBucketsCommand, S3Client, type S3ClientConfig } from "@aws-sdk/client-s3";
+import { handleErrorServerNoAuth } from "@/utils/handleErrorServer";
 
 interface S3Config {
   endpoint?: string;

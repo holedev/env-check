@@ -1,8 +1,8 @@
+import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { _TOOL_GROUP_LIST } from "@/constants/tool";
-import { useTranslations } from "next-intl";
-import Link from "next/link";
 
 export default function Home() {
   const t = useTranslations();

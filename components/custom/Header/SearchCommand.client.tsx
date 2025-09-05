@@ -1,5 +1,9 @@
 "use client";
 
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { useCallback, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   CommandDialog,
@@ -11,10 +15,6 @@ import {
 } from "@/components/ui/command";
 import { _TOOL_GROUP_LIST, _TOOL_LIST } from "@/constants/tool";
 import type { ToolPath, ToolWithProgressType } from "@/types/tool";
-import { useTranslations } from "next-intl";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
 import { ToolProgress } from "../Tools/ToolProgress";
 
 const SearchCommand = () => {

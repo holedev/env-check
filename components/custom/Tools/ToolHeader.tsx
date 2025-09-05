@@ -1,8 +1,8 @@
+import Link from "next/link";
+import { useTranslations } from "next-intl";
+import type React from "react";
 import { _TOOL_LIST } from "@/constants/tool";
 import type { ToolPath, ToolWithProgressType } from "@/types/tool";
-import { useTranslations } from "next-intl";
-import Link from "next/link";
-import type React from "react";
 import { ToolProgress } from "./ToolProgress";
 
 export type ToolHeaderProps = React.HTMLAttributes<HTMLDivElement> & {
