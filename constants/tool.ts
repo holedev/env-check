@@ -27,7 +27,7 @@ export const _TOOL_LIST = defineToolList([
     libInfo: {
       packageName: "@aws-sdk/client-s3",
       url: "https://www.npmjs.com/package/@aws-sdk/client-s3",
-      version: "3.839.0"
+      version: "3.1023.0"
     }
   },
   {
@@ -49,7 +49,17 @@ export const _TOOL_LIST = defineToolList([
     libInfo: {
       packageName: "mongodb",
       url: "https://www.npmjs.com/package/mongodb",
-      version: "6.17.0"
+      version: "7.1.1"
+    }
+  },
+  {
+    icon: "postgresql",
+    path: "postgresql",
+    progress: "completed",
+    libInfo: {
+      packageName: "pg",
+      url: "https://www.npmjs.com/package/pg",
+      version: "8.20.0"
     }
   },
   {
@@ -59,7 +69,7 @@ export const _TOOL_LIST = defineToolList([
     libInfo: {
       packageName: "openai",
       url: "https://www.npmjs.com/package/openai",
-      version: "5.7.0"
+      version: "6.33.0"
     }
   },
   {
@@ -69,7 +79,7 @@ export const _TOOL_LIST = defineToolList([
     libInfo: {
       packageName: "nodemailer",
       url: "https://www.npmjs.com/package/nodemailer",
-      version: "7.0.3"
+      version: "8.0.4"
     }
   },
   {
@@ -91,7 +101,7 @@ export const _TOOL_LIST = defineToolList([
     libInfo: {
       packageName: "@octokit/rest",
       url: "https://www.npmjs.com/package/@octokit/rest",
-      version: "22.0.0"
+      version: "22.0.1"
     }
   }
 ] as const);
@@ -107,7 +117,7 @@ export const _TOOL_GROUP_LIST: ToolGroupType[] = [
   },
   {
     path: "database",
-    tools: ["mongodb"]
+    tools: ["mongodb", "postgresql"]
   },
   {
     path: "payment",

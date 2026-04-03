@@ -17,17 +17,17 @@ const ToolHeader = ({ toolPath }: ToolHeaderProps) => {
   const isFetchLib = tool.libInfo?.packageName === "fetch";
 
   return (
-    <div className='mb-4 text-center space-y-1'>
-      <h1 className='text-2xl font-bold'>{t(`tools.items.${toolPath}.name`)}</h1>
-      <p className='text-sm text-muted-foreground'>{t(`tools.items.${toolPath}.description`)}</p>
+    <div className='mb-4 space-y-1 text-center'>
+      <h1 className='font-bold text-2xl'>{t(`tools.items.${toolPath}.name`)}</h1>
+      <p className='text-muted-foreground text-sm'>{t(`tools.items.${toolPath}.description`)}</p>
       {tool.libInfo && (
-        <p className='text-sm text-muted-foreground'>
+        <p className='text-muted-foreground text-sm'>
           Library:{" "}
           <Link
             className='font-semibold'
             href={isFetchLib ? _DEFAULT_FETCH_URL : `${tool.libInfo.url}/v/${tool.libInfo.version}`}
-            target='_blank'
             rel='noopener noreferrer'
+            target='_blank'
           >
             {isFetchLib ? tool.libInfo.packageName : `${tool.libInfo.packageName}@${tool.libInfo.version}`}
           </Link>

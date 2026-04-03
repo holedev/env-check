@@ -11,21 +11,21 @@ export default function ErrorGlobal({ error, reset }: ErrorType) {
   const isProd = process.env.NODE_ENV === "production";
 
   return (
-    <div className='min-h-full flex items-center justify-center py-6'>
-      <div className='bg-white p-8 rounded-lg shadow-md max-w-md w-full text-center'>
-        <AlertTriangleIcon className='mx-auto h-12 w-12 text-red-500 mb-4' />
-        <h1 className='text-2xl font-bold text-gray-800 mb-4'>{t("title")}</h1>
-        <p className='text-gray-600 mb-6'>{isProd ? t("description") : error.message}</p>
-        <div className='bg-gray-100 p-4 rounded-md mb-6'>
-          <p className='text-sm text-gray-600'>{t("reminder")}</p>
+    <div className='flex min-h-full items-center justify-center py-6'>
+      <div className='w-full max-w-md rounded-lg bg-white p-8 text-center shadow-md'>
+        <AlertTriangleIcon className='mx-auto mb-4 h-12 w-12 text-red-500' />
+        <h1 className='mb-4 font-bold text-2xl text-gray-800'>{t("title")}</h1>
+        <p className='mb-6 text-gray-600'>{isProd ? t("description") : error.message}</p>
+        <div className='mb-6 rounded-md bg-gray-100 p-4'>
+          <p className='text-gray-600 text-sm'>{t("reminder")}</p>
         </div>
         <div className='flex flex-col space-y-3'>
-          <Button onClick={() => reset()} className='w-full'>
+          <Button className='w-full' onClick={() => reset()}>
             <RefreshCwIcon className='mr-2 h-4 w-4' />
             {t("tryAgain")}
           </Button>
           <Link href='/' passHref>
-            <Button variant='outline' className='w-full'>
+            <Button className='w-full' variant='outline'>
               <HomeIcon className='mr-2 h-4 w-4' />
               {t("redirect")}
             </Button>

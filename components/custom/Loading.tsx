@@ -2,8 +2,8 @@ import { Skeleton } from "../ui/skeleton";
 
 const LoadingPage = () => {
   return (
-    <section className=' py-4 h-full flex flex-col justify-center items-center'>
-      <div className='flex gap-4 justify-center items-center'>
+    <section className='flex h-full flex-col items-center justify-center py-4'>
+      <div className='flex items-center justify-center gap-4'>
         <Skeleton className='h-12 w-12 rounded-full' />
         <div className='space-y-2'>
           <Skeleton className='h-4 w-[250px]' />
@@ -21,8 +21,8 @@ const LoadingPage = () => {
 
 const LoadingComponent = () => {
   return (
-    <section className=' py-4 flex flex-col justify-center items-center'>
-      <div className='flex gap-4 justify-center items-center'>
+    <section className='flex flex-col items-center justify-center py-4'>
+      <div className='flex items-center justify-center gap-4'>
         <Skeleton className='h-12 w-12 rounded-full' />
         <div className='space-y-2'>
           <Skeleton className='h-4 w-[250px]' />

@@ -14,8 +14,12 @@ const useHandleError = () => {
 
   const handleErrorClient = async ({
     cb,
-    postOnSuccess = () => {},
-    postOnError = () => {},
+    postOnSuccess = () => {
+      // do nothing by default
+    },
+    postOnError = () => {
+      // do nothing by default
+    },
     withSuccessNotify = true
   }: handleErrorType) => {
     try {

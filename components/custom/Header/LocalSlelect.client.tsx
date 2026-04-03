@@ -25,7 +25,7 @@ const LocaleSelect = () => {
   }
 
   return (
-    <Select onValueChange={handleChangeLocale} defaultValue={locale}>
+    <Select defaultValue={locale} onValueChange={handleChangeLocale}>
       <SelectTrigger className='w-[180px]'>
         <SelectValue placeholder='Select' />
       </SelectTrigger>

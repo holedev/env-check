@@ -1,11 +1,11 @@
 "use server";
 
 import { MongoClient } from "mongodb";
-import { handleErrorServerNoAuth } from "@/utils/handleErrorServer";
+import { handleErrorServerNoAuth } from "@/utils/handle-error-server";
 
-interface MongoDbConfig {
+type MongoDbConfig = {
   connectionString: string;
-}
+};
 
 const checkMongoDbConnection = async (config: MongoDbConfig) =>
   handleErrorServerNoAuth({

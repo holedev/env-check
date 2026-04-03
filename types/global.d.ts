@@ -1,5 +1,6 @@
 import type { formats } from "@/configs/i18n/request";
 import type globalMessages from "@/configs/messages/en.json";
+
 // import type zodMessages from "@/configs/messages/zod/en.json";
 
 declare module "next-intl" {

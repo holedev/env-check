@@ -11,8 +11,11 @@ const ToolProgress = ({ progress, ...rest }: Props) => {
   const t = useTranslations("tools.progress");
 
   let variant = "destructive";
-  if (progress === "inProgress") variant = "secondary";
-  else if (progress === "completed") variant = "outline";
+  if (progress === "inProgress") {
+    variant = "secondary";
+  } else if (progress === "completed") {
+    variant = "outline";
+  }
 
   return (
     <Badge

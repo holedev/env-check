@@ -1,21 +1,21 @@
 "use server";
 
-import * as nodemailer from "nodemailer";
-import { handleErrorServerNoAuth } from "@/utils/handleErrorServer";
+import { createTransport } from "nodemailer";
+import { handleErrorServerNoAuth } from "@/utils/handle-error-server";
 
-interface SMTPConfig {
+type SMTPConfig = {
   host: string;
-  port: number;
-  username: string;
   password: string;
+  port: number;
   secure: boolean;
   testType: "verify" | "sendEmail";
-}
+  username: string;
+};
 
 const checkSMTPConnection = async (config: SMTPConfig) =>
   handleErrorServerNoAuth({
     cb: async () => {
-      const transporter = nodemailer.createTransport({
+      const transporter = createTransport({
         host: config.host,
         port: config.port,
         secure: config.secure,

@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { AlertCircleIcon, CheckCircle2Icon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+import type { Resolver } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { InputWithPaste } from "@/components/custom/InputWithPaste";
@@ -14,12 +15,12 @@ import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useHandleError } from "@/hooks/useHandleError";
+import { useHandleError } from "@/hooks/use-handle-error";
 import { checkSMTPConnection } from "./actions";
 
 const formSchema = z.object({
   host: z.string().min(1),
-  port: z.coerce.number().min(1).max(65535),
+  port: z.coerce.number().min(1).max(65_535),
   username: z.string().email(),
   password: z.string().min(1),
   secure: z.boolean(),
@@ -46,7 +47,7 @@ const FormClient = () => {
   const { handleErrorClient } = useHandleError();
 
   const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(formSchema) as Resolver<z.infer<typeof formSchema>>,
     defaultValues: {
       host: "smtp.gmail.com",
       port: 465,
@@ -75,155 +76,26 @@ const FormClient = () => {
     setIsLoading(false);
   }
 
-  return (
-    <div className='space-y-8 w-fit mx-auto'>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col gap-4'>
-          <div className='grid grid-cols-2 gap-4'>
-            <FormField
-              control={form.control}
-              name='host'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t("form.host.label")}</FormLabel>
-                  <FormControl>
-                    <Input placeholder={t("form.host.placeholder")} autoComplete='off' {...field} />
-                  </FormControl>
-                  <FormDescription>{t("form.host.description")}</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name='port'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t("form.port.label")}</FormLabel>
-                  <FormControl>
-                    <Input
-                      type='number'
-                      placeholder={t("form.port.placeholder")}
-                      autoComplete='off'
-                      {...field}
-                      onChange={(e) => field.onChange(e.target.value)}
-                    />
-                  </FormControl>
-                  <FormDescription>{t("form.port.description")}</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-
-          <FormField
-            control={form.control}
-            name='username'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("form.username.label")}</FormLabel>
-                <FormControl>
-                  <InputWithPaste
-                    placeholder={t("form.username.placeholder")}
-                    autoComplete='email'
-                    onPasteClick={(value) => field.onChange(value)}
-                    {...field}
-                  />
-                </FormControl>
-                <FormDescription>{t("form.username.description")}</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name='password'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("form.password.label")}</FormLabel>
-                <FormControl>
-                  <InputWithPaste
-                    type='password'
-                    placeholder={t("form.password.placeholder")}
-                    autoComplete='off'
-                    onPasteClick={(value) => field.onChange(value)}
-                    {...field}
-                  />
-                </FormControl>
-                <FormDescription>{t("form.password.description")}</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <div className='flex items-center space-x-2'>
-            <FormField
-              control={form.control}
-              name='secure'
-              render={({ field }) => (
-                <FormItem className='flex items-center space-x-2'>
-                  <FormControl>
-                    <input type='checkbox' checked={field.value} onChange={field.onChange} className='h-4 w-4' />
-                  </FormControl>
-                  <FormLabel className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'>
-                    {t("form.secure.label")}
-                  </FormLabel>
-                  <FormDescription className='text-xs text-muted-foreground'>
-                    {t("form.secure.description")}
-                  </FormDescription>
-                </FormItem>
-              )}
-            />
-          </div>
-
-          <FormField
-            control={form.control}
-            name='testType'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("form.testType.label")}</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder='Select test type' />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value='verify'>{t("form.testType.options.verify")}</SelectItem>
-                    <SelectItem value='sendEmail'>{t("form.testType.options.sendEmail")}</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormDescription>{t("form.testType.description")}</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <Button type='submit' className='self-end'>
-            {t("form.submit")}
-          </Button>
-        </form>
-      </Form>
-
-      {isLoading ? (
-        <LoadingComponent />
-      ) : result ? (
+  function renderResult() {
+    if (isLoading) {
+      return <LoadingComponent />;
+    }
+    if (result) {
+      return (
         <div>
-          <Alert variant='default' className='flex justify-center mb-4'>
+          <Alert className='mb-4 flex justify-center' variant='default'>
             <CheckCircle2Icon />
             <AlertDescription>{t("validCredentials")}</AlertDescription>
           </Alert>
 
           {result.testType === "sendEmail" && result.messageId && (
-            <Alert variant='default' className='mb-4'>
+            <Alert className='mb-4' variant='default'>
               <CheckCircle2Icon />
               <AlertDescription>{t("testEmailSent")}</AlertDescription>
             </Alert>
           )}
 
-          <Accordion type='single' collapsible className='overflow-y-hidden'>
+          <Accordion className='overflow-y-hidden' collapsible type='single'>
             <AccordionItem value='item-1'>
               <AccordionTrigger>{t("connectionDetails")}</AccordionTrigger>
               <AccordionContent>
@@ -256,14 +128,152 @@ const FormClient = () => {
             </AccordionItem>
           </Accordion>
         </div>
-      ) : (
-        !firstRender && (
-          <Alert variant='destructive' className='flex justify-center'>
-            <AlertCircleIcon />
-            <AlertDescription>{t("invalidCredentials")}</AlertDescription>
-          </Alert>
-        )
-      )}
+      );
+    }
+    if (!firstRender) {
+      return (
+        <Alert className='flex justify-center' variant='destructive'>
+          <AlertCircleIcon />
+          <AlertDescription>{t("invalidCredentials")}</AlertDescription>
+        </Alert>
+      );
+    }
+    return null;
+  }
+
+  return (
+    <div className='mx-auto w-fit space-y-8'>
+      <Form {...form}>
+        <form className='flex flex-col gap-4' onSubmit={form.handleSubmit(onSubmit)}>
+          <div className='grid grid-cols-2 gap-4'>
+            <FormField
+              control={form.control}
+              name='host'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t("form.host.label")}</FormLabel>
+                  <FormControl>
+                    <Input autoComplete='off' placeholder={t("form.host.placeholder")} {...field} />
+                  </FormControl>
+                  <FormDescription>{t("form.host.description")}</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name='port'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t("form.port.label")}</FormLabel>
+                  <FormControl>
+                    <Input
+                      autoComplete='off'
+                      placeholder={t("form.port.placeholder")}
+                      type='number'
+                      {...field}
+                      onChange={(e) => field.onChange(e.target.value)}
+                    />
+                  </FormControl>
+                  <FormDescription>{t("form.port.description")}</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
+          <FormField
+            control={form.control}
+            name='username'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("form.username.label")}</FormLabel>
+                <FormControl>
+                  <InputWithPaste
+                    autoComplete='email'
+                    onPasteClick={(value) => field.onChange(value)}
+                    placeholder={t("form.username.placeholder")}
+                    {...field}
+                  />
+                </FormControl>
+                <FormDescription>{t("form.username.description")}</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name='password'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("form.password.label")}</FormLabel>
+                <FormControl>
+                  <InputWithPaste
+                    autoComplete='off'
+                    onPasteClick={(value) => field.onChange(value)}
+                    placeholder={t("form.password.placeholder")}
+                    type='password'
+                    {...field}
+                  />
+                </FormControl>
+                <FormDescription>{t("form.password.description")}</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <div className='flex items-center space-x-2'>
+            <FormField
+              control={form.control}
+              name='secure'
+              render={({ field }) => (
+                <FormItem className='flex items-center space-x-2'>
+                  <FormControl>
+                    <input checked={field.value} className='h-4 w-4' onChange={field.onChange} type='checkbox' />
+                  </FormControl>
+                  <FormLabel className='font-medium text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'>
+                    {t("form.secure.label")}
+                  </FormLabel>
+                  <FormDescription className='text-muted-foreground text-xs'>
+                    {t("form.secure.description")}
+                  </FormDescription>
+                </FormItem>
+              )}
+            />
+          </div>
+
+          <FormField
+            control={form.control}
+            name='testType'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("form.testType.label")}</FormLabel>
+                <Select defaultValue={field.value} onValueChange={field.onChange}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder='Select test type' />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value='verify'>{t("form.testType.options.verify")}</SelectItem>
+                    <SelectItem value='sendEmail'>{t("form.testType.options.sendEmail")}</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormDescription>{t("form.testType.description")}</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <Button className='self-end' type='submit'>
+            {t("form.submit")}
+          </Button>
+        </form>
+      </Form>
+
+      {renderResult()}
     </div>
   );
 };

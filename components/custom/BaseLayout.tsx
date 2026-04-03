@@ -19,8 +19,8 @@ export async function BaseLayout({ children, locale }: BaseLayoutType) {
 
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body className={cn(roboto.className, "w-full h-screen")}>
-        <ThemeProvider attribute='class' defaultTheme='system' enableSystem disableTransitionOnChange>
+      <body className={cn(roboto.className, "h-screen w-full")}>
+        <ThemeProvider attribute='class' defaultTheme='system' disableTransitionOnChange enableSystem>
           <TooltipProvider>
             <NextIntlClientProvider messages={messages}>
               {/* <SidebarProvider defaultOpen={true}> */}

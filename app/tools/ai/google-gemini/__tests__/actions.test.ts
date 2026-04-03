@@ -13,7 +13,7 @@ jest.mock("openai", () => {
 });
 
 // Mock the error handler
-jest.mock("@/utils/handleErrorServer", () => ({
+jest.mock("@/utils/handle-error-server", () => ({
   handleErrorServerNoAuth: jest.fn()
 }));
 
@@ -38,7 +38,7 @@ describe("Google Gemini Actions", () => {
         }
       }));
 
-      const { handleErrorServerNoAuth } = require("@/utils/handleErrorServer");
+      const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
       handleErrorServerNoAuth.mockImplementation(async ({ cb }: { cb: () => Promise<object> }) => {
         const result = await cb();
         return { error: null, data: { payload: result } };
@@ -63,7 +63,7 @@ describe("Google Gemini Actions", () => {
         }
       }));
 
-      const { handleErrorServerNoAuth } = require("@/utils/handleErrorServer");
+      const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
       handleErrorServerNoAuth.mockImplementation(async ({ cb }: { cb: () => Promise<object> }) => {
         try {
           await cb();
@@ -89,7 +89,7 @@ describe("Google Gemini Actions", () => {
         }
       }));
 
-      const { handleErrorServerNoAuth } = require("@/utils/handleErrorServer");
+      const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
       handleErrorServerNoAuth.mockImplementation(async ({ cb }: { cb: () => Promise<object> }) => {
         try {
           await cb();
@@ -119,7 +119,7 @@ describe("Google Gemini Actions", () => {
         };
       });
 
-      const { handleErrorServerNoAuth } = require("@/utils/handleErrorServer");
+      const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
       handleErrorServerNoAuth.mockImplementation(async ({ cb }: { cb: () => Promise<object> }) => {
         const result = await cb();
         return { error: null, data: { payload: result } };

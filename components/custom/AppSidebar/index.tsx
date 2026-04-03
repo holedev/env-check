@@ -24,8 +24,8 @@ const AppSidebar = () => {
     <Sidebar>
       <SidebarHeader>
         <div className='flex items-center justify-center py-4'>
-          <Link href='/' className='flex items-center gap-2'>
-            <h1 className='scroll-m-20 text-2xl font-extrabold tracking-tight lg:text-2xl uppercase'>
+          <Link className='flex items-center gap-2' href='/'>
+            <h1 className='scroll-m-20 font-extrabold text-2xl uppercase tracking-tight lg:text-2xl'>
               {t("common.site.logoText")}
             </h1>
           </Link>
@@ -34,7 +34,7 @@ const AppSidebar = () => {
       <SidebarContent>
         {_TOOL_GROUP_LIST.map((group) => {
           return (
-            <Collapsible key={group.path} defaultOpen={false} className='group/collapsible'>
+            <Collapsible className='group/collapsible' defaultOpen={false} key={group.path}>
               <SidebarGroup key={group.path}>
                 <SidebarGroupLabel asChild>
                   <CollapsibleTrigger className='cursor-pointer'>
@@ -47,21 +47,23 @@ const AppSidebar = () => {
                     <SidebarMenu>
                       {group.tools.map((toolPath) => {
                         const tool = _TOOL_LIST.find((t) => t.path === toolPath);
-                        if (!tool) return null;
+                        if (!tool) {
+                          return null;
+                        }
 
                         const toolName = t(`tools.items.${tool.path}.name`);
 
                         return (
-                          <SidebarMenuItem key={tool.path} className='py-1'>
+                          <SidebarMenuItem className='py-1' key={tool.path}>
                             <SidebarMenuButton asChild>
                               <Link href={`/tools/${group.path}/${tool.path}`}>
                                 {tool.icon && (
                                   <Image
-                                    width={24}
-                                    height={24}
-                                    src={`https://cdn.simpleicons.org/${tool.icon}`}
                                     alt={toolName}
                                     className='dark:invert'
+                                    height={24}
+                                    src={`https://cdn.simpleicons.org/${tool.icon}`}
+                                    width={24}
                                   />
                                 )}
                                 <span>{toolName}</span>

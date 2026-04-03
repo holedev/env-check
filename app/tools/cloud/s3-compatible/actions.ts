@@ -1,14 +1,14 @@
 "use server";
 
 import { ListBucketsCommand, S3Client, type S3ClientConfig } from "@aws-sdk/client-s3";
-import { handleErrorServerNoAuth } from "@/utils/handleErrorServer";
+import { handleErrorServerNoAuth } from "@/utils/handle-error-server";
 
-interface S3Config {
+type S3Config = {
+  accessKeyId: string;
   endpoint?: string;
   region: string;
-  accessKeyId: string;
   secretAccessKey: string;
-}
+};
 
 const checkS3Connection = async (config: S3Config) =>
   handleErrorServerNoAuth({

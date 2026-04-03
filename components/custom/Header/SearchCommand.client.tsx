@@ -51,17 +51,17 @@ const SearchCommand = () => {
   return (
     <>
       <Button
-        variant='outline'
-        className='relative w-full justify-start text-sm text-muted-foreground sm:pr-12 md:w-40 lg:w-64'
+        className='relative w-full justify-start text-muted-foreground text-sm sm:pr-12 md:w-40 lg:w-64'
         onClick={() => setOpen(true)}
+        variant='outline'
       >
         <span className='hidden lg:inline-flex'>{t("common.search.placeholder")}</span>
         <span className='inline-flex lg:hidden'>{t("common.search.filter")}</span>
-        <span className='pointer-events-none absolute top-1/2 right-1.5 transform -translate-y-1/2 hidden h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex'>
+        <span className='pointer-events-none absolute top-1/2 right-1.5 hidden h-5 -translate-y-1/2 transform select-none items-center gap-1 rounded border bg-muted px-1.5 font-medium font-mono text-[10px] opacity-100 sm:flex'>
           <span className='text-xs'>Ctrl + K</span>
         </span>
       </Button>
-      <CommandDialog open={open} onOpenChange={setOpen}>
+      <CommandDialog onOpenChange={setOpen} open={open}>
         <CommandInput placeholder={`${t("common.search.placeholder")} (${_TOOL_LIST.length})`} />
         <CommandList>
           <CommandEmpty>{t("common.search.empty")}</CommandEmpty>
@@ -75,18 +75,18 @@ const SearchCommand = () => {
               })
               .map((tool) => (
                 <CommandItem
+                  className='flex items-center justify-between gap-2'
                   key={tool.path}
-                  value={t(`tools.items.${tool.path}.name`)}
                   onSelect={() => runCommand(tool.path)}
-                  className='flex items-center gap-2 justify-between'
+                  value={t(`tools.items.${tool.path}.name`)}
                 >
                   <div className='flex gap-2'>
                     <Image
-                      src={`https://cdn.simpleicons.org/${tool.icon}`}
                       alt={tool.path}
-                      width={18}
-                      height={18}
                       className='dark:invert'
+                      height={18}
+                      src={`https://cdn.simpleicons.org/${tool.icon}`}
+                      width={18}
                     />
                     <span>{t(`tools.items.${tool.path}.name`)}</span>
                   </div>

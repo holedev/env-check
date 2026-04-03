@@ -21,6 +21,7 @@ This is a modern web application built with Next.js that serves as a centralized
 ## Key Features
 
 ### Tool Categories
+
 - AI Tools (Google Gemini integration)
 - Analytics
 - Cloud Services
@@ -30,6 +31,7 @@ This is a modern web application built with Next.js that serves as a centralized
 - Other Utilities
 
 ### Core Components
+
 - **Custom UI Components**:
   - BaseLayout
   - Header with Theme Toggle
@@ -43,6 +45,7 @@ This is a modern web application built with Next.js that serves as a centralized
   - Paste-enabled Input Components
 
 ### Architecture Highlights
+
 - App Router-based routing structure
 - Server-side error handling
 - Global loading states
@@ -52,26 +55,27 @@ This is a modern web application built with Next.js that serves as a centralized
 ## Setup & Development
 
 1. **Prerequisites**:
+
    - Node.js (version specified in .nvmrc)
    - pnpm package manager
    - Docker (optional, for containerized development)
-
 2. **Installation**:
+
    ```bash
    pnpm install
    ```
-
 3. **Development**:
+
    ```bash
    pnpm dev
    ```
-
 4. **Testing**:
+
    ```bash
    pnpm test
    ```
-
 5. **Docker Setup** (Optional):
+
    ```bash
    docker-compose up
    ```
