@@ -30,7 +30,7 @@ describe("Tools", () => {
         if (!item) {
           throw new Error(`Missing i18n default for tool: ${tool.path}`);
         }
-        if (!item.name || !item.description) {
+        if (!(item.name && item.description)) {
           throw new Error(`Missing i18n default name or description for tool: ${tool.path}`);
         }
       }
@@ -61,7 +61,7 @@ describe("Tools", () => {
         if (!item) {
           throw new Error(`Missing i18n default for group: ${group.path}`);
         }
-        if (!item.name || !item.description) {
+        if (!(item.name && item.description)) {
           throw new Error(`Missing i18n default name or description for group: ${group.path}`);
         }
       }
@@ -120,7 +120,9 @@ describe("Tools", () => {
 
         for (const tool of toolsWithLibInfo) {
           // Skip fetch as it doesn't have a version in package.json
-          if (tool.libInfo.packageName === "fetch") continue;
+          if (tool.libInfo.packageName === "fetch") {
+            continue;
+          }
 
           const libInfo = tool.libInfo;
           const pkgVersion = pkg.dependencies[libInfo.packageName];

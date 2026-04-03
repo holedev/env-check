@@ -1,21 +1,21 @@
 "use client";
 
+import { ClipboardIcon, EyeIcon, EyeOffIcon } from "lucide-react";
+import { forwardRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { ClipboardIcon, EyeIcon, EyeOffIcon } from "lucide-react";
-import * as React from "react";
 
 interface InputWithPasteProps extends React.ComponentProps<typeof Input> {
-  onPasteClick?: (value: string) => void;
-  inputClassName?: string;
   buttonClassName?: string;
   hidden?: boolean;
+  inputClassName?: string;
+  onPasteClick?: (value: string) => void;
 }
 
-const InputWithPaste = React.forwardRef<HTMLInputElement, InputWithPasteProps>(
+const InputWithPaste = forwardRef<HTMLInputElement, InputWithPasteProps>(
   ({ className, onPasteClick, inputClassName, buttonClassName, hidden = true, ...props }, ref) => {
-    const [show, setShow] = React.useState(!hidden);
+    const [show, setShow] = useState(!hidden);
     const handlePaste = async () => {
       try {
         const text = await navigator.clipboard.readText();
@@ -39,25 +39,25 @@ const InputWithPaste = React.forwardRef<HTMLInputElement, InputWithPasteProps>(
 
     return (
       <div className={cn("relative flex w-full items-center", className)}>
-        <Input ref={ref} type={show ? "text" : "password"} className={cn("pr-20", inputClassName)} {...props} />
+        <Input className={cn("pr-20", inputClassName)} ref={ref} type={show ? "text" : "password"} {...props} />
         <div className={cn("absolute right-1 flex", buttonClassName)}>
           {hidden && (
             <Button
-              type='button'
-              variant='ghost'
               className='h-fit w-fit p-1'
               onClick={() => setShow(!show)}
               title={show ? "Hide" : "Show"}
+              type='button'
+              variant='ghost'
             >
               {show ? <EyeOffIcon className='h-4 w-4' /> : <EyeIcon className='h-4 w-4' />}
             </Button>
           )}
           <Button
-            type='button'
-            variant='ghost'
             className='h-fit w-fit p-1'
             onClick={handlePaste}
             title='Paste from clipboard'
+            type='button'
+            variant='ghost'
           >
             <ClipboardIcon className='h-4 w-4' />
           </Button>

@@ -101,6 +101,20 @@
         "validCredentials": "MongoDB connection successful!",
         "invalidCredentials": "MongoDB connection failed!"
       },
+      "postgresql": {
+        "name": "PostgreSQL",
+        "description": "Test your PostgreSQL connection string",
+        "form": {
+          "connectionString": {
+            "label": "Connection String",
+            "placeholder": "postgresql://user:pass@host:5432/db",
+            "description": "Your PostgreSQL connection string"
+          },
+          "submit": "Test Connection"
+        },
+        "validCredentials": "PostgreSQL connection successful!",
+        "invalidCredentials": "PostgreSQL connection failed!"
+      },
       "google-gemini": {
         "name": "Gemini",
         "description": "Gemini API (AI Studio)",
@@ -222,10 +236,6 @@
       "google-analytics": {
         "name": "Google Analytics",
         "description": "Google Analytics"
-      },
-      "postgresql": {
-        "name": "PostgreSQL",
-        "description": "PostgreSQL"
       },
       "mysql": {
         "name": "MySQL",

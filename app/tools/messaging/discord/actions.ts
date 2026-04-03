@@ -1,6 +1,6 @@
 "use server";
 
-import { handleErrorServerNoAuth } from "@/utils/handleErrorServer";
+import { handleErrorServerNoAuth } from "@/utils/handle-error-server";
 
 type DiscordConfig = {
   token: string;

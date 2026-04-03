@@ -13,23 +13,21 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useHandleError } from "@/hooks/use-handle-error";
-import { checkMongoDbConnection } from "./actions";
+import { checkPostgreSqlConnection } from "./actions";
 
 const formSchema = z.object({
   connectionString: z.string().min(1)
 });
 
-type MongoDbResult = {
+type PostgreSqlResult = {
   success: boolean;
-  collections: string[];
-  databases: string[];
-  collectionsCount: number;
-  databasesCount: number;
+  tables: string[];
+  tablesCount: number;
 };
 
 const FormClient = () => {
-  const t = useTranslations("tools.items.mongodb");
-  const [result, setResult] = useState<MongoDbResult | null>(null);
+  const t = useTranslations("tools.items.postgresql");
+  const [result, setResult] = useState<PostgreSqlResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [firstRender, setFirstRender] = useState(true);
   const { handleErrorClient } = useHandleError();
@@ -47,10 +45,10 @@ const FormClient = () => {
     setFirstRender(false);
 
     await handleErrorClient({
-      cb: async () => checkMongoDbConnection(values),
+      cb: async () => checkPostgreSqlConnection(values),
       withSuccessNotify: true,
       postOnSuccess({ data }) {
-        setResult(data.payload as MongoDbResult);
+        setResult(data.payload as PostgreSqlResult);
       },
       postOnError() {
         setResult(null);
@@ -72,39 +70,20 @@ const FormClient = () => {
           </Alert>
 
           <Accordion className='overflow-y-hidden' collapsible type='single'>
-            <AccordionItem value='databases-list'>
-              <AccordionTrigger>Databases ({result.databasesCount} found)</AccordionTrigger>
+            <AccordionItem value='tables-list'>
+              <AccordionTrigger>Tables ({result.tablesCount} found)</AccordionTrigger>
               <AccordionContent>
                 <div className='space-y-2'>
-                  {result.databases.length > 0 ? (
+                  {result.tables.length > 0 ? (
                     <div className='space-y-1'>
-                      {result.databases.map((db) => (
-                        <div className='rounded-md border p-2' key={db}>
-                          <p className='font-medium'>{db}</p>
+                      {result.tables.map((table) => (
+                        <div className='rounded-md border p-2' key={table}>
+                          <p className='font-medium'>{table}</p>
                         </div>
                       ))}
                     </div>
                   ) : (
-                    <p className='text-muted-foreground'>No databases found</p>
-                  )}
-                </div>
-              </AccordionContent>
-            </AccordionItem>
-
-            <AccordionItem value='collections-list'>
-              <AccordionTrigger>Collections ({result.collectionsCount} found)</AccordionTrigger>
-              <AccordionContent>
-                <div className='space-y-2'>
-                  {result.collections.length > 0 ? (
-                    <div className='space-y-1'>
-                      {result.collections.map((col) => (
-                        <div className='rounded-md border p-2' key={col}>
-                          <p className='font-medium'>{col}</p>
-                        </div>
-                      ))}
-                    </div>
-                  ) : (
-                    <p className='text-muted-foreground'>No collections found</p>
+                    <p className='text-muted-foreground'>No tables found</p>
                   )}
                 </div>
               </AccordionContent>

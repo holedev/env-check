@@ -8,7 +8,7 @@ type MessageObject = {
 function getAllKeys(obj: MessageObject, prefix = ""): string[] {
   let keys: string[] = [];
   for (const key in obj) {
-    if (Object.prototype.hasOwnProperty.call(obj, key)) {
+    if (Object.hasOwn(obj, key)) {
       const path = prefix ? `${prefix}.${key}` : key;
       if (typeof obj[key] === "object" && obj[key] !== null) {
         keys = keys.concat(getAllKeys(obj[key] as MessageObject, path));

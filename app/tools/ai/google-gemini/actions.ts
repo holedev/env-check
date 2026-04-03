@@ -1,7 +1,7 @@
 "use server";
 
-import { handleErrorServerNoAuth } from "@/utils/handleErrorServer";
 import OpenAI from "openai";
+import { handleErrorServerNoAuth } from "@/utils/handle-error-server";
 
 const _GEMINI_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/openai/";
 
@@ -9,7 +9,7 @@ const checkAPIKey = async (apiKey: string) =>
   handleErrorServerNoAuth({
     cb: async () => {
       const openai = new OpenAI({
-        apiKey: apiKey,
+        apiKey,
         baseURL: _GEMINI_BASE_URL
       });
       try {

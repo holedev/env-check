@@ -1,19 +1,18 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { AlertCircleIcon, CheckCircle2Icon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
 import { InputWithPaste } from "@/components/custom/InputWithPaste";
 import { LoadingComponent } from "@/components/custom/Loading";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { useHandleError } from "@/hooks/useHandleError";
-import { AlertCircleIcon, CheckCircle2Icon } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useHandleError } from "@/hooks/use-handle-error";
 import { checkDiscordConnection } from "./actions";
 
 const formSchema = z.object({
@@ -60,45 +59,19 @@ const FormClient = () => {
     setIsLoading(false);
   }
 
-  return (
-    <div className='space-y-8 w-fit mx-auto min-w-[400px]'>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col items-end gap-4'>
-          <FormField
-            control={form.control}
-            name='token'
-            render={({ field }) => (
-              <FormItem className='w-full'>
-                <FormLabel>{t("form.token.label")}</FormLabel>
-                <FormControl>
-                  <InputWithPaste
-                    hidden
-                    placeholder={t("form.token.placeholder")}
-                    autoComplete='off'
-                    onPasteClick={(value) => field.onChange(value)}
-                    {...field}
-                  />
-                </FormControl>
-                <FormDescription>{t("form.token.description")}</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <Button type='submit'>{t("form.submit")}</Button>
-        </form>
-      </Form>
-
-      {isLoading ? (
-        <LoadingComponent />
-      ) : result ? (
+  function renderResult() {
+    if (isLoading) {
+      return <LoadingComponent />;
+    }
+    if (result) {
+      return (
         <div>
-          <Alert variant='default' className='flex justify-center mb-4'>
+          <Alert className='mb-4 flex justify-center' variant='default'>
             <CheckCircle2Icon />
             <AlertDescription>{t("validCredentials")}</AlertDescription>
           </Alert>
 
-          <Accordion type='single' collapsible>
+          <Accordion collapsible type='single'>
             <AccordionItem value='databases-list'>
               <AccordionTrigger>{t("details")}</AccordionTrigger>
               <AccordionContent>
@@ -117,14 +90,49 @@ const FormClient = () => {
             </AccordionItem>
           </Accordion>
         </div>
-      ) : (
-        !firstRender && (
-          <Alert variant='destructive' className='flex justify-center'>
-            <AlertCircleIcon />
-            <AlertDescription>{t("invalidCredentials")}</AlertDescription>
-          </Alert>
-        )
-      )}
+      );
+    }
+    if (!firstRender) {
+      return (
+        <Alert className='flex justify-center' variant='destructive'>
+          <AlertCircleIcon />
+          <AlertDescription>{t("invalidCredentials")}</AlertDescription>
+        </Alert>
+      );
+    }
+    return null;
+  }
+
+  return (
+    <div className='mx-auto w-fit min-w-100 space-y-8'>
+      <Form {...form}>
+        <form className='flex flex-col items-end gap-4' onSubmit={form.handleSubmit(onSubmit)}>
+          <FormField
+            control={form.control}
+            name='token'
+            render={({ field }) => (
+              <FormItem className='w-full'>
+                <FormLabel>{t("form.token.label")}</FormLabel>
+                <FormControl>
+                  <InputWithPaste
+                    autoComplete='off'
+                    hidden
+                    onPasteClick={(value) => field.onChange(value)}
+                    placeholder={t("form.token.placeholder")}
+                    {...field}
+                  />
+                </FormControl>
+                <FormDescription>{t("form.token.description")}</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <Button type='submit'>{t("form.submit")}</Button>
+        </form>
+      </Form>
+
+      {renderResult()}
     </div>
   );
 };

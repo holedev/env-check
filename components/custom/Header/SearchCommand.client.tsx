@@ -1,5 +1,9 @@
 "use client";
 
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -12,10 +16,6 @@ import {
 } from "@/components/ui/command";
 import { _TOOL_GROUP_LIST, _TOOL_LIST } from "@/constants/tool";
 import type { ToolPath, ToolWithProgressType } from "@/types/tool";
-import { useTranslations } from "next-intl";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useMemo, useState } from "react";
 import { ToolProgress } from "../Tools/ToolProgress";
 
 const SearchCommand = () => {
@@ -49,7 +49,9 @@ const SearchCommand = () => {
   }, []);
 
   const filteredTools = useMemo(() => {
-    if (!searchValue.trim()) return sortedTools;
+    if (!searchValue.trim()) {
+      return sortedTools;
+    }
 
     const query = searchValue.toLowerCase();
     return sortedTools.filter((tool) => {
@@ -67,7 +69,7 @@ const SearchCommand = () => {
 
       if (open && (e.metaKey || e.ctrlKey) && !Number.isNaN(Number(e.key)) && e.key !== "0") {
         e.preventDefault();
-        const index = Number.parseInt(e.key) - 1;
+        const index = Number.parseInt(e.key, 10) - 1;
 
         if (index >= 0 && index < filteredTools.length && index < 9) {
           runCommand(filteredTools[index].path);
@@ -87,45 +89,45 @@ const SearchCommand = () => {
   return (
     <>
       <Button
-        variant='outline'
-        className='relative w-full justify-start text-sm text-muted-foreground sm:pr-12 md:w-40 lg:w-64'
+        className='relative w-full justify-start text-muted-foreground text-sm sm:pr-12 md:w-40 lg:w-64'
         onClick={() => setOpen(true)}
+        variant='outline'
       >
         <span className='hidden lg:inline-flex'>{t("common.search.placeholder")}</span>
         <span className='inline-flex lg:hidden'>{t("common.search.filter")}</span>
-        <span className='pointer-events-none absolute top-1/2 right-1.5 transform -translate-y-1/2 hidden h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex'>
+        <span className='pointer-events-none absolute top-1/2 right-1.5 hidden h-5 -translate-y-1/2 transform select-none items-center gap-1 rounded border bg-muted px-1.5 font-medium font-mono text-[10px] opacity-100 sm:flex'>
           <span className='text-xs'>Ctrl + K</span>
         </span>
       </Button>
-      <CommandDialog open={open} onOpenChange={setOpen}>
+      <CommandDialog onOpenChange={setOpen} open={open}>
         <Command shouldFilter={false}>
           <CommandInput
+            onValueChange={setSearchValue}
             placeholder={`${t("common.search.placeholder")} (${_TOOL_LIST.length}) • Ctrl + 1-9`}
             value={searchValue}
-            onValueChange={setSearchValue}
           />
           <CommandList>
             <CommandEmpty>{t("common.search.empty")}</CommandEmpty>
             <CommandGroup>
               {filteredTools.map((tool, index) => (
                 <CommandItem
+                  className='flex items-center justify-between gap-2'
                   key={tool.path}
-                  value={t(`tools.items.${tool.path}.name`)}
                   onSelect={() => runCommand(tool.path)}
-                  className='flex items-center gap-2 justify-between'
+                  value={t(`tools.items.${tool.path}.name`)}
                 >
-                  <div className='flex gap-2 items-center'>
+                  <div className='flex items-center gap-2'>
                     {index < 9 && (
-                      <span className='text-xs text-muted-foreground font-mono bg-muted px-1 py-0.5 rounded text-[10px] min-w-[16px] text-center'>
+                      <span className='min-w-[16px] rounded bg-muted px-1 py-0.5 text-center font-mono text-[10px] text-muted-foreground text-xs'>
                         {index + 1}
                       </span>
                     )}
                     <Image
-                      src={`https://cdn.simpleicons.org/${tool.icon}`}
                       alt={tool.path}
-                      width={18}
-                      height={18}
                       className='dark:invert'
+                      height={18}
+                      src={`https://cdn.simpleicons.org/${tool.icon}`}
+                      width={18}
                     />
                     <span>{t(`tools.items.${tool.path}.name`)}</span>
                   </div>

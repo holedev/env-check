@@ -225,7 +225,17 @@
       },
       "postgresql": {
         "name": "PostgreSQL",
-        "description": "PostgreSQL"
+        "description": "Kiểm tra chuỗi kết nối PostgreSQL của bạn",
+        "form": {
+          "connectionString": {
+            "label": "Chuỗi kết nối",
+            "placeholder": "postgresql://user:pass@host:5432/db",
+            "description": "Chuỗi kết nối PostgreSQL của bạn"
+          },
+          "submit": "Kiểm tra kết nối"
+        },
+        "validCredentials": "Kết nối PostgreSQL thành công!",
+        "invalidCredentials": "Kết nối PostgreSQL thất bại!"
       },
       "mysql": {
         "name": "MySQL",

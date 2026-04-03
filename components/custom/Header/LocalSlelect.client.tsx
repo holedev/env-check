@@ -1,10 +1,10 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import { useLocale, useTranslations } from "next-intl";
+import { useTransition } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { _NEXT_COOKIE_LOCALE } from "@/constants/lang";
-import { useLocale, useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
-import { useTransition } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../ui/select";
 
 const LocaleSelect = () => {
@@ -25,7 +25,7 @@ const LocaleSelect = () => {
   }
 
   return (
-    <Select onValueChange={handleChangeLocale} defaultValue={locale}>
+    <Select defaultValue={locale} onValueChange={handleChangeLocale}>
       <SelectTrigger className='w-[180px]'>
         <SelectValue placeholder='Select' />
       </SelectTrigger>

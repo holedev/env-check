@@ -1,11 +1,11 @@
 import "@/app/globals.css";
+import { Roboto } from "next/font/google";
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages } from "next-intl/server";
+import type { ReactNode } from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { cn } from "@/lib/utils";
 import type { locale } from "@/types/global";
-import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
-import { Roboto } from "next/font/google";
-import type { ReactNode } from "react";
 import { ThemeProvider } from "../theme-provider";
 import { TooltipProvider } from "../ui/tooltip";
 import { Header } from "./Header";
@@ -19,8 +19,8 @@ export async function BaseLayout({ children, locale }: BaseLayoutType) {
 
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body className={cn(roboto.className, "w-full h-screen")}>
-        <ThemeProvider attribute='class' defaultTheme='system' enableSystem disableTransitionOnChange>
+      <body className={cn(roboto.className, "h-screen w-full")}>
+        <ThemeProvider attribute='class' defaultTheme='system' disableTransitionOnChange enableSystem>
           <TooltipProvider>
             <NextIntlClientProvider messages={messages}>
               {/* <SidebarProvider defaultOpen={true}> */}

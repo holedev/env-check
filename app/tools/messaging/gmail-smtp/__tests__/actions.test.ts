@@ -11,7 +11,7 @@ jest.mock("nodemailer", () => {
 });
 
 // Mock the error handler
-jest.mock("@/utils/handleErrorServer", () => ({
+jest.mock("@/utils/handle-error-server", () => ({
   handleErrorServerNoAuth: jest.fn()
 }));
 
@@ -31,7 +31,7 @@ describe("Gmail SMTP Actions", () => {
         sendMail: mockSendMail
       }));
 
-      const { handleErrorServerNoAuth } = require("@/utils/handleErrorServer");
+      const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
       handleErrorServerNoAuth.mockImplementation(async ({ cb }: { cb: () => Promise<object> }) => {
         const result = await cb();
         return { error: null, data: { payload: result } };
@@ -82,7 +82,7 @@ describe("Gmail SMTP Actions", () => {
         sendMail: mockSendMail
       }));
 
-      const { handleErrorServerNoAuth } = require("@/utils/handleErrorServer");
+      const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
       handleErrorServerNoAuth.mockImplementation(async ({ cb }: { cb: () => Promise<object> }) => {
         const result = await cb();
         return { error: null, data: { payload: result } };
@@ -140,7 +140,7 @@ describe("Gmail SMTP Actions", () => {
         };
       });
 
-      const { handleErrorServerNoAuth } = require("@/utils/handleErrorServer");
+      const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
       handleErrorServerNoAuth.mockImplementation(async ({ cb }: { cb: () => Promise<object> }) => {
         const result = await cb();
         return { error: null, data: { payload: result } };
@@ -173,7 +173,7 @@ describe("Gmail SMTP Actions", () => {
         sendMail: jest.fn()
       }));
 
-      const { handleErrorServerNoAuth } = require("@/utils/handleErrorServer");
+      const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
       handleErrorServerNoAuth.mockImplementation(async ({ cb }: { cb: () => Promise<object> }) => {
         try {
           await cb();
@@ -208,7 +208,7 @@ describe("Gmail SMTP Actions", () => {
         sendMail: mockSendMail
       }));
 
-      const { handleErrorServerNoAuth } = require("@/utils/handleErrorServer");
+      const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
       handleErrorServerNoAuth.mockImplementation(async ({ cb }: { cb: () => Promise<object> }) => {
         try {
           await cb();

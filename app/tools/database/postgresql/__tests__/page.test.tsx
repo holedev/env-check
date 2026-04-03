@@ -7,11 +7,11 @@ jest.mock("@/components/custom/Tools/ToolHeader", () => ({
 }));
 
 jest.mock("../form.client", () => ({
-  FormClient: () => <div data-testid='form-client'>Form Client Gmail SMTP</div>
+  FormClient: () => <div data-testid='form-client'>Form Client PostgreSQL</div>
 }));
 
-test("Page renders ToolHeader và FormClient", () => {
+test("Page renders ToolHeader and FormClient", () => {
   render(<Page />);
   expect(screen.getByTestId("tool-header")).toBeInTheDocument();
-  expect(screen.getByTestId("form-client")).toHaveTextContent("Form Client Gmail SMTP");
+  expect(screen.getByTestId("form-client")).toHaveTextContent("Form Client PostgreSQL");
 });

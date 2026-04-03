@@ -1,10 +1,11 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { AlertCircleIcon, CheckCircle2Icon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
 import { InputWithPaste } from "@/components/custom/InputWithPaste";
 import { LoadingComponent } from "@/components/custom/Loading";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -12,9 +13,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useHandleError } from "@/hooks/useHandleError";
-import { AlertCircleIcon, CheckCircle2Icon } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useHandleError } from "@/hooks/use-handle-error";
 import { checkS3Connection } from "./actions";
 
 const formSchema = z.object({
@@ -73,102 +72,19 @@ const FormClient = () => {
     setIsLoading(false);
   }
 
-  return (
-    <div className='space-y-8 w-fit mx-auto min-w-[400px]'>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col gap-4'>
-          <FormField
-            control={form.control}
-            name='endpoint'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("form.endpoint.label")}</FormLabel>
-                <FormControl>
-                  <InputWithPaste
-                    placeholder={t("form.endpoint.placeholder")}
-                    autoComplete='off'
-                    onPasteClick={(value) => field.onChange(value)}
-                    {...field}
-                  />
-                </FormControl>
-                <FormDescription>{t("form.endpoint.description")}</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name='region'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("form.region.label")}</FormLabel>
-                <FormControl>
-                  <Input placeholder={t("form.region.placeholder")} autoComplete='off' {...field} />
-                </FormControl>
-                <FormDescription>{t("form.region.description")}</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name='accessKeyId'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("form.accessKey.label")}</FormLabel>
-                <FormControl>
-                  <InputWithPaste
-                    placeholder={t("form.accessKey.placeholder")}
-                    autoComplete='off'
-                    onPasteClick={(value) => field.onChange(value)}
-                    {...field}
-                  />
-                </FormControl>
-                <FormDescription>{t("form.accessKey.description")}</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name='secretAccessKey'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("form.secretKey.label")}</FormLabel>
-                <FormControl>
-                  <InputWithPaste
-                    type='password'
-                    placeholder={t("form.secretKey.placeholder")}
-                    autoComplete='off'
-                    onPasteClick={(value) => field.onChange(value)}
-                    {...field}
-                  />
-                </FormControl>
-                <FormDescription>{t("form.secretKey.description")}</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <Button type='submit' className='self-end'>
-            {t("form.submit")}
-          </Button>
-        </form>
-      </Form>
-
-      {isLoading ? (
-        <LoadingComponent />
-      ) : result ? (
+  function renderResult() {
+    if (isLoading) {
+      return <LoadingComponent />;
+    }
+    if (result) {
+      return (
         <div>
-          <Alert variant='default' className='flex justify-center mb-4'>
+          <Alert className='mb-4 flex justify-center' variant='default'>
             <CheckCircle2Icon />
             <AlertDescription>{t("validCredentials")}</AlertDescription>
           </Alert>
 
-          <Accordion type='single' collapsible className='overflow-y-hidden'>
+          <Accordion className='overflow-y-hidden' collapsible type='single'>
             <AccordionItem value='connection-details'>
               <AccordionTrigger>{t("connectionDetails")}</AccordionTrigger>
               <AccordionContent>
@@ -193,10 +109,10 @@ const FormClient = () => {
                   {result.buckets.length > 0 ? (
                     <div className='space-y-1'>
                       {result.buckets.map((bucket) => (
-                        <div key={bucket.name} className='p-2 border rounded-md'>
+                        <div className='rounded-md border p-2' key={bucket.name}>
                           <p className='font-medium'>{bucket.name}</p>
                           {bucket.creationDate && (
-                            <p className='text-sm text-muted-foreground'>
+                            <p className='text-muted-foreground text-sm'>
                               Created: {new Date(bucket.creationDate).toLocaleDateString()}
                             </p>
                           )}
@@ -211,14 +127,106 @@ const FormClient = () => {
             </AccordionItem>
           </Accordion>
         </div>
-      ) : (
-        !firstRender && (
-          <Alert variant='destructive' className='flex justify-center'>
-            <AlertCircleIcon />
-            <AlertDescription>{t("invalidCredentials")}</AlertDescription>
-          </Alert>
-        )
-      )}
+      );
+    }
+    if (!firstRender) {
+      return (
+        <Alert className='flex justify-center' variant='destructive'>
+          <AlertCircleIcon />
+          <AlertDescription>{t("invalidCredentials")}</AlertDescription>
+        </Alert>
+      );
+    }
+    return null;
+  }
+
+  return (
+    <div className='mx-auto w-fit min-w-[400px] space-y-8'>
+      <Form {...form}>
+        <form className='flex flex-col gap-4' onSubmit={form.handleSubmit(onSubmit)}>
+          <FormField
+            control={form.control}
+            name='endpoint'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("form.endpoint.label")}</FormLabel>
+                <FormControl>
+                  <InputWithPaste
+                    autoComplete='off'
+                    onPasteClick={(value) => field.onChange(value)}
+                    placeholder={t("form.endpoint.placeholder")}
+                    {...field}
+                  />
+                </FormControl>
+                <FormDescription>{t("form.endpoint.description")}</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name='region'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("form.region.label")}</FormLabel>
+                <FormControl>
+                  <Input autoComplete='off' placeholder={t("form.region.placeholder")} {...field} />
+                </FormControl>
+                <FormDescription>{t("form.region.description")}</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name='accessKeyId'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("form.accessKey.label")}</FormLabel>
+                <FormControl>
+                  <InputWithPaste
+                    autoComplete='off'
+                    onPasteClick={(value) => field.onChange(value)}
+                    placeholder={t("form.accessKey.placeholder")}
+                    {...field}
+                  />
+                </FormControl>
+                <FormDescription>{t("form.accessKey.description")}</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name='secretAccessKey'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("form.secretKey.label")}</FormLabel>
+                <FormControl>
+                  <InputWithPaste
+                    autoComplete='off'
+                    onPasteClick={(value) => field.onChange(value)}
+                    placeholder={t("form.secretKey.placeholder")}
+                    type='password'
+                    {...field}
+                  />
+                </FormControl>
+                <FormDescription>{t("form.secretKey.description")}</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <Button className='self-end' type='submit'>
+            {t("form.submit")}
+          </Button>
+        </form>
+      </Form>
+
+      {renderResult()}
     </div>
   );
 };

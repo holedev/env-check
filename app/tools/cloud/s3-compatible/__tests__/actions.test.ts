@@ -11,7 +11,7 @@ jest.mock("@aws-sdk/client-s3", () => {
 });
 
 // Mock the error handler
-jest.mock("@/utils/handleErrorServer", () => ({
+jest.mock("@/utils/handle-error-server", () => ({
   handleErrorServerNoAuth: jest.fn()
 }));
 
@@ -34,7 +34,7 @@ describe("S3 Compatible Actions", () => {
         send: mockSend
       }));
 
-      const { handleErrorServerNoAuth } = require("@/utils/handleErrorServer");
+      const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
       handleErrorServerNoAuth.mockImplementation(async ({ cb }: { cb: () => Promise<object> }) => {
         const result = await cb();
         return { error: null, data: { payload: result } };
@@ -80,7 +80,7 @@ describe("S3 Compatible Actions", () => {
         };
       });
 
-      const { handleErrorServerNoAuth } = require("@/utils/handleErrorServer");
+      const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
       handleErrorServerNoAuth.mockImplementation(async ({ cb }: { cb: () => Promise<object> }) => {
         const result = await cb();
         return { error: null, data: { payload: result } };
@@ -115,7 +115,7 @@ describe("S3 Compatible Actions", () => {
         };
       });
 
-      const { handleErrorServerNoAuth } = require("@/utils/handleErrorServer");
+      const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
       handleErrorServerNoAuth.mockImplementation(async ({ cb }: { cb: () => Promise<object> }) => {
         const result = await cb();
         return { error: null, data: { payload: result } };
@@ -142,7 +142,7 @@ describe("S3 Compatible Actions", () => {
         send: mockSend
       }));
 
-      const { handleErrorServerNoAuth } = require("@/utils/handleErrorServer");
+      const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
       handleErrorServerNoAuth.mockImplementation(async ({ cb }: { cb: () => Promise<object> }) => {
         try {
           await cb();
@@ -172,7 +172,7 @@ describe("S3 Compatible Actions", () => {
         send: mockSend
       }));
 
-      const { handleErrorServerNoAuth } = require("@/utils/handleErrorServer");
+      const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
       handleErrorServerNoAuth.mockImplementation(async ({ cb }: { cb: () => Promise<object> }) => {
         try {
           await cb();

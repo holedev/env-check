@@ -1,7 +1,7 @@
+import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import type { ToolProgressCategory } from "@/types/tool";
-import { useTranslations } from "next-intl";
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
   progress: ToolProgressCategory;
@@ -11,8 +11,11 @@ const ToolProgress = ({ progress, ...rest }: Props) => {
   const t = useTranslations("tools.progress");
 
   let variant = "destructive";
-  if (progress === "inProgress") variant = "secondary";
-  else if (progress === "completed") variant = "outline";
+  if (progress === "inProgress") {
+    variant = "secondary";
+  } else if (progress === "completed") {
+    variant = "outline";
+  }
 
   return (
     <Badge

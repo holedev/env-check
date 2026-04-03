@@ -1,6 +1,6 @@
-import type { ErrorResponseType, ResponseType, SuccessResponseType } from "@/types/response";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
+import type { ErrorResponseType, ResponseType, SuccessResponseType } from "@/types/response";
 
 type handleErrorType = {
   cb: () => Promise<ResponseType>;
@@ -14,8 +14,12 @@ const useHandleError = () => {
 
   const handleErrorClient = async ({
     cb,
-    postOnSuccess = () => {},
-    postOnError = () => {},
+    postOnSuccess = () => {
+      // do nothing by default
+    },
+    postOnError = () => {
+      // do nothing by default
+    },
     withSuccessNotify = true
   }: handleErrorType) => {
     try {
