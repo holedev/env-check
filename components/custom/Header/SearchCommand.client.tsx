@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -16,10 +16,6 @@ import {
 } from "@/components/ui/command";
 import { _TOOL_GROUP_LIST, _TOOL_LIST } from "@/constants/tool";
 import type { ToolPath, ToolWithProgressType } from "@/types/tool";
-import { useTranslations } from "next-intl";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useMemo, useState } from "react";
 import { ToolProgress } from "../Tools/ToolProgress";
 
 const SearchCommand = () => {
@@ -53,7 +49,9 @@ const SearchCommand = () => {
   }, []);
 
   const filteredTools = useMemo(() => {
-    if (!searchValue.trim()) return sortedTools;
+    if (!searchValue.trim()) {
+      return sortedTools;
+    }
 
     const query = searchValue.toLowerCase();
     return sortedTools.filter((tool) => {
@@ -71,7 +69,7 @@ const SearchCommand = () => {
 
       if (open && (e.metaKey || e.ctrlKey) && !Number.isNaN(Number(e.key)) && e.key !== "0") {
         e.preventDefault();
-        const index = Number.parseInt(e.key) - 1;
+        const index = Number.parseInt(e.key, 10) - 1;
 
         if (index >= 0 && index < filteredTools.length && index < 9) {
           runCommand(filteredTools[index].path);
@@ -101,12 +99,12 @@ const SearchCommand = () => {
           <span className='text-xs'>Ctrl + K</span>
         </span>
       </Button>
-      <CommandDialog open={open} onOpenChange={setOpen}>
+      <CommandDialog onOpenChange={setOpen} open={open}>
         <Command shouldFilter={false}>
           <CommandInput
+            onValueChange={setSearchValue}
             placeholder={`${t("common.search.placeholder")} (${_TOOL_LIST.length}) • Ctrl + 1-9`}
             value={searchValue}
-            onValueChange={setSearchValue}
           />
           <CommandList>
             <CommandEmpty>{t("common.search.empty")}</CommandEmpty>
@@ -118,9 +116,9 @@ const SearchCommand = () => {
                   onSelect={() => runCommand(tool.path)}
                   value={t(`tools.items.${tool.path}.name`)}
                 >
-                  <div className='flex gap-2 items-center'>
+                  <div className='flex items-center gap-2'>
                     {index < 9 && (
-                      <span className='text-xs text-muted-foreground font-mono bg-muted px-1 py-0.5 rounded text-[10px] min-w-[16px] text-center'>
+                      <span className='min-w-[16px] rounded bg-muted px-1 py-0.5 text-center font-mono text-[10px] text-muted-foreground text-xs'>
                         {index + 1}
                       </span>
                     )}

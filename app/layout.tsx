@@ -1,5 +1,6 @@
 import "@/app/globals.css";
 import type { Metadata } from "next";
+import { getLocale } from "next-intl/server";
 import type { ReactNode } from "react";
 import { BaseLayout } from "@/components/custom/BaseLayout";
 import type { locale } from "@/types/global";
@@ -12,9 +13,9 @@ export const metadata: Metadata = {
   description: "ENV Check"
 };
 
-type LocaleLayoutType = { children: ReactNode; params: Promise<{ locale: locale }> };
+type RootLayoutProps = { children: ReactNode };
 
-export default async function RootLayout({ children, params }: LocaleLayoutType) {
-  const { locale } = await params;
-  return <BaseLayout locale={locale}>{children}</BaseLayout>;
+export default async function RootLayout({ children }: RootLayoutProps) {
+  const localeStr = await getLocale();
+  return <BaseLayout locale={localeStr as locale}>{children}</BaseLayout>;
 }
