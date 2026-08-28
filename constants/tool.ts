@@ -69,7 +69,7 @@ export const _TOOL_LIST = defineToolList([
     libInfo: {
       packageName: "openai",
       url: "https://www.npmjs.com/package/openai",
-      version: "6.33.0"
+      version: "7.8.0"
     }
   },
   {
