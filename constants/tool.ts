@@ -27,7 +27,7 @@ export const _TOOL_LIST = defineToolList([
     libInfo: {
       packageName: "@aws-sdk/client-s3",
       url: "https://www.npmjs.com/package/@aws-sdk/client-s3",
-      version: "3.1023.0"
+      version: "3.1120.0"
     }
   },
   {
@@ -49,7 +49,7 @@ export const _TOOL_LIST = defineToolList([
     libInfo: {
       packageName: "mongodb",
       url: "https://www.npmjs.com/package/mongodb",
-      version: "7.1.1"
+      version: "7.6.0"
     }
   },
   {
@@ -59,7 +59,7 @@ export const _TOOL_LIST = defineToolList([
     libInfo: {
       packageName: "pg",
       url: "https://www.npmjs.com/package/pg",
-      version: "8.20.0"
+      version: "8.23.0"
     }
   },
   {

@@ -13,7 +13,10 @@
       "**/*.js",
       "**/*.jsx",
       "!**/components/ui",
-      "!**/*.d.ts"
+      "!**/*.d.ts",
+      "!public",
+      "!.agents",
+      "!.claude"
     ]
   },
   "assist": {
