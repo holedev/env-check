@@ -32,7 +32,11 @@ export const _TOOL_LIST = defineToolList([
   },
   {
     icon: "cloudflare",
-    path: "cloudflare"
+    path: "cloudflare",
+    progress: "completed",
+    libInfo: {
+      packageName: "fetch"
+    }
   },
   {
     icon: "supabase",

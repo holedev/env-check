@@ -73,7 +73,18 @@
       },
       "cloudflare": {
         "name": "Cloudflare",
-        "description": "Cloudflare"
+        "description": "Cloudflare",
+        "form": {
+          "apiToken": {
+            "label": "API Token",
+            "placeholder": "Enter your Cloudflare API Token",
+            "description": "Create a token at https://dash.cloudflare.com/profile/api-tokens. The legacy Global API Key is not supported."
+          },
+          "submit": "Verify Token"
+        },
+        "validCredentials": "Cloudflare API Token is valid",
+        "invalidCredentials": "Cloudflare API Token is invalid!",
+        "details": "Details"
       },
       "digital-ocean": {
         "name": "Digital Ocean",
