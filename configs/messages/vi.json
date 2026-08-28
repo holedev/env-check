@@ -149,16 +149,15 @@
         "description": "GitHub Token",
         "form": {
           "token": {
-            "label": "Token",
-            "placeholder": "GitHub PAT hoặc token OAuth App"
+            "label": "Personal Access Token",
+            "placeholder": "Nhập GitHub Personal Access Token của bạn",
+            "description": "Tạo token tại https://github.com/settings/tokens. Chỉ hỗ trợ Personal Access Token."
           },
           "submit": "Kiểm tra"
         },
-        "result": {
-          "title": "Chi tiết"
-        },
-        "validApiKey": "API Key của bạn hợp lệ.",
-        "invalidApiKey": "API Key của bạn không hợp lệ!"
+        "validCredentials": "Token GitHub hợp lệ",
+        "invalidCredentials": "Token GitHub không hợp lệ!",
+        "details": "Chi tiết"
       },
       "vercel": {
         "name": "Vercel",

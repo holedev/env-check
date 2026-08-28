@@ -8,10 +8,10 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { InputWithPaste } from "@/components/custom/InputWithPaste";
 import { LoadingComponent } from "@/components/custom/Loading";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useHandleError } from "@/hooks/use-handle-error";
 import { checkGithubToken } from "./actions";
 
@@ -19,36 +19,37 @@ const formSchema = z.object({
   token: z.string().min(1)
 });
 
-type FormSchema = z.infer<typeof formSchema>;
+type GithubResult = {
+  login: string;
+  type: string;
+};
 
-type GithubResult = { login: string; type: string };
-
-export function GithubForm() {
+const FormClient = () => {
   const t = useTranslations("tools.items.github");
   const [result, setResult] = useState<GithubResult | null>(null);
-  const [firstRender, setFirstRender] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [firstRender, setFirstRender] = useState(true);
   const { handleErrorClient } = useHandleError();
 
-  const form = useForm<FormSchema>({
+  const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       token: ""
     }
   });
 
-  async function onSubmit(data: FormSchema) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
     setResult(null);
     setFirstRender(false);
 
     await handleErrorClient({
-      cb: async () => checkGithubToken(data),
+      cb: async () => checkGithubToken(values),
       withSuccessNotify: true,
-      postOnSuccess: ({ data }) => {
+      postOnSuccess({ data }) {
         setResult(data.payload as GithubResult);
       },
-      postOnError: () => {
+      postOnError() {
         setResult(null);
       }
     });
@@ -61,32 +62,35 @@ export function GithubForm() {
     }
     if (result) {
       return (
-        <>
+        <div>
           <Alert className='mb-4 flex justify-center' variant='default'>
             <CheckCircle2Icon />
-            <AlertDescription>{t("validApiKey")}</AlertDescription>
+            <AlertDescription>{t("validCredentials")}</AlertDescription>
           </Alert>
-          <Card>
-            <CardHeader>
-              <CardTitle>{t("result.title")}</CardTitle>
-            </CardHeader>
-            <CardContent className='space-y-2 text-sm'>
-              <p>
-                <strong>Login: </strong> {result.login}
-              </p>
-              <p>
-                <strong>Type: </strong> {result.type}
-              </p>
-            </CardContent>
-          </Card>
-        </>
+
+          <Accordion collapsible type='single'>
+            <AccordionItem value='token-details'>
+              <AccordionTrigger>{t("details")}</AccordionTrigger>
+              <AccordionContent>
+                <div className='space-y-2'>
+                  <p>
+                    <strong>Login:</strong> {result.login}
+                  </p>
+                  <p>
+                    <strong>Type:</strong> {result.type}
+                  </p>
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </div>
       );
     }
     if (!firstRender) {
       return (
         <Alert className='flex justify-center' variant='destructive'>
           <AlertCircleIcon />
-          <AlertDescription>{t("invalidApiKey")}</AlertDescription>
+          <AlertDescription>{t("invalidCredentials")}</AlertDescription>
         </Alert>
       );
     }
@@ -94,7 +98,7 @@ export function GithubForm() {
   }
 
   return (
-    <div className='mx-auto w-fit min-w-[400px] space-y-4'>
+    <div className='mx-auto w-fit min-w-[400px] space-y-8'>
       <Form {...form}>
         <form className='flex flex-col items-end gap-4' onSubmit={form.handleSubmit(onSubmit)}>
           <FormField
@@ -105,24 +109,26 @@ export function GithubForm() {
                 <FormLabel>{t("form.token.label")}</FormLabel>
                 <FormControl>
                   <InputWithPaste
+                    autoComplete='off'
                     hidden
+                    onPasteClick={(value) => field.onChange(value)}
                     placeholder={t("form.token.placeholder")}
                     {...field}
-                    autoComplete='off'
-                    onPasteClick={(value) => field.onChange(value)}
                   />
                 </FormControl>
+                <FormDescription>{t("form.token.description")}</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button disabled={isLoading} type='submit'>
-            {t("form.submit")}
-          </Button>
+
+          <Button type='submit'>{t("form.submit")}</Button>
         </form>
       </Form>
 
       {renderResult()}
     </div>
   );
-}
+};
+
+export { FormClient };
