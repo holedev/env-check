@@ -92,7 +92,23 @@
       },
       "supabase": {
         "name": "Supabase",
-        "description": "Supabase"
+        "description": "Supabase",
+        "form": {
+          "projectUrl": {
+            "label": "Project URL",
+            "placeholder": "https://your-project.supabase.co",
+            "description": "Project Settings -> API -> Project URL"
+          },
+          "serviceRoleKey": {
+            "label": "Service Role Key",
+            "placeholder": "Enter your service_role key",
+            "description": "Project Settings -> API -> service_role secret. Never expose this key in a browser app."
+          },
+          "submit": "Check Credentials"
+        },
+        "validCredentials": "Supabase credentials are valid",
+        "invalidCredentials": "Supabase credentials are invalid!",
+        "details": "Details"
       },
       "firebase": {
         "name": "Firebase",

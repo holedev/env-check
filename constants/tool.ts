@@ -40,7 +40,13 @@ export const _TOOL_LIST = defineToolList([
   },
   {
     icon: "supabase",
-    path: "supabase"
+    path: "supabase",
+    progress: "completed",
+    libInfo: {
+      packageName: "@supabase/supabase-js",
+      url: "https://www.npmjs.com/package/@supabase/supabase-js",
+      version: "2.112.4"
+    }
   },
   {
     icon: "firebase",

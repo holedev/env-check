@@ -92,7 +92,23 @@
       },
       "supabase": {
         "name": "Supabase",
-        "description": "Supabase"
+        "description": "Supabase",
+        "form": {
+          "projectUrl": {
+            "label": "Project URL",
+            "placeholder": "https://your-project.supabase.co",
+            "description": "Project Settings -> API -> Project URL"
+          },
+          "serviceRoleKey": {
+            "label": "Service Role Key",
+            "placeholder": "Nhập service_role key của bạn",
+            "description": "Project Settings -> API -> service_role secret. Không để lộ key này trong ứng dụng chạy trên trình duyệt."
+          },
+          "submit": "Kiểm tra thông tin"
+        },
+        "validCredentials": "Thông tin Supabase hợp lệ",
+        "invalidCredentials": "Thông tin Supabase không hợp lệ!",
+        "details": "Chi tiết"
       },
       "firebase": {
         "name": "Firebase",
