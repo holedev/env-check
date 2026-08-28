@@ -9,6 +9,7 @@ env-check is a Next.js web app for validating API keys across multiple services.
 ## Commands
 
 ```bash
+mise install      # Install pinned Node + pnpm (versions in mise.toml)
 pnpm dev          # Start dev server (Turbopack)
 pnpm build        # Production build
 pnpm test         # Run Jest tests
