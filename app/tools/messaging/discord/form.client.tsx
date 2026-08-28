@@ -49,7 +49,6 @@ const FormClient = () => {
       cb: async () => checkDiscordConnection(values),
       withSuccessNotify: true,
       postOnSuccess({ data }) {
-        console.info("[form.client.tsx:55] ", data);
         setResult(data.payload as DiscordResult);
       },
       postOnError() {
@@ -72,7 +71,7 @@ const FormClient = () => {
           </Alert>
 
           <Accordion collapsible type='single'>
-            <AccordionItem value='databases-list'>
+            <AccordionItem value='token-details'>
               <AccordionTrigger>{t("details")}</AccordionTrigger>
               <AccordionContent>
                 <div className='space-y-2'>
@@ -104,7 +103,7 @@ const FormClient = () => {
   }
 
   return (
-    <div className='mx-auto w-fit min-w-100 space-y-8'>
+    <div className='mx-auto w-fit min-w-[400px] space-y-8'>
       <Form {...form}>
         <form className='flex flex-col items-end gap-4' onSubmit={form.handleSubmit(onSubmit)}>
           <FormField
