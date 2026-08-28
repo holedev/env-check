@@ -73,7 +73,18 @@
       },
       "cloudflare": {
         "name": "Cloudflare",
-        "description": "Cloudflare"
+        "description": "Cloudflare",
+        "form": {
+          "apiToken": {
+            "label": "API Token",
+            "placeholder": "Nhập Cloudflare API Token của bạn",
+            "description": "Tạo token tại https://dash.cloudflare.com/profile/api-tokens. Không hỗ trợ Global API Key cũ."
+          },
+          "submit": "Xác minh Token"
+        },
+        "validCredentials": "Cloudflare API Token hợp lệ",
+        "invalidCredentials": "Cloudflare API Token không hợp lệ!",
+        "details": "Chi tiết"
       },
       "digital-ocean": {
         "name": "Digital Ocean",
