@@ -79,7 +79,7 @@ export const _TOOL_LIST = defineToolList([
     libInfo: {
       packageName: "nodemailer",
       url: "https://www.npmjs.com/package/nodemailer",
-      version: "8.0.4"
+      version: "9.0.6"
     }
   },
   {
