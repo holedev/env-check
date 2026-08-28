@@ -112,7 +112,18 @@
       },
       "firebase": {
         "name": "Firebase",
-        "description": "Firebase"
+        "description": "Firebase",
+        "form": {
+          "serviceAccountJson": {
+            "label": "Service Account JSON",
+            "placeholder": "Dán toàn bộ nội dung JSON của service account",
+            "description": "Project Settings -> Service accounts -> Generate new private key. Dán nội dung file JSON đã tải về."
+          },
+          "submit": "Xác minh Service Account"
+        },
+        "validCredentials": "Service account Firebase hợp lệ",
+        "invalidCredentials": "Service account Firebase không hợp lệ!",
+        "details": "Chi tiết"
       },
       "mongodb": {
         "name": "MongoDB",

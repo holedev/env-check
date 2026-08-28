@@ -50,7 +50,13 @@ export const _TOOL_LIST = defineToolList([
   },
   {
     icon: "firebase",
-    path: "firebase"
+    path: "firebase",
+    progress: "completed",
+    libInfo: {
+      packageName: "firebase-admin",
+      url: "https://www.npmjs.com/package/firebase-admin",
+      version: "14.3.0"
+    }
   },
   {
     icon: "mongodb",
