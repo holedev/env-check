@@ -45,7 +45,7 @@ export const _TOOL_LIST = defineToolList([
   {
     icon: "mongodb",
     path: "mongodb",
-    progress: "inProgress",
+    progress: "completed",
     libInfo: {
       packageName: "mongodb",
       url: "https://www.npmjs.com/package/mongodb",
