@@ -46,3 +46,7 @@ next-env.d.ts
 
 .pnpm-store
 .swc
+
+# mise
+mise.local.toml
+.mise.local.toml

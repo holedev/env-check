@@ -12,7 +12,12 @@ A developer tool for quickly validating API keys across multiple popular service
 
 ## Quick Start
 
+Prerequisites: [mise](https://mise.jdx.dev) (provides the pinned Node and pnpm — versions live in `mise.toml`) and Git.
+
 ```bash
+# Install the toolchain (Node + pnpm) from mise.toml
+mise install
+
 # Install dependencies
 pnpm install
 
@@ -60,7 +65,7 @@ Available commands:
 pnpm dev         # Start development server
 pnpm build       # Build for production
 pnpm test        # Run tests
-pnpm check:fix    # Run Biome formatter and linter
+pnpm lint:fix    # Run Biome formatter and linter
 ```
 
 ## Contributing

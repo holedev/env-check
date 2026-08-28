@@ -1,0 +1,3 @@
+# mise for local dev, corepack in Docker
+
+Local development pins Node and pnpm through `mise.toml`, replacing `.nvmrc` and any global/corepack pnpm setup as the single source of truth. The production `Dockerfile` deliberately does **not** bootstrap mise: it keeps its pinned `node:<major>-alpine` base image and `corepack enable pnpm`, so image size and build reproducibility are unchanged and the build has no dependency on a mise install. The cost is that the Node major appears in two places — `mise.toml` and the Dockerfile `FROM` line — and must be bumped together. `package.json` `engines` mirrors `mise.toml` so a mismatched local toolchain is caught on install.

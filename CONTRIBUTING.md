@@ -5,8 +5,7 @@ Thank you for your interest in contributing to env-check! This document provides
 ## Development Setup
 
 1. **Prerequisites**
-   - Node.js (version specified in `.nvmrc`)
-   - pnpm (recommended package manager)
+   - [mise](https://mise.jdx.dev) — provides the pinned Node and pnpm (versions in `mise.toml`)
    - Git
 
 2. **Local Development**
@@ -14,6 +13,9 @@ Thank you for your interest in contributing to env-check! This document provides
    # Clone the repository
    git clone https://github.com/holedev/env-check.git
    cd env-check
+
+   # Install the toolchain (Node + pnpm) from mise.toml
+   mise install
 
    # Install dependencies
    pnpm install
@@ -38,7 +40,7 @@ We use Biome for formatting and linting with the following key rules:
 
 To check and fix formatting:
 ```bash
-pnpm check:fix
+pnpm lint:fix
 ```
 
 ### Adding New Service Support
