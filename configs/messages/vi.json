@@ -258,7 +258,22 @@
       },
       "google-analytics": {
         "name": "Google Analytics",
-        "description": "Google Analytics"
+        "description": "Google Analytics",
+        "form": {
+          "measurementId": {
+            "label": "Measurement ID",
+            "placeholder": "G-XXXXXXXXXX",
+            "description": "Admin -> Data Streams -> web stream của bạn -> Measurement ID"
+          },
+          "apiSecret": {
+            "label": "API Secret",
+            "placeholder": "Nhập Measurement Protocol API secret của bạn",
+            "description": "Admin -> Data Streams -> web stream của bạn -> Measurement Protocol API secrets"
+          },
+          "submit": "Kiểm tra thông tin"
+        },
+        "validCredentials": "Thông tin Measurement Protocol hợp lệ",
+        "invalidCredentials": "Thông tin Measurement Protocol không hợp lệ!"
       },
       "postgresql": {
         "name": "PostgreSQL",

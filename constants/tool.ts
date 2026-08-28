@@ -108,7 +108,11 @@ export const _TOOL_LIST = defineToolList([
   },
   {
     icon: "googleanalytics",
-    path: "google-analytics"
+    path: "google-analytics",
+    progress: "completed",
+    libInfo: {
+      packageName: "fetch"
+    }
   },
   {
     icon: "github",
