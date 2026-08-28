@@ -272,7 +272,22 @@
       },
       "google-analytics": {
         "name": "Google Analytics",
-        "description": "Google Analytics"
+        "description": "Google Analytics",
+        "form": {
+          "measurementId": {
+            "label": "Measurement ID",
+            "placeholder": "G-XXXXXXXXXX",
+            "description": "Admin -> Data Streams -> your web stream -> Measurement ID"
+          },
+          "apiSecret": {
+            "label": "API Secret",
+            "placeholder": "Enter your Measurement Protocol API secret",
+            "description": "Admin -> Data Streams -> your web stream -> Measurement Protocol API secrets"
+          },
+          "submit": "Check Credentials"
+        },
+        "validCredentials": "Measurement Protocol credentials are valid",
+        "invalidCredentials": "Measurement Protocol credentials are invalid!"
       },
       "mysql": {
         "name": "MySQL",
