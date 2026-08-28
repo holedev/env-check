@@ -97,7 +97,7 @@ export const _TOOL_LIST = defineToolList([
   {
     icon: "github",
     path: "github",
-    progress: "inProgress",
+    progress: "completed",
     libInfo: {
       packageName: "@octokit/rest",
       url: "https://www.npmjs.com/package/@octokit/rest",
