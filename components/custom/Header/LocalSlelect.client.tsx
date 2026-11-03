@@ -21,12 +21,12 @@ const LocaleSelect = () => {
   };
 
   if (isPending) {
-    return <Skeleton className='h-10 w-[180px] border-2' />;
+    return <Skeleton className='h-9 w-[130px]' />;
   }
 
   return (
     <Select defaultValue={locale} onValueChange={handleChangeLocale}>
-      <SelectTrigger className='w-[180px]'>
+      <SelectTrigger className='w-[130px]'>
         <SelectValue placeholder='Select' />
       </SelectTrigger>
       <SelectContent>

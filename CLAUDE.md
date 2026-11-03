@@ -23,6 +23,16 @@ pnpm test -- path/to/__tests__/actions.test.ts
 
 ## Architecture
 
+### Layouts
+
+The app has two UIs (see `CONTEXT.md`: **Landing** and **Workspace**), sharing only the root layout:
+
+- `app/layout.tsx` → `BaseLayout`: `<html>`, theme, i18n provider, toaster. No chrome.
+- `app/(landing)/layout.tsx`: the Landing at `/` (`components/custom/Landing/`).
+- `app/tools/layout.tsx`: the Workspace for everything under `/tools` — `AppSidebar` + `WorkspaceHeader` (`components/custom/Workspace/`). The sidebar and the `/tools` index are built from `_TOOL_GROUP_LIST`, so a new tool needs no layout changes.
+
+Static security headers (HSTS, `X-Frame-Options`, etc.) are set in `next.config.ts`. The Content-Security-Policy is nonce-based and built per request in `proxy.ts` (`utils/csp.ts`): never add an inline `<script>` without the nonce from the `x-nonce` request header, and add any new asset origin a tool needs to `utils/csp.ts`.
+
 ### Tool system
 
 Tools are organized by category: `app/tools/[category]/[service-path]/`. Each tool consists of:

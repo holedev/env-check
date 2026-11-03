@@ -142,7 +142,7 @@ const FormClient = () => {
   }
 
   return (
-    <div className='mx-auto w-fit space-y-8'>
+    <div className='mx-auto w-full space-y-8 sm:w-fit'>
       <Form {...form}>
         <form className='flex flex-col gap-4' onSubmit={form.handleSubmit(onSubmit)}>
           <div className='grid grid-cols-2 gap-4'>

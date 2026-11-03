@@ -42,6 +42,14 @@ The client-side counterpart hook (`hooks/use-handle-error.tsx`) that unwraps a `
 
 ### UI
 
+**Landing**:
+The public marketing page at `/` that introduces the app, explains why credentials stay safe, and sends visitors into the Workspace. Has no tool navigation of its own.
+_Avoid_: home, homepage, marketing site
+
+**Workspace**:
+The app shell wrapping every Tool and Tool Group page under `/tools`: a sidebar listing Tool Groups and their Tools, plus a header with search, locale and theme controls.
+_Avoid_: tool UI, dashboard, app
+
 **`ToolHeader`**:
 The server component atop every tool page. Given a `toolPath`, it renders the tool's name, description, `libInfo` link, and progress badge from the constants.
 

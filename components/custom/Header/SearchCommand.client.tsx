@@ -1,5 +1,6 @@
 "use client";
 
+import { SearchIcon } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
@@ -89,12 +90,14 @@ const SearchCommand = () => {
   return (
     <>
       <Button
-        className='relative w-full justify-start text-muted-foreground text-sm sm:pr-12 md:w-40 lg:w-64'
+        aria-label={t("common.search.placeholder")}
+        className='relative w-9 justify-center px-0 text-muted-foreground text-sm sm:w-48 sm:justify-start sm:px-3 sm:pr-16 lg:w-64'
         onClick={() => setOpen(true)}
         variant='outline'
       >
+        <SearchIcon />
         <span className='hidden lg:inline-flex'>{t("common.search.placeholder")}</span>
-        <span className='inline-flex lg:hidden'>{t("common.search.filter")}</span>
+        <span className='hidden sm:inline-flex lg:hidden'>{t("common.search.filter")}</span>
         <span className='pointer-events-none absolute top-1/2 right-1.5 hidden h-5 -translate-y-1/2 transform select-none items-center gap-1 rounded border bg-muted px-1.5 font-medium font-mono text-[10px] opacity-100 sm:flex'>
           <span className='text-xs'>Ctrl + K</span>
         </span>
