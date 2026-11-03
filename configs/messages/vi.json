@@ -245,7 +245,36 @@
       },
       "sentry": {
         "name": "Sentry",
-        "description": "Sentry"
+        "description": "Auth token của Sentry (sentry.io)",
+        "form": {
+          "token": {
+            "label": "Auth Token",
+            "placeholder": "sntrys_... hoặc sntryu_...",
+            "description": "Token tổ chức: Settings → Developer Settings → Organization Tokens. Token cá nhân: User settings → Personal Tokens. Chưa hỗ trợ Sentry tự host."
+          },
+          "region": {
+            "label": "Vùng dữ liệu",
+            "description": "Nơi lưu dữ liệu của tổ chức Sentry.",
+            "options": {
+              "us": "Hoa Kỳ (sentry.io)",
+              "eu": "Liên minh châu Âu (de.sentry.io)"
+            }
+          },
+          "submit": "Kiểm tra token"
+        },
+        "validCredentials": "Token Sentry hợp lệ",
+        "restrictedCredentials": "Token hợp lệ nhưng bị giới hạn",
+        "invalidCredentials": "Token Sentry không hợp lệ",
+        "summary": {
+          "tokenType": "Loại token",
+          "user": "User",
+          "scopes": "Scope"
+        },
+        "tokenTypes": {
+          "organization": "Token tổ chức",
+          "user": "Token cá nhân",
+          "legacy": "Token cũ"
+        }
       },
       "github": {
         "name": "GitHub",

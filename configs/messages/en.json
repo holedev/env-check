@@ -259,7 +259,36 @@
       },
       "sentry": {
         "name": "Sentry",
-        "description": "Sentry"
+        "description": "Sentry auth token (sentry.io)",
+        "form": {
+          "token": {
+            "label": "Auth Token",
+            "placeholder": "sntrys_... or sntryu_...",
+            "description": "Organization tokens: Settings → Developer Settings → Organization Tokens. Personal tokens: User settings → Personal Tokens. Self-hosted Sentry isn't supported."
+          },
+          "region": {
+            "label": "Data region",
+            "description": "Where your Sentry organization's data is stored.",
+            "options": {
+              "us": "United States (sentry.io)",
+              "eu": "European Union (de.sentry.io)"
+            }
+          },
+          "submit": "Check Token"
+        },
+        "validCredentials": "Sentry token is valid",
+        "restrictedCredentials": "Token is valid but restricted",
+        "invalidCredentials": "Sentry token is invalid",
+        "summary": {
+          "tokenType": "Token type",
+          "user": "User",
+          "scopes": "Scopes"
+        },
+        "tokenTypes": {
+          "organization": "Organization token",
+          "user": "Personal token",
+          "legacy": "Legacy token"
+        }
       },
       "github": {
         "name": "GitHub",

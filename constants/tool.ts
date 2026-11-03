@@ -177,6 +177,14 @@ export const _TOOL_LIST = defineToolList([
     libInfo: {
       packageName: "fetch"
     }
+  },
+  {
+    icon: "sentry",
+    path: "sentry",
+    progress: "completed",
+    libInfo: {
+      packageName: "fetch"
+    }
   }
 ] as const);
 
@@ -203,7 +211,7 @@ export const _TOOL_GROUP_LIST: ToolGroupType[] = [
   },
   {
     path: "analytics",
-    tools: ["google-analytics"]
+    tools: ["google-analytics", "sentry"]
   },
   {
     path: "others",
