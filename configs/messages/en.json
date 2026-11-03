@@ -550,6 +550,30 @@
           "domainsCount": "Domains",
           "domains": "Domain status"
         }
+      },
+      "redis": {
+        "name": "Redis",
+        "description": "Redis / Valkey connection URL",
+        "form": {
+          "connectionString": {
+            "label": "Connection URL",
+            "placeholder": "rediss://default:password@host:6379",
+            "description": "Use rediss:// for TLS (Upstash, Redis Cloud, Aiven). Private and local addresses are blocked on the hosted site.",
+            "errors": {
+              "format": "Connection URLs start with redis:// or rediss://"
+            }
+          },
+          "submit": "Check Connection"
+        },
+        "validCredentials": "Connected to Redis",
+        "restrictedCredentials": "Connected, but this user can't run INFO",
+        "invalidCredentials": "Could not connect to Redis",
+        "summary": {
+          "ping": "PING",
+          "server": "Server",
+          "version": "Version",
+          "mode": "Mode"
+        }
       }
     },
     "progress": {

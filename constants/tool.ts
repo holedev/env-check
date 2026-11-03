@@ -195,6 +195,16 @@ export const _TOOL_LIST = defineToolList([
       url: "https://www.npmjs.com/package/mysql2",
       version: "3.24.6"
     }
+  },
+  {
+    icon: "redis",
+    path: "redis",
+    progress: "completed",
+    libInfo: {
+      packageName: "redis",
+      url: "https://www.npmjs.com/package/redis",
+      version: "6.3.1"
+    }
   }
 ] as const);
 
@@ -209,7 +219,7 @@ export const _TOOL_GROUP_LIST: ToolGroupType[] = [
   },
   {
     path: "database",
-    tools: ["mongodb", "postgresql", "mysql"]
+    tools: ["mongodb", "postgresql", "mysql", "redis"]
   },
   {
     path: "payment",

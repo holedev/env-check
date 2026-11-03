@@ -550,6 +550,30 @@
           "domainsCount": "Số domain",
           "domains": "Trạng thái domain"
         }
+      },
+      "redis": {
+        "name": "Redis",
+        "description": "URL kết nối Redis / Valkey",
+        "form": {
+          "connectionString": {
+            "label": "URL kết nối",
+            "placeholder": "rediss://default:password@host:6379",
+            "description": "Dùng rediss:// cho TLS (Upstash, Redis Cloud, Aiven). Bản online chặn địa chỉ private và local.",
+            "errors": {
+              "format": "URL kết nối bắt đầu bằng redis:// hoặc rediss://"
+            }
+          },
+          "submit": "Kiểm tra kết nối"
+        },
+        "validCredentials": "Kết nối Redis thành công",
+        "restrictedCredentials": "Kết nối được nhưng user này không có quyền chạy INFO",
+        "invalidCredentials": "Không kết nối được Redis",
+        "summary": {
+          "ping": "PING",
+          "server": "Server",
+          "version": "Phiên bản",
+          "mode": "Chế độ"
+        }
       }
     },
     "progress": {
