@@ -401,7 +401,26 @@
       },
       "mysql": {
         "name": "MySQL",
-        "description": "MySQL"
+        "description": "MySQL / MariaDB connection string",
+        "form": {
+          "connectionString": {
+            "label": "Connection string",
+            "placeholder": "mysql://user:password@host:3306/database",
+            "description": "Works with MySQL, MariaDB, PlanetScale, TiDB and Aiven. For TLS add ?ssl={\"rejectUnauthorized\":true}. Private and local addresses are blocked on the hosted site.",
+            "errors": {
+              "format": "Connection strings start with mysql://"
+            }
+          },
+          "submit": "Check Connection"
+        },
+        "validCredentials": "Connected to MySQL",
+        "restrictedCredentials": "Connected, but restricted",
+        "invalidCredentials": "Could not connect to MySQL",
+        "summary": {
+          "version": "Server version",
+          "database": "Database",
+          "user": "Connected as"
+        }
       },
       "s3-compatible": {
         "name": "S3 Compatible",

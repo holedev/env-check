@@ -1,7 +1,7 @@
 /**
  * @jest-environment node
  */
-import { redact, requestService, restricted, summarize, valid } from "@/lib/validation";
+import { connectionSecrets, redact, requestService, restricted, summarize, valid } from "@/lib/validation";
 
 describe("summarize", () => {
   it("drops facts the service did not return", () => {
@@ -26,6 +26,20 @@ describe("redact", () => {
 
   it("ignores very short values to avoid shredding the message", () => {
     expect(redact("root denied", ["ro"])).toBe("root denied");
+  });
+});
+
+describe("connectionSecrets", () => {
+  it("returns the string plus raw and decoded password", () => {
+    expect(connectionSecrets("redis://:p%40ss@cache.example.com:6379")).toEqual([
+      "redis://:p%40ss@cache.example.com:6379",
+      "p%40ss",
+      "p@ss"
+    ]);
+  });
+
+  it("falls back to the raw string when it isn't a URL", () => {
+    expect(connectionSecrets("not a url")).toEqual(["not a url"]);
   });
 });
 

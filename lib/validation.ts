@@ -23,6 +23,16 @@ export const redact = (message: string, secrets: (string | undefined)[]): string
     .filter((secret): secret is string => typeof secret === "string" && secret.length >= 4)
     .reduce((text, secret) => text.split(secret).join("***"), message);
 
+/** The connection string itself plus its decoded password, for redact(). */
+export const connectionSecrets = (connectionString: string): string[] => {
+  try {
+    const { password } = new URL(connectionString);
+    return [connectionString, password, decodeURIComponent(password)];
+  } catch {
+    return [connectionString];
+  }
+};
+
 type ServiceResponse<T> = { status: number; ok: boolean; headers: Headers; body: T | null };
 
 const _TIMEOUT_MS = 10_000;

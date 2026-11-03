@@ -185,6 +185,16 @@ export const _TOOL_LIST = defineToolList([
     libInfo: {
       packageName: "fetch"
     }
+  },
+  {
+    icon: "mysql",
+    path: "mysql",
+    progress: "completed",
+    libInfo: {
+      packageName: "mysql2",
+      url: "https://www.npmjs.com/package/mysql2",
+      version: "3.24.6"
+    }
   }
 ] as const);
 
@@ -199,7 +209,7 @@ export const _TOOL_GROUP_LIST: ToolGroupType[] = [
   },
   {
     path: "database",
-    tools: ["mongodb", "postgresql"]
+    tools: ["mongodb", "postgresql", "mysql"]
   },
   {
     path: "payment",
