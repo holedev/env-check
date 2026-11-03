@@ -278,7 +278,23 @@
       },
       "vercel": {
         "name": "Vercel",
-        "description": "Vercel API"
+        "description": "Vercel access token",
+        "form": {
+          "token": {
+            "label": "Access Token",
+            "placeholder": "Enter your Vercel access token",
+            "description": "Create a token at https://vercel.com/account/settings/tokens."
+          },
+          "submit": "Check Token"
+        },
+        "validCredentials": "Vercel token is valid",
+        "restrictedCredentials": "Token is valid but can't read the account",
+        "invalidCredentials": "Vercel token is invalid",
+        "summary": {
+          "username": "Username",
+          "name": "Name",
+          "plan": "Plan"
+        }
       },
       "netlify": {
         "name": "Netlify",

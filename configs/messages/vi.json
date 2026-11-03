@@ -264,7 +264,23 @@
       },
       "vercel": {
         "name": "Vercel",
-        "description": "Vercel API"
+        "description": "Access token của Vercel",
+        "form": {
+          "token": {
+            "label": "Access Token",
+            "placeholder": "Nhập access token của Vercel",
+            "description": "Tạo token tại https://vercel.com/account/settings/tokens."
+          },
+          "submit": "Kiểm tra token"
+        },
+        "validCredentials": "Token Vercel hợp lệ",
+        "restrictedCredentials": "Token hợp lệ nhưng không đọc được thông tin tài khoản",
+        "invalidCredentials": "Token Vercel không hợp lệ",
+        "summary": {
+          "username": "Username",
+          "name": "Tên",
+          "plan": "Gói"
+        }
       },
       "netlify": {
         "name": "Netlify",

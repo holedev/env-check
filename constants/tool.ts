@@ -169,6 +169,14 @@ export const _TOOL_LIST = defineToolList([
     libInfo: {
       packageName: "fetch"
     }
+  },
+  {
+    icon: "vercel",
+    path: "vercel",
+    progress: "completed",
+    libInfo: {
+      packageName: "fetch"
+    }
   }
 ] as const);
 
@@ -179,7 +187,7 @@ export const _TOOL_GROUP_LIST: ToolGroupType[] = [
   },
   {
     path: "cloud",
-    tools: ["s3-compatible", "cloudflare", "supabase", "firebase", "github"]
+    tools: ["s3-compatible", "cloudflare", "supabase", "firebase", "github", "vercel"]
   },
   {
     path: "database",
