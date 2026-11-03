@@ -25,6 +25,10 @@ The metadata on a tool describing what performs the validation — `packageName`
 The act of proving a pasted credential works, by making one real authenticated call to the service and reporting success or the service's error. The call is read-only: it identifies or lists, and never sends, charges or writes anything.
 _Avoid_: verification, testing
 
+**Restricted**:
+The third Validation outcome, besides valid and invalid: the service authenticated the credential but refused the probe for lack of permission (a scoped or restricted key). The credential works; it just cannot do what the probe asks.
+_Avoid_: partial, forbidden, limited
+
 **Validation summary**:
 The small, hand-picked set of facts a Tool shows after a successful Validation (account or workspace name, scopes, live/test mode, model count). Never the service's raw response.
 _Avoid_: payload, details, raw response
