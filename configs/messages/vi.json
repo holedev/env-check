@@ -438,6 +438,32 @@
           "modelsCount": "Số model khả dụng",
           "models": "Model"
         }
+      },
+      "telegram": {
+        "name": "Telegram Bot",
+        "description": "Token Bot API của Telegram từ @BotFather",
+        "form": {
+          "token": {
+            "label": "Bot Token",
+            "placeholder": "123456789:AAE...",
+            "description": "Lấy token từ @BotFather trên Telegram (/newbot hoặc /token).",
+            "errors": {
+              "format": "Bot token có dạng 123456789:AAE… (id bot, dấu hai chấm, mã bí mật)"
+            }
+          },
+          "submit": "Kiểm tra token"
+        },
+        "validCredentials": "Token bot Telegram hợp lệ",
+        "restrictedCredentials": "Token hợp lệ nhưng bị giới hạn",
+        "invalidCredentials": "Token bot Telegram không hợp lệ",
+        "summary": {
+          "username": "Username",
+          "name": "Tên",
+          "id": "ID bot",
+          "canJoinGroups": "Được vào nhóm",
+          "canReadAllGroupMessages": "Đọc mọi tin trong nhóm",
+          "supportsInlineQueries": "Chế độ inline"
+        }
       }
     },
     "progress": {

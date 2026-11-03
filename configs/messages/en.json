@@ -438,6 +438,32 @@
           "modelsCount": "Models available",
           "models": "Models"
         }
+      },
+      "telegram": {
+        "name": "Telegram Bot",
+        "description": "Telegram Bot API token from @BotFather",
+        "form": {
+          "token": {
+            "label": "Bot Token",
+            "placeholder": "123456789:AAE...",
+            "description": "Get a token from @BotFather on Telegram (/newbot or /token).",
+            "errors": {
+              "format": "Bot tokens look like 123456789:AAE… (bot id, colon, secret)"
+            }
+          },
+          "submit": "Check Token"
+        },
+        "validCredentials": "Telegram bot token is valid",
+        "restrictedCredentials": "Token is valid but restricted",
+        "invalidCredentials": "Telegram bot token is invalid",
+        "summary": {
+          "username": "Username",
+          "name": "Name",
+          "id": "Bot ID",
+          "canJoinGroups": "Can join groups",
+          "canReadAllGroupMessages": "Reads all group messages",
+          "supportsInlineQueries": "Inline mode"
+        }
       }
     },
     "progress": {

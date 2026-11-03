@@ -153,6 +153,14 @@ export const _TOOL_LIST = defineToolList([
     libInfo: {
       packageName: "fetch"
     }
+  },
+  {
+    icon: "telegram",
+    path: "telegram",
+    progress: "completed",
+    libInfo: {
+      packageName: "fetch"
+    }
   }
 ] as const);
 
@@ -175,7 +183,7 @@ export const _TOOL_GROUP_LIST: ToolGroupType[] = [
   },
   {
     path: "messaging",
-    tools: ["gmail-smtp", "discord", "slack"]
+    tools: ["gmail-smtp", "discord", "slack", "telegram"]
   },
   {
     path: "analytics",
