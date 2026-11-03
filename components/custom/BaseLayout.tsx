@@ -8,7 +8,6 @@ import { cn } from "@/lib/utils";
 import type { locale } from "@/types/global";
 import { ThemeProvider } from "../theme-provider";
 import { TooltipProvider } from "../ui/tooltip";
-import { Header } from "./Header";
 
 const roboto = Roboto({ subsets: ["latin"], weight: ["300", "400", "500", "700"], style: ["italic", "normal"] });
 
@@ -19,18 +18,10 @@ export async function BaseLayout({ children, locale }: BaseLayoutType) {
 
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body className={cn(roboto.className, "h-screen w-full")}>
+      <body className={cn(roboto.className, "min-h-svh w-full antialiased")}>
         <ThemeProvider attribute='class' defaultTheme='system' disableTransitionOnChange enableSystem>
           <TooltipProvider>
-            <NextIntlClientProvider messages={messages}>
-              {/* <SidebarProvider defaultOpen={true}> */}
-              {/* <AppSidebar /> */}
-              <div className='w-full'>
-                <Header />
-                <main className='p-4'>{children}</main>
-              </div>
-              {/* </SidebarProvider> */}
-            </NextIntlClientProvider>
+            <NextIntlClientProvider messages={messages}>{children}</NextIntlClientProvider>
           </TooltipProvider>
           <Toaster position='bottom-right' richColors />
         </ThemeProvider>

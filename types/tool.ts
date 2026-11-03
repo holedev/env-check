@@ -30,3 +30,5 @@ export type ToolGroupType = {
   path: ToolGroupCategory;
   tools: ToolPath[];
 };
+
+export type ToolItem = ToolWithProgressType & { path: ToolPath };

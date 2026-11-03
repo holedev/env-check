@@ -98,7 +98,7 @@ const FormClient = () => {
   }
 
   return (
-    <div className='mx-auto w-fit min-w-[400px] space-y-8'>
+    <div className='mx-auto w-full space-y-8 sm:w-fit sm:min-w-[400px]'>
       <Form {...form}>
         <form className='flex flex-col items-end gap-4' onSubmit={form.handleSubmit(onSubmit)}>
           <FormField

@@ -343,5 +343,28 @@
       "description": "Xin lỗi, chúng tôi không thể tìm thấy trang bạn đang tìm kiếm. Nó có thể đã bị di chuyển hoặc không tồn tại.",
       "redirect": "Quay về trang chủ"
     }
+  },
+  "workspace": {
+    "sidebar": {
+      "allTools": "Tất cả tools",
+      "groups": "Nhóm tools",
+      "toggleGroup": "Mở/đóng {group}"
+    },
+    "overview": {
+      "title": "Tất cả tools",
+      "description": "{count} trình kiểm tra credential, chia theo loại dịch vụ. Chọn một tool để bắt đầu.",
+      "viewGroup": "Xem nhóm"
+    },
+    "emptyGroup": "Nhóm này chưa có tool nào."
+  },
+  "landing": {
+    "header": {
+      "openWorkspace": "Mở Workspace"
+    },
+    "footer": {
+      "tagline": "Kiểm tra API key mà không phải giao nó cho bên thứ ba.",
+      "source": "Mã nguồn",
+      "license": "Giấy phép GPL-3.0"
+    }
   }
 }

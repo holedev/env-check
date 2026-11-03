@@ -11,7 +11,7 @@ export default function ErrorGlobal({ error, reset }: ErrorType) {
   const isProd = process.env.NODE_ENV === "production";
 
   return (
-    <div className='flex min-h-full items-center justify-center py-6'>
+    <div className='flex min-h-svh items-center justify-center px-4 py-6'>
       <div className='w-full max-w-md rounded-lg bg-white p-8 text-center shadow-md'>
         <AlertTriangleIcon className='mx-auto mb-4 h-12 w-12 text-red-500' />
         <h1 className='mb-4 font-bold text-2xl text-gray-800'>{t("title")}</h1>

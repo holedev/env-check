@@ -343,5 +343,28 @@
       "description": "Sorry, we can't find the page you're looking for. It may have been moved or does not exist.",
       "redirect": "Go to the homepage"
     }
+  },
+  "workspace": {
+    "sidebar": {
+      "allTools": "All tools",
+      "groups": "Tool groups",
+      "toggleGroup": "Toggle {group}"
+    },
+    "overview": {
+      "title": "All tools",
+      "description": "{count} credential validators, grouped by service type. Pick one to start checking.",
+      "viewGroup": "View group"
+    },
+    "emptyGroup": "No tools in this group yet."
+  },
+  "landing": {
+    "header": {
+      "openWorkspace": "Open Workspace"
+    },
+    "footer": {
+      "tagline": "Validate API keys without handing them to a third party.",
+      "source": "Source code",
+      "license": "GPL-3.0 licensed"
+    }
   }
 }
