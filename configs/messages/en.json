@@ -365,6 +365,68 @@
       "tagline": "Validate API keys without handing them to a third party.",
       "source": "Source code",
       "license": "GPL-3.0 licensed"
+    },
+    "meta": {
+      "title": "ENV Check: validate API keys in seconds",
+      "description": "Paste an API key or credential and ENV Check makes one real authenticated call to the service to tell you whether it works. Open source, nothing stored."
+    },
+    "hero": {
+      "badge": "Open source · Self-hostable",
+      "title": "Is your API key actually working?",
+      "description": "Paste a credential and ENV Check makes one real authenticated call to the service, then tells you whether it works and why not.",
+      "primary": "Start checking",
+      "secondary": "View on GitHub"
+    },
+    "preview": {
+      "title": "Validation result",
+      "valid": "Valid",
+      "invalid": "Invalid"
+    },
+    "stats": {
+      "tools": "tools",
+      "groups": "service groups",
+      "locales": "languages"
+    },
+    "security": {
+      "title": "Your keys stay with you",
+      "description": "Built for credentials you would rather not paste into a random website.",
+      "serverAction": {
+        "title": "Server-side only",
+        "description": "Every check runs in a Next.js Server Action. Your key goes from your browser to this server and on to the service being checked. No other third party sees it."
+      },
+      "noStorage": {
+        "title": "Nothing stored",
+        "description": "There is no database and no cache. A key lives only for the single request that validates it."
+      },
+      "openSource": {
+        "title": "Open source",
+        "description": "Read exactly what each check does, or run your own instance with Docker or Vercel."
+      }
+    },
+    "steps": {
+      "title": "How it works",
+      "pick": {
+        "title": "Pick a tool",
+        "description": "Choose the service your credential belongs to."
+      },
+      "paste": {
+        "title": "Paste the credential",
+        "description": "Inputs are masked by default, with a one-click paste."
+      },
+      "result": {
+        "title": "Get a clear answer",
+        "description": "See success, or the exact error the service returned."
+      }
+    },
+    "groups": {
+      "title": "What you can check",
+      "description": "Tools are grouped by the kind of service they validate.",
+      "count": "{count, plural, one {# tool} other {# tools}}"
+    },
+    "cta": {
+      "title": "Ready to check a key?",
+      "description": "No sign-up. Pick a tool and paste.",
+      "button": "Open Workspace"
     }
   }
 }

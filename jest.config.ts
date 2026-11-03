@@ -13,8 +13,8 @@ const config: Config = {
   testMatch: [
     "**/test/**/*.test.ts",
     "**/test/**/*.test.tsx",
-    "**/app/tools/**/__tests__/*.test.ts",
-    "**/app/tools/**/__tests__/*.test.tsx"
+    "**/app/**/__tests__/*.test.ts",
+    "**/app/**/__tests__/*.test.tsx"
   ],
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/$1"

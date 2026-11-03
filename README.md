@@ -2,11 +2,14 @@
 
 A developer tool for quickly validating API keys across multiple popular services. Stop wondering if your API keys are working - just paste and check!
 
+**Live:** https://envcheck.vercel.app
+
 ## Features
 
-- 🔑 Instant API key validation for 15+ popular services
+- 🔑 Instant API key validation across AI, cloud, database, messaging and analytics services
 - 🚀 Clean, modern interface built with Next.js
-- 🔒 Client-side only - your API keys never touch our servers
+- 🔒 Validation runs in Next.js Server Actions - keys go only to the service being checked, and nothing is stored
+- 🛡️ Strict security headers (CSP, HSTS, frame-ancestors) out of the box
 - 🌙 Dark/Light mode support
 - 🌍 i18n support (English/Vietnamese)
 
@@ -50,7 +53,9 @@ docker rm env-check
 
 ## Vercel Deployment
 You can deploy this application to Vercel with a single click:
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fhole-dev%2Fenv-check)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fholedev%2Fenv-check)
+
+Set `NEXT_PUBLIC_SITE_URL` (e.g. `https://your-domain.com`) on your own deployment so canonical URLs, Open Graph tags and `sitemap.xml` point at your domain instead of `https://envcheck.vercel.app`.
 
 ## Development
 

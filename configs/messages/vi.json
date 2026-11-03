@@ -365,6 +365,68 @@
       "tagline": "Kiểm tra API key mà không phải giao nó cho bên thứ ba.",
       "source": "Mã nguồn",
       "license": "Giấy phép GPL-3.0"
+    },
+    "meta": {
+      "title": "ENV Check: kiểm tra API key trong vài giây",
+      "description": "Dán API key hoặc credential, ENV Check gọi thật một request có xác thực tới dịch vụ để cho bạn biết key có hoạt động hay không. Mã nguồn mở, không lưu trữ."
+    },
+    "hero": {
+      "badge": "Mã nguồn mở · Tự host được",
+      "title": "API key của bạn có thật sự hoạt động?",
+      "description": "Dán credential, ENV Check gọi thật một request có xác thực tới dịch vụ và cho bạn biết key có hoạt động hay không, kèm lý do nếu lỗi.",
+      "primary": "Bắt đầu kiểm tra",
+      "secondary": "Xem trên GitHub"
+    },
+    "preview": {
+      "title": "Kết quả kiểm tra",
+      "valid": "Hợp lệ",
+      "invalid": "Không hợp lệ"
+    },
+    "stats": {
+      "tools": "tools",
+      "groups": "nhóm dịch vụ",
+      "locales": "ngôn ngữ"
+    },
+    "security": {
+      "title": "Key của bạn vẫn ở chỗ bạn",
+      "description": "Làm ra cho những credential bạn không muốn dán vào một trang web lạ.",
+      "serverAction": {
+        "title": "Chỉ chạy phía server",
+        "description": "Mọi lần kiểm tra chạy trong Next.js Server Action. Key đi từ trình duyệt tới server này rồi tới dịch vụ cần kiểm tra. Không bên thứ ba nào khác nhìn thấy."
+      },
+      "noStorage": {
+        "title": "Không lưu trữ",
+        "description": "Không có database, không có cache. Key chỉ tồn tại trong đúng một request dùng để kiểm tra nó."
+      },
+      "openSource": {
+        "title": "Mã nguồn mở",
+        "description": "Đọc chính xác từng tool làm gì, hoặc tự chạy một bản riêng bằng Docker hay Vercel."
+      }
+    },
+    "steps": {
+      "title": "Cách hoạt động",
+      "pick": {
+        "title": "Chọn tool",
+        "description": "Chọn dịch vụ mà credential của bạn thuộc về."
+      },
+      "paste": {
+        "title": "Dán credential",
+        "description": "Ô nhập được che mặc định, có nút dán một chạm."
+      },
+      "result": {
+        "title": "Nhận kết quả rõ ràng",
+        "description": "Thấy ngay thành công, hoặc đúng lỗi mà dịch vụ trả về."
+      }
+    },
+    "groups": {
+      "title": "Bạn có thể kiểm tra gì",
+      "description": "Các tool được chia nhóm theo loại dịch vụ.",
+      "count": "{count} tools"
+    },
+    "cta": {
+      "title": "Sẵn sàng kiểm tra key?",
+      "description": "Không cần đăng ký. Chọn tool và dán.",
+      "button": "Mở Workspace"
     }
   }
 }
