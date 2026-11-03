@@ -361,6 +361,28 @@
           "admin": "Admin key",
           "user": "User key (legacy)"
         }
+      },
+      "anthropic": {
+        "name": "Anthropic (Claude)",
+        "description": "Claude API key (console.anthropic.com)",
+        "form": {
+          "apiKey": {
+            "label": "API Key",
+            "placeholder": "sk-ant-api03-...",
+            "description": "Create a key at https://console.anthropic.com/settings/keys.",
+            "errors": {
+              "format": "Anthropic keys start with sk-ant-"
+            }
+          },
+          "submit": "Check API Key"
+        },
+        "validCredentials": "Claude API key is valid",
+        "restrictedCredentials": "Key is valid but can't list models",
+        "invalidCredentials": "Claude API key is invalid",
+        "summary": {
+          "modelsCount": "Models available",
+          "models": "Models"
+        }
       }
     },
     "progress": {

@@ -361,6 +361,28 @@
           "admin": "Key admin",
           "user": "Key user (cũ)"
         }
+      },
+      "anthropic": {
+        "name": "Anthropic (Claude)",
+        "description": "API key của Claude (console.anthropic.com)",
+        "form": {
+          "apiKey": {
+            "label": "API Key",
+            "placeholder": "sk-ant-api03-...",
+            "description": "Tạo key tại https://console.anthropic.com/settings/keys.",
+            "errors": {
+              "format": "Key của Anthropic bắt đầu bằng sk-ant-"
+            }
+          },
+          "submit": "Kiểm tra API Key"
+        },
+        "validCredentials": "API key của Claude hợp lệ",
+        "restrictedCredentials": "Key hợp lệ nhưng không có quyền liệt kê model",
+        "invalidCredentials": "API key của Claude không hợp lệ",
+        "summary": {
+          "modelsCount": "Số model khả dụng",
+          "models": "Model"
+        }
       }
     },
     "progress": {
