@@ -9,7 +9,7 @@ A developer tool for quickly validating API keys across multiple popular service
 - 🔑 Instant API key validation across AI, cloud, database, messaging and analytics services
 - 🚀 Clean, modern interface built with Next.js
 - 🔒 Validation runs in Next.js Server Actions - keys go only to the service being checked, and nothing is stored
-- 🛡️ Strict security headers (CSP, HSTS, frame-ancestors) out of the box
+- 🛡️ Nonce-based CSP plus HSTS and anti-framing headers out of the box
 - 🌙 Dark/Light mode support
 - 🌍 i18n support (English/Vietnamese)
 
