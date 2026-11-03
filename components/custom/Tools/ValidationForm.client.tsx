@@ -116,7 +116,7 @@ const ValidationForm = <V extends Values>({
         {summary.map((item) => (
           <div className='contents' key={item.key}>
             <dt className='text-muted-foreground'>{tool(`summary.${item.key}`)}</dt>
-            <dd className='break-all font-medium'>
+            <dd className='wrap-anywhere font-medium'>
               {item.enumKey ? tool(`${item.enumKey}.${String(item.value)}`) : formatValue(item.value)}
             </dd>
           </div>
@@ -133,7 +133,7 @@ const ValidationForm = <V extends Values>({
           <Alert variant='destructive'>
             <AlertCircleIcon />
             <AlertTitle>{tool("invalidCredentials")}</AlertTitle>
-            {state.message && <AlertDescription className='break-all'>{state.message}</AlertDescription>}
+            {state.message && <AlertDescription className='wrap-anywhere'>{state.message}</AlertDescription>}
           </Alert>
         );
       case "done":
@@ -144,7 +144,7 @@ const ValidationForm = <V extends Values>({
                 <AlertTriangleIcon />
                 <AlertTitle>{tool("restrictedCredentials")}</AlertTitle>
                 {state.result.reason && (
-                  <AlertDescription className='break-all'>{state.result.reason}</AlertDescription>
+                  <AlertDescription className='wrap-anywhere'>{state.result.reason}</AlertDescription>
                 )}
               </Alert>
             ) : (
