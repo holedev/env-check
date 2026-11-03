@@ -123,13 +123,20 @@ export const _TOOL_LIST = defineToolList([
       url: "https://www.npmjs.com/package/@octokit/rest",
       version: "22.0.1"
     }
+  },
+  {
+    path: "openai",
+    progress: "completed",
+    libInfo: {
+      packageName: "fetch"
+    }
   }
 ] as const);
 
 export const _TOOL_GROUP_LIST: ToolGroupType[] = [
   {
     path: "ai",
-    tools: ["google-gemini"]
+    tools: ["google-gemini", "openai"]
   },
   {
     path: "cloud",

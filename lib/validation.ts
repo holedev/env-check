@@ -6,6 +6,9 @@ export const summarize = (items: Record<string, SummaryItem["value"] | null | un
     value === null || value === undefined || value === "" ? [] : [{ key, value }]
   );
 
+/** A summary fact whose value is a code translated from `tools.items.<tool>.<enumKey>.<value>`. */
+export const enumFact = (key: string, enumKey: string, value: string): SummaryItem => ({ key, value, enumKey });
+
 export const valid = (summary: SummaryItem[] = []): ValidationResult => ({ outcome: "valid", summary });
 
 export const restricted = (reason: string, summary: SummaryItem[] = []): ValidationResult => ({

@@ -332,6 +332,35 @@
         "validCredentials": "S3 connection successful!",
         "invalidCredentials": "S3 connection failed!",
         "connectionDetails": "Connection Details"
+      },
+      "openai": {
+        "name": "OpenAI",
+        "description": "OpenAI API key (platform.openai.com)",
+        "form": {
+          "apiKey": {
+            "label": "API Key",
+            "placeholder": "sk-proj-...",
+            "description": "Create a key at https://platform.openai.com/api-keys. Project, service-account and legacy user keys are supported.",
+            "errors": {
+              "format": "OpenAI keys start with sk-"
+            }
+          },
+          "submit": "Check API Key"
+        },
+        "validCredentials": "OpenAI API key is valid",
+        "restrictedCredentials": "Key is valid but can't list models",
+        "invalidCredentials": "OpenAI API key is invalid",
+        "summary": {
+          "keyType": "Key type",
+          "modelsCount": "Models available",
+          "models": "Models"
+        },
+        "keyTypes": {
+          "project": "Project key",
+          "serviceAccount": "Service account key",
+          "admin": "Admin key",
+          "user": "User key (legacy)"
+        }
       }
     },
     "progress": {

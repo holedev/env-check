@@ -332,6 +332,35 @@
         "validCredentials": "Kết nối S3 thành công!",
         "invalidCredentials": "Kết nối S3 thất bại!",
         "connectionDetails": "Chi Tiết Kết Nối"
+      },
+      "openai": {
+        "name": "OpenAI",
+        "description": "API key của OpenAI (platform.openai.com)",
+        "form": {
+          "apiKey": {
+            "label": "API Key",
+            "placeholder": "sk-proj-...",
+            "description": "Tạo key tại https://platform.openai.com/api-keys. Hỗ trợ key project, service account và key user cũ.",
+            "errors": {
+              "format": "Key của OpenAI bắt đầu bằng sk-"
+            }
+          },
+          "submit": "Kiểm tra API Key"
+        },
+        "validCredentials": "API key của OpenAI hợp lệ",
+        "restrictedCredentials": "Key hợp lệ nhưng không có quyền liệt kê model",
+        "invalidCredentials": "API key của OpenAI không hợp lệ",
+        "summary": {
+          "keyType": "Loại key",
+          "modelsCount": "Số model khả dụng",
+          "models": "Model"
+        },
+        "keyTypes": {
+          "project": "Key project",
+          "serviceAccount": "Key service account",
+          "admin": "Key admin",
+          "user": "Key user (cũ)"
+        }
       }
     },
     "progress": {

@@ -2,6 +2,8 @@
 export type SummaryItem = {
   key: string;
   value: string | number | boolean | string[];
+  /** When set, `value` is a code shown as `tools.items.<tool>.<enumKey>.<value>`. */
+  enumKey?: string;
 };
 
 /** What a successful Server Action returns as its payload. An invalid credential throws instead. */

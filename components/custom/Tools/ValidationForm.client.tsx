@@ -116,7 +116,9 @@ const ValidationForm = <V extends Values>({
         {summary.map((item) => (
           <div className='contents' key={item.key}>
             <dt className='text-muted-foreground'>{tool(`summary.${item.key}`)}</dt>
-            <dd className='break-all font-medium'>{formatValue(item.value)}</dd>
+            <dd className='break-all font-medium'>
+              {item.enumKey ? tool(`${item.enumKey}.${String(item.value)}`) : formatValue(item.value)}
+            </dd>
           </div>
         ))}
       </dl>
