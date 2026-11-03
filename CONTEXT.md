@@ -22,8 +22,12 @@ _Avoid_: status, stage, planned, coming-soon
 The metadata on a tool describing what performs the validation — `packageName` (an npm package, or the literal `"fetch"` when it's a raw REST call), plus optional `url` and `version`.
 
 **Validation**:
-The act of proving a pasted credential works, by making one real authenticated call to the service and reporting success or the service's error.
+The act of proving a pasted credential works, by making one real authenticated call to the service and reporting success or the service's error. The call is read-only: it identifies or lists, and never sends, charges or writes anything.
 _Avoid_: verification, testing
+
+**Validation summary**:
+The small, hand-picked set of facts a Tool shows after a successful Validation (account or workspace name, scopes, live/test mode, model count). Never the service's raw response.
+_Avoid_: payload, details, raw response
 
 ### Request handling
 
