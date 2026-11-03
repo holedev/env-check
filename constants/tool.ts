@@ -27,7 +27,7 @@ export const _TOOL_LIST = defineToolList([
     libInfo: {
       packageName: "@aws-sdk/client-s3",
       url: "https://www.npmjs.com/package/@aws-sdk/client-s3",
-      version: "3.1120.0"
+      version: "3.1161.0"
     }
   },
   {
@@ -45,7 +45,7 @@ export const _TOOL_LIST = defineToolList([
     libInfo: {
       packageName: "@supabase/supabase-js",
       url: "https://www.npmjs.com/package/@supabase/supabase-js",
-      version: "2.112.4"
+      version: "2.118.0"
     }
   },
   {
@@ -55,7 +55,7 @@ export const _TOOL_LIST = defineToolList([
     libInfo: {
       packageName: "firebase-admin",
       url: "https://www.npmjs.com/package/firebase-admin",
-      version: "14.3.0"
+      version: "14.5.0"
     }
   },
   {
@@ -65,7 +65,7 @@ export const _TOOL_LIST = defineToolList([
     libInfo: {
       packageName: "mongodb",
       url: "https://www.npmjs.com/package/mongodb",
-      version: "7.6.0"
+      version: "7.8.0"
     }
   },
   {
@@ -75,7 +75,7 @@ export const _TOOL_LIST = defineToolList([
     libInfo: {
       packageName: "pg",
       url: "https://www.npmjs.com/package/pg",
-      version: "8.23.0"
+      version: "8.23.1"
     }
   },
   {
@@ -85,7 +85,7 @@ export const _TOOL_LIST = defineToolList([
     libInfo: {
       packageName: "openai",
       url: "https://www.npmjs.com/package/openai",
-      version: "7.8.0"
+      version: "7.47.0"
     }
   },
   {
@@ -95,7 +95,7 @@ export const _TOOL_LIST = defineToolList([
     libInfo: {
       packageName: "nodemailer",
       url: "https://www.npmjs.com/package/nodemailer",
-      version: "9.0.6"
+      version: "10.3.1"
     }
   },
   {
