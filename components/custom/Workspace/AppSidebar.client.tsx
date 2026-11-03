@@ -1,10 +1,10 @@
 "use client";
 
 import { ChevronRightIcon, LayoutGridIcon } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { ToolIcon } from "@/components/custom/Tools/ToolIcon";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import {
   Sidebar,
@@ -115,13 +115,7 @@ const AppSidebar = () => {
                               <SidebarMenuSubItem key={tool.path}>
                                 <SidebarMenuSubButton asChild isActive={pathname === toolHref}>
                                   <Link href={toolHref} onClick={closeOnMobile}>
-                                    <Image
-                                      alt=''
-                                      className='dark:invert'
-                                      height={16}
-                                      src={`https://cdn.simpleicons.org/${tool.icon}`}
-                                      width={16}
-                                    />
+                                    <ToolIcon icon={tool.icon} size={16} />
                                     <span>{toolName}</span>
                                   </Link>
                                 </SidebarMenuSubButton>

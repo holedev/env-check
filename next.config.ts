@@ -19,13 +19,12 @@ const nextConfig: NextConfig = {
   // "standalone" is for the Docker image (Dockerfile copies .next/standalone).
   // On Vercel it clashes with Vercel's own output tracing (next-server.js.nft.json
   // ENOENT on Next 16.3+), so let Vercel trace natively there.
-  output: process.env.VERCEL ? undefined : "standalone",
-  images: {
-    remotePatterns: [new URL("https://cdn.simpleicons.org/**")],
-    // simple icon return image/svg+xml
-    dangerouslyAllowSVG: true
-  }
+  output: process.env.VERCEL ? undefined : "standalone"
 };
+
+// No `images` config: brand icons (SVG) load straight from cdn.simpleicons.org
+// via <Image unoptimized> (components/custom/Tools/ToolIcon.tsx), so the Image
+// Optimization API needs no remote patterns and never serves SVG.
 
 const withNextIntl = createNextIntlPlugin({
   requestConfig: "./configs/i18n/request.ts"

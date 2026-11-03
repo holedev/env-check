@@ -1,7 +1,6 @@
 "use client";
 
 import { SearchIcon } from "lucide-react";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -17,6 +16,7 @@ import {
 } from "@/components/ui/command";
 import { _TOOL_GROUP_LIST, _TOOL_LIST } from "@/constants/tool";
 import type { ToolPath, ToolWithProgressType } from "@/types/tool";
+import { ToolIcon } from "../Tools/ToolIcon";
 import { ToolProgress } from "../Tools/ToolProgress";
 
 const SearchCommand = () => {
@@ -125,13 +125,7 @@ const SearchCommand = () => {
                         {index + 1}
                       </span>
                     )}
-                    <Image
-                      alt={tool.path}
-                      className='dark:invert'
-                      height={18}
-                      src={`https://cdn.simpleicons.org/${tool.icon}`}
-                      width={18}
-                    />
+                    <ToolIcon icon={tool.icon} size={18} />
                     <span>{t(`tools.items.${tool.path}.name`)}</span>
                   </div>
                   <ToolProgress progress={(tool as ToolWithProgressType).progress || "notStarted"} />
