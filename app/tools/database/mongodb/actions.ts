@@ -2,6 +2,7 @@
 
 import { MongoClient } from "mongodb";
 import { handleErrorServerNoAuth } from "@/utils/handle-error-server";
+import { assertPublicConnectionString } from "@/utils/network-guard";
 
 type MongoDbConfig = {
   connectionString: string;
@@ -10,6 +11,7 @@ type MongoDbConfig = {
 const checkMongoDbConnection = async (config: MongoDbConfig) =>
   handleErrorServerNoAuth({
     cb: async () => {
+      await assertPublicConnectionString(config.connectionString);
       const client = new MongoClient(config.connectionString);
 
       try {

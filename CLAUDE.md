@@ -72,6 +72,10 @@ Tests live in `app/tools/[category]/[service-path]/__tests__/`. Jest is configur
 
 `next-intl` with two locales: `en` and `vi`. All user-visible strings go in `configs/messages/en.json` and `configs/messages/vi.json`.
 
+### User-supplied hosts
+
+Any tool that connects to a host the user types (connection string, SMTP host, custom endpoint) must call `assertPublicConnectionString` / `assertPublicHost` from `utils/network-guard.ts` before connecting. Mock `@/utils/network-guard` in that tool's `actions.test.ts`.
+
 ### Sensitive inputs
 
 Use the `InputWithPaste` component for all API key / token fields. It defaults to `hidden={true}` (password masking with toggle).

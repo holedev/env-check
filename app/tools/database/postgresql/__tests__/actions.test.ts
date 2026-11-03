@@ -16,6 +16,11 @@ jest.mock("@/utils/handle-error-server", () => ({
   handleErrorServerNoAuth: jest.fn()
 }));
 
+jest.mock("@/utils/network-guard", () => ({
+  assertPublicHost: jest.fn(),
+  assertPublicConnectionString: jest.fn()
+}));
+
 describe("PostgreSQL Actions", () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -134,5 +139,27 @@ describe("PostgreSQL Actions", () => {
 
       expect(Client).toHaveBeenCalledWith({ connectionString });
     });
+  });
+});
+
+describe("private network guard", () => {
+  it("refuses private hosts before connecting", async () => {
+    const guard = require("@/utils/network-guard").assertPublicConnectionString as jest.Mock;
+    guard.mockRejectedValueOnce(new Error("Connections to private or internal network addresses are blocked."));
+    const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
+    handleErrorServerNoAuth.mockImplementation(async ({ cb }: { cb: () => Promise<object> }) => {
+      try {
+        return { error: null, data: { payload: await cb() } };
+      } catch (error) {
+        return { error: { message: (error as Error).message }, data: null };
+      }
+    });
+    const driver = require("pg").Client as jest.Mock;
+    driver.mockClear();
+
+    const result = await checkPostgreSqlConnection({ connectionString: "postgresql://user:pass@127.0.0.1:5432/db" });
+
+    expect(result.error?.message).toContain("private or internal network");
+    expect(driver).not.toHaveBeenCalled();
   });
 });

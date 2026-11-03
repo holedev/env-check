@@ -15,6 +15,11 @@ jest.mock("@/utils/handle-error-server", () => ({
   handleErrorServerNoAuth: jest.fn()
 }));
 
+jest.mock("@/utils/network-guard", () => ({
+  assertPublicHost: jest.fn(),
+  assertPublicConnectionString: jest.fn()
+}));
+
 describe("Gmail SMTP Actions", () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -232,5 +237,34 @@ describe("Gmail SMTP Actions", () => {
       expect(result.error?.message).toBe("Failed to send email");
       expect(result.data).toBeNull();
     });
+  });
+});
+
+describe("private network guard", () => {
+  it("refuses private hosts before connecting", async () => {
+    const guard = require("@/utils/network-guard").assertPublicHost as jest.Mock;
+    guard.mockRejectedValueOnce(new Error("Connections to private or internal network addresses are blocked."));
+    const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
+    handleErrorServerNoAuth.mockImplementation(async ({ cb }: { cb: () => Promise<object> }) => {
+      try {
+        return { error: null, data: { payload: await cb() } };
+      } catch (error) {
+        return { error: { message: (error as Error).message }, data: null };
+      }
+    });
+    const driver = require("nodemailer").createTransport as jest.Mock;
+    driver.mockClear();
+
+    const result = await checkSMTPConnection({
+      host: "127.0.0.1",
+      port: 587,
+      secure: false,
+      username: "u",
+      password: "p",
+      testType: "verify" as const
+    });
+
+    expect(result.error?.message).toContain("private or internal network");
+    expect(driver).not.toHaveBeenCalled();
   });
 });

@@ -10,6 +10,11 @@ jest.mock("@/utils/handle-error-server", () => ({
   handleErrorServerNoAuth: jest.fn()
 }));
 
+jest.mock("@/utils/network-guard", () => ({
+  assertPublicHost: jest.fn(),
+  assertPublicConnectionString: jest.fn()
+}));
+
 type Cb = { cb: () => Promise<object> };
 
 const passThrough = async ({ cb }: Cb) => {
@@ -115,5 +120,27 @@ describe("MongoDB Actions", () => {
 
       expect(MongoClient).toHaveBeenCalledWith(connectionString);
     });
+  });
+});
+
+describe("private network guard", () => {
+  it("refuses private hosts before connecting", async () => {
+    const guard = require("@/utils/network-guard").assertPublicConnectionString as jest.Mock;
+    guard.mockRejectedValueOnce(new Error("Connections to private or internal network addresses are blocked."));
+    const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
+    handleErrorServerNoAuth.mockImplementation(async ({ cb }: { cb: () => Promise<object> }) => {
+      try {
+        return { error: null, data: { payload: await cb() } };
+      } catch (error) {
+        return { error: { message: (error as Error).message }, data: null };
+      }
+    });
+    const driver = require("mongodb").MongoClient as jest.Mock;
+    driver.mockClear();
+
+    const result = await checkMongoDbConnection({ connectionString: "mongodb://user:pass@127.0.0.1:27017/db" });
+
+    expect(result.error?.message).toContain("private or internal network");
+    expect(driver).not.toHaveBeenCalled();
   });
 });
