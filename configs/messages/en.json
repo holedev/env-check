@@ -464,6 +464,28 @@
           "canReadAllGroupMessages": "Reads all group messages",
           "supportsInlineQueries": "Inline mode"
         }
+      },
+      "resend": {
+        "name": "Resend",
+        "description": "Resend email API key",
+        "form": {
+          "apiKey": {
+            "label": "API Key",
+            "placeholder": "re_...",
+            "description": "Create a key at https://resend.com/api-keys. Sending-only keys are reported as restricted.",
+            "errors": {
+              "format": "Resend keys start with re_"
+            }
+          },
+          "submit": "Check API Key"
+        },
+        "validCredentials": "Resend API key is valid (full access)",
+        "restrictedCredentials": "Key is valid but limited to sending emails",
+        "invalidCredentials": "Resend API key is invalid",
+        "summary": {
+          "domainsCount": "Domains",
+          "domains": "Domain status"
+        }
       }
     },
     "progress": {

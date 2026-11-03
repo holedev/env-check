@@ -464,6 +464,28 @@
           "canReadAllGroupMessages": "Đọc mọi tin trong nhóm",
           "supportsInlineQueries": "Chế độ inline"
         }
+      },
+      "resend": {
+        "name": "Resend",
+        "description": "API key gửi email của Resend",
+        "form": {
+          "apiKey": {
+            "label": "API Key",
+            "placeholder": "re_...",
+            "description": "Tạo key tại https://resend.com/api-keys. Key chỉ có quyền gửi sẽ được báo là bị giới hạn.",
+            "errors": {
+              "format": "Key của Resend bắt đầu bằng re_"
+            }
+          },
+          "submit": "Kiểm tra API Key"
+        },
+        "validCredentials": "API key của Resend hợp lệ (toàn quyền)",
+        "restrictedCredentials": "Key hợp lệ nhưng chỉ có quyền gửi email",
+        "invalidCredentials": "API key của Resend không hợp lệ",
+        "summary": {
+          "domainsCount": "Số domain",
+          "domains": "Trạng thái domain"
+        }
       }
     },
     "progress": {
