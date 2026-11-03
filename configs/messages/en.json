@@ -213,7 +213,34 @@
       },
       "slack": {
         "name": "Slack",
-        "description": "Slack"
+        "description": "Slack bot, user or app-level token",
+        "form": {
+          "token": {
+            "label": "Token",
+            "placeholder": "xoxb-... or xoxp-...",
+            "description": "Find tokens under OAuth & Permissions at https://api.slack.com/apps.",
+            "errors": {
+              "format": "Slack tokens start with xoxb-, xoxp-, xoxe- or xapp-"
+            }
+          },
+          "submit": "Check Token"
+        },
+        "validCredentials": "Slack token is valid",
+        "restrictedCredentials": "Token is valid but can't call auth.test",
+        "invalidCredentials": "Slack token is invalid",
+        "summary": {
+          "team": "Workspace",
+          "url": "Workspace URL",
+          "user": "User",
+          "tokenType": "Token type",
+          "scopes": "Scopes"
+        },
+        "tokenTypes": {
+          "bot": "Bot token",
+          "user": "User token",
+          "appLevel": "App-level token",
+          "other": "Other token"
+        }
       },
       "discord": {
         "name": "Discord",

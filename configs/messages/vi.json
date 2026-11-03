@@ -199,7 +199,34 @@
       },
       "slack": {
         "name": "Slack",
-        "description": "Slack"
+        "description": "Token bot, user hoặc app-level của Slack",
+        "form": {
+          "token": {
+            "label": "Token",
+            "placeholder": "xoxb-... hoặc xoxp-...",
+            "description": "Lấy token ở mục OAuth & Permissions tại https://api.slack.com/apps.",
+            "errors": {
+              "format": "Token của Slack bắt đầu bằng xoxb-, xoxp-, xoxe- hoặc xapp-"
+            }
+          },
+          "submit": "Kiểm tra token"
+        },
+        "validCredentials": "Token Slack hợp lệ",
+        "restrictedCredentials": "Token hợp lệ nhưng không gọi được auth.test",
+        "invalidCredentials": "Token Slack không hợp lệ",
+        "summary": {
+          "team": "Workspace",
+          "url": "URL workspace",
+          "user": "User",
+          "tokenType": "Loại token",
+          "scopes": "Scope"
+        },
+        "tokenTypes": {
+          "bot": "Bot token",
+          "user": "User token",
+          "appLevel": "App-level token",
+          "other": "Token khác"
+        }
       },
       "discord": {
         "name": "Discord",
