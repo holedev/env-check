@@ -10,7 +10,8 @@ export type ToolLibInfo = {
 
 export type ToolType = {
   path: string;
-  icon: string;
+  /** simpleicons.org slug; omit when simpleicons has no icon for the brand. */
+  icon?: string;
   libInfo?: ToolLibInfo;
 };
 

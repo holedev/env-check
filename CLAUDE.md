@@ -52,6 +52,10 @@ All server actions wrap their logic in `handleErrorServerNoAuth` from `utils/han
 
 Icons come from simpleicons.org — use the icon slug as the `icon` value.
 
+### ValidationForm (preferred for new tools)
+
+New tools don't hand-write their form. `form.client.tsx` declares a zod schema and field list and renders `<ValidationForm>` (`components/custom/Tools/ValidationForm.client.tsx`), which handles inputs, loading and the three outcomes. The Server Action returns a `ValidationResult` built with `valid()` / `restricted()` / `summarize()` from `lib/validation.ts`, and throws for an invalid credential. HTTP probes use `requestService()` (timeout, no URL in errors); driver errors go through `redact()` so secrets never reach the browser or logs. See `CONTEXT.md` for Validation, Restricted and Validation summary.
+
 ### Response pattern
 
 ```ts

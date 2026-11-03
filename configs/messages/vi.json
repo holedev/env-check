@@ -29,6 +29,16 @@
         "message": "Thao tác thất bại.",
         "unknownError": "Lỗi không xác định. Vui lòng liên hệ quản trị viên."
       }
+    },
+    "validation": {
+      "valid": "Hợp lệ",
+      "restricted": "Bị giới hạn quyền",
+      "invalid": "Không hợp lệ",
+      "summary": "Chi tiết",
+      "yes": "Có",
+      "no": "Không",
+      "more": "+{count} mục khác",
+      "required": "Vui lòng nhập trường này"
     }
   },
   "tools": {

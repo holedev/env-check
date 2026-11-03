@@ -19,7 +19,7 @@ const ToolCard = ({ groupPath, tool }: Props) => {
       <Link className='flex h-full flex-col' href={`/tools/${groupPath}/${tool.path}`}>
         <CardHeader>
           <div className='flex items-center gap-3'>
-            <ToolIcon className='rounded' icon={tool.icon} size={32} />
+            <ToolIcon className='rounded' decorative icon={tool.icon} name={toolName} size={32} />
             <CardTitle>{toolName}</CardTitle>
           </div>
         </CardHeader>

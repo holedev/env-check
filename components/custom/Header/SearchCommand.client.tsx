@@ -125,7 +125,7 @@ const SearchCommand = () => {
                         {index + 1}
                       </span>
                     )}
-                    <ToolIcon icon={tool.icon} size={18} />
+                    <ToolIcon decorative icon={tool.icon} name={t(`tools.items.${tool.path}.name`)} size={18} />
                     <span>{t(`tools.items.${tool.path}.name`)}</span>
                   </div>
                   <ToolProgress progress={(tool as ToolWithProgressType).progress || "notStarted"} />

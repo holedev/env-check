@@ -29,6 +29,16 @@
         "message": "Action was failed.",
         "unknownError": "Unknown error. Please contact admin."
       }
+    },
+    "validation": {
+      "valid": "Valid",
+      "restricted": "Restricted",
+      "invalid": "Invalid",
+      "summary": "Details",
+      "yes": "Yes",
+      "no": "No",
+      "more": "+{count} more",
+      "required": "This field is required"
     }
   },
   "tools": {

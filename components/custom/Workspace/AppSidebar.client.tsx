@@ -115,7 +115,7 @@ const AppSidebar = () => {
                               <SidebarMenuSubItem key={tool.path}>
                                 <SidebarMenuSubButton asChild isActive={pathname === toolHref}>
                                   <Link href={toolHref} onClick={closeOnMobile}>
-                                    <ToolIcon icon={tool.icon} size={16} />
+                                    <ToolIcon decorative icon={tool.icon} name={toolName} size={16} />
                                     <span>{toolName}</span>
                                   </Link>
                                 </SidebarMenuSubButton>
