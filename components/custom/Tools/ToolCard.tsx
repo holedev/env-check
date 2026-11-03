@@ -1,8 +1,8 @@
-import Image from "next/image";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import type { ToolGroupCategory, ToolItem } from "@/types/tool";
+import { ToolIcon } from "./ToolIcon";
 import { ToolProgress } from "./ToolProgress";
 
 type Props = {
@@ -19,13 +19,7 @@ const ToolCard = ({ groupPath, tool }: Props) => {
       <Link className='flex h-full flex-col' href={`/tools/${groupPath}/${tool.path}`}>
         <CardHeader>
           <div className='flex items-center gap-3'>
-            <Image
-              alt={toolName}
-              className='rounded dark:invert'
-              height={32}
-              src={`https://cdn.simpleicons.org/${tool.icon}`}
-              width={32}
-            />
+            <ToolIcon className='rounded' icon={tool.icon} size={32} />
             <CardTitle>{toolName}</CardTitle>
           </div>
         </CardHeader>

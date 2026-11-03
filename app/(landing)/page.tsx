@@ -10,10 +10,10 @@ import {
   XCircleIcon
 } from "lucide-react";
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { getLocale, getTranslations } from "next-intl/server";
+import { ToolIcon } from "@/components/custom/Tools/ToolIcon";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -117,13 +117,7 @@ export default function Page() {
               {_PREVIEW_ROWS.map(({ tool, icon, valid }) => (
                 <div className='flex items-center justify-between rounded-lg border px-3 py-2.5' key={tool}>
                   <div className='flex items-center gap-3'>
-                    <Image
-                      alt=''
-                      className='dark:invert'
-                      height={20}
-                      src={`https://cdn.simpleicons.org/${icon}`}
-                      width={20}
-                    />
+                    <ToolIcon icon={icon} size={20} />
                     <span className='font-medium text-sm'>{t(`tools.items.${tool}.name`)}</span>
                     <span className='font-mono text-muted-foreground text-xs'>••••••••</span>
                   </div>
