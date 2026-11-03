@@ -73,14 +73,6 @@
       }
     },
     "items": {
-      "aws": {
-        "name": "AWS",
-        "description": "Amazon Web Services"
-      },
-      "google-cloud": {
-        "name": "Google Cloud",
-        "description": "Google Cloud Platform"
-      },
       "cloudflare": {
         "name": "Cloudflare",
         "description": "Cloudflare",
@@ -95,10 +87,6 @@
         "validCredentials": "Cloudflare API Token is valid",
         "invalidCredentials": "Cloudflare API Token is invalid!",
         "details": "Details"
-      },
-      "digital-ocean": {
-        "name": "Digital Ocean",
-        "description": "Digital Ocean"
       },
       "supabase": {
         "name": "Supabase",
@@ -324,18 +312,6 @@
           "name": "Name",
           "plan": "Plan"
         }
-      },
-      "netlify": {
-        "name": "Netlify",
-        "description": "Netlify API"
-      },
-      "render": {
-        "name": "Render",
-        "description": "Render Hosting API"
-      },
-      "minio": {
-        "name": "MinIO",
-        "description": "MinIO"
       },
       "gmail-smtp": {
         "name": "Gmail SMTP",
