@@ -181,7 +181,35 @@
       },
       "stripe": {
         "name": "Stripe",
-        "description": "Stripe Payment"
+        "description": "Stripe secret or restricted API key",
+        "form": {
+          "apiKey": {
+            "label": "Secret or restricted key",
+            "placeholder": "sk_test_... or rk_live_...",
+            "description": "Find keys at https://dashboard.stripe.com/apikeys. Publishable keys (pk_) can't be validated server-side.",
+            "errors": {
+              "publishable": "This is a publishable key (pk_). Paste a secret (sk_) or restricted (rk_) key instead.",
+              "format": "Stripe keys look like sk_live_…, sk_test_…, rk_live_… or rk_test_…"
+            }
+          },
+          "submit": "Check Key"
+        },
+        "validCredentials": "Stripe key is valid",
+        "restrictedCredentials": "Key is valid but can't read the balance",
+        "invalidCredentials": "Stripe key is invalid",
+        "summary": {
+          "mode": "Mode",
+          "keyType": "Key type",
+          "currencies": "Balance currencies"
+        },
+        "modes": {
+          "live": "Live",
+          "test": "Test"
+        },
+        "keyTypes": {
+          "secret": "Secret key",
+          "restricted": "Restricted key"
+        }
       },
       "slack": {
         "name": "Slack",

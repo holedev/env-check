@@ -167,7 +167,35 @@
       },
       "stripe": {
         "name": "Stripe",
-        "description": "Stripe Payment"
+        "description": "Secret key hoặc restricted key của Stripe",
+        "form": {
+          "apiKey": {
+            "label": "Secret key hoặc restricted key",
+            "placeholder": "sk_test_... hoặc rk_live_...",
+            "description": "Lấy key tại https://dashboard.stripe.com/apikeys. Publishable key (pk_) không kiểm tra được phía server.",
+            "errors": {
+              "publishable": "Đây là publishable key (pk_). Hãy dán secret key (sk_) hoặc restricted key (rk_).",
+              "format": "Key của Stripe có dạng sk_live_…, sk_test_…, rk_live_… hoặc rk_test_…"
+            }
+          },
+          "submit": "Kiểm tra key"
+        },
+        "validCredentials": "Key Stripe hợp lệ",
+        "restrictedCredentials": "Key hợp lệ nhưng không có quyền đọc số dư",
+        "invalidCredentials": "Key Stripe không hợp lệ",
+        "summary": {
+          "mode": "Chế độ",
+          "keyType": "Loại key",
+          "currencies": "Loại tiền trong số dư"
+        },
+        "modes": {
+          "live": "Live",
+          "test": "Test"
+        },
+        "keyTypes": {
+          "secret": "Secret key",
+          "restricted": "Restricted key"
+        }
       },
       "slack": {
         "name": "Slack",
