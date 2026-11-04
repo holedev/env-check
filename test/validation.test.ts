@@ -5,7 +5,7 @@ import { connectionSecrets, redact, requestService, restricted, summarize, valid
 
 describe("summarize", () => {
   it("drops facts the service did not return", () => {
-    expect(summarize({ account: "acme", email: undefined, plan: null, team: "", count: 0 })).toEqual([
+    expect(summarize({ account: "acme", email: undefined, plan: null, team: "", scopes: [], count: 0 })).toEqual([
       { key: "account", value: "acme" },
       { key: "count", value: 0 }
     ]);
