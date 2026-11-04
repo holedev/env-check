@@ -424,22 +424,29 @@
       },
       "google-analytics": {
         "name": "Google Analytics",
-        "description": "Google Analytics",
+        "description": "GA4 Measurement Protocol measurement ID and API secret",
         "form": {
           "measurementId": {
             "label": "Measurement ID",
             "placeholder": "G-XXXXXXXXXX",
-            "description": "Admin -> Data Streams -> your web stream -> Measurement ID"
+            "description": "Admin → Data Streams → your web stream → Measurement ID.",
+            "errors": {
+              "format": "Measurement IDs look like G-XXXXXXXXXX"
+            }
           },
           "apiSecret": {
             "label": "API Secret",
             "placeholder": "Enter your Measurement Protocol API secret",
-            "description": "Admin -> Data Streams -> your web stream -> Measurement Protocol API secrets"
+            "description": "Admin → Data Streams → your web stream → Measurement Protocol API secrets."
           },
           "submit": "Check Credentials"
         },
-        "validCredentials": "Measurement Protocol credentials are valid",
-        "invalidCredentials": "Measurement Protocol credentials are invalid!"
+        "validCredentials": "Google accepted the request (the debug endpoint can't confirm the API secret itself)",
+        "restrictedCredentials": "Accepted, but restricted",
+        "invalidCredentials": "Google rejected the Measurement Protocol request",
+        "summary": {
+          "measurementId": "Measurement ID"
+        }
       },
       "mysql": {
         "name": "MySQL",
