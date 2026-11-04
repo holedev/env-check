@@ -641,6 +641,35 @@
         "limits": {
           "unlimited": "No limit"
         }
+      },
+      "huggingface": {
+        "name": "Hugging Face",
+        "description": "Hugging Face user access token",
+        "form": {
+          "token": {
+            "label": "Access Token",
+            "placeholder": "hf_...",
+            "description": "Create a token at https://huggingface.co/settings/tokens.",
+            "errors": {
+              "format": "Hugging Face tokens start with hf_"
+            }
+          },
+          "submit": "Check Token"
+        },
+        "validCredentials": "Hugging Face token is valid",
+        "restrictedCredentials": "Token is valid but restricted",
+        "invalidCredentials": "Hugging Face token is invalid",
+        "summary": {
+          "user": "User",
+          "tokenName": "Token name",
+          "role": "Permission",
+          "orgs": "Organizations"
+        },
+        "roles": {
+          "read": "Read",
+          "write": "Write",
+          "fineGrained": "Fine-grained"
+        }
       }
     },
     "progress": {

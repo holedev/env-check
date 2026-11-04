@@ -641,6 +641,35 @@
         "limits": {
           "unlimited": "Không giới hạn"
         }
+      },
+      "huggingface": {
+        "name": "Hugging Face",
+        "description": "User access token của Hugging Face",
+        "form": {
+          "token": {
+            "label": "Access Token",
+            "placeholder": "hf_...",
+            "description": "Tạo token tại https://huggingface.co/settings/tokens.",
+            "errors": {
+              "format": "Token của Hugging Face bắt đầu bằng hf_"
+            }
+          },
+          "submit": "Kiểm tra token"
+        },
+        "validCredentials": "Token Hugging Face hợp lệ",
+        "restrictedCredentials": "Token hợp lệ nhưng bị giới hạn",
+        "invalidCredentials": "Token Hugging Face không hợp lệ",
+        "summary": {
+          "user": "User",
+          "tokenName": "Tên token",
+          "role": "Quyền",
+          "orgs": "Tổ chức"
+        },
+        "roles": {
+          "read": "Đọc",
+          "write": "Ghi",
+          "fineGrained": "Tuỳ chỉnh chi tiết"
+        }
       }
     },
     "progress": {
