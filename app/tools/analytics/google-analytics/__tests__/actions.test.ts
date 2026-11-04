@@ -1,98 +1,40 @@
+/**
+ * @jest-environment node
+ */
+import { jsonResponse, mockFetch } from "@/test/utils/service";
 import { checkGoogleAnalyticsCredentials } from "../actions";
 
-jest.mock("@/utils/handle-error-server", () => ({
-  handleErrorServerNoAuth: jest.fn()
-}));
+const fetchMock = mockFetch();
+const SECRET = "mp-secret-value";
 
-type Cb = { cb: () => Promise<object> };
+describe("checkGoogleAnalyticsCredentials", () => {
+  it("is valid when the debug endpoint reports no problems", async () => {
+    fetchMock.mockResolvedValue(jsonResponse({ validationMessages: [] }));
 
-const passThrough = async ({ cb }: Cb) => {
-  const result = await cb();
-  return { error: null, data: { payload: result } };
-};
+    const result = await checkGoogleAnalyticsCredentials({ measurementId: "G-ABC123", apiSecret: SECRET });
 
-const catchError = async ({ cb }: Cb) => {
-  try {
-    await cb();
-    return { error: null, data: { payload: {} } };
-  } catch (error) {
-    return { error: { message: error instanceof Error ? error.message : "Unknown error" }, data: null };
-  }
-};
-
-const mockFetch = jest.fn();
-const creds = { measurementId: "G-ABCDE12345", apiSecret: "secret" };
-
-describe("Google Analytics Actions", () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-    global.fetch = mockFetch as unknown as typeof fetch;
+    const [url, init] = fetchMock.mock.calls[0];
+    expect(url).toBe(`https://www.google-analytics.com/debug/mp/collect?measurement_id=G-ABC123&api_secret=${SECRET}`);
+    expect(init).toMatchObject({ method: "POST" });
+    expect(result.data?.payload).toEqual({ outcome: "valid", summary: [{ key: "measurementId", value: "G-ABC123" }] });
   });
 
-  describe("checkGoogleAnalyticsCredentials", () => {
-    it("should be valid when the debug endpoint returns no validation messages", async () => {
-      mockFetch.mockResolvedValue({
-        ok: true,
-        statusText: "OK",
-        json: jest.fn().mockResolvedValue({ validationMessages: [] })
-      });
+  it("is invalid when Google returns validation messages", async () => {
+    fetchMock.mockResolvedValue(
+      jsonResponse({
+        validationMessages: [{ description: "Measurement ID is not valid", validationCode: "VALUE_INVALID" }]
+      })
+    );
 
-      const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
-      handleErrorServerNoAuth.mockImplementation(passThrough);
+    const result = await checkGoogleAnalyticsCredentials({ measurementId: "G-ABC123", apiSecret: SECRET });
 
-      const res = await checkGoogleAnalyticsCredentials(creds);
+    expect(result.error?.message).toBe("Measurement ID is not valid");
+  });
 
-      expect(res.error).toBeNull();
-      expect(res.data?.payload).toEqual({ valid: true });
-    });
+  it("refuses malformed measurement IDs before calling Google", async () => {
+    const result = await checkGoogleAnalyticsCredentials({ measurementId: "UA-123&x=1", apiSecret: SECRET });
 
-    it("should be invalid when the debug endpoint returns validation messages", async () => {
-      mockFetch.mockResolvedValue({
-        ok: true,
-        statusText: "OK",
-        json: jest.fn().mockResolvedValue({
-          validationMessages: [{ description: "Measurement id not found for the api_secret provided" }]
-        })
-      });
-
-      const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
-      handleErrorServerNoAuth.mockImplementation(catchError);
-
-      const res = await checkGoogleAnalyticsCredentials(creds);
-
-      expect(res.data).toBeNull();
-      expect(res.error?.message).toBe("Measurement id not found for the api_secret provided");
-    });
-
-    it("should return a fallback message on network failure", async () => {
-      mockFetch.mockRejectedValue("boom");
-
-      const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
-      handleErrorServerNoAuth.mockImplementation(catchError);
-
-      const res = await checkGoogleAnalyticsCredentials(creds);
-
-      expect(res.data).toBeNull();
-      expect(res.error?.message).toBe("Failed to connect to Google Analytics");
-    });
-
-    it("should post to the debug collect endpoint with the measurement id and api secret", async () => {
-      mockFetch.mockResolvedValue({
-        ok: true,
-        statusText: "OK",
-        json: jest.fn().mockResolvedValue({ validationMessages: [] })
-      });
-
-      const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
-      handleErrorServerNoAuth.mockImplementation(passThrough);
-
-      await checkGoogleAnalyticsCredentials(creds);
-
-      const [calledUrl, calledInit] = mockFetch.mock.calls[0];
-      expect(calledUrl).toBe(
-        "https://www.google-analytics.com/debug/mp/collect?measurement_id=G-ABCDE12345&api_secret=secret"
-      );
-      expect(calledInit).toEqual(expect.objectContaining({ method: "POST" }));
-    });
+    expect(fetchMock).not.toHaveBeenCalled();
+    expect(result.error?.message).toBe("Measurement ID must look like G-XXXXXXXXXX");
   });
 });

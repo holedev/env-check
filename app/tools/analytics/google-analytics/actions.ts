@@ -1,53 +1,43 @@
 "use server";
 
+import { redact, requestService, summarize, valid } from "@/lib/validation";
 import { handleErrorServerNoAuth } from "@/utils/handle-error-server";
 
-type GoogleAnalyticsConfig = {
-  apiSecret: string;
-  measurementId: string;
-};
+type GoogleAnalyticsConfig = { apiSecret: string; measurementId: string };
+
+type DebugResponse = { validationMessages?: { description?: string }[] };
 
 const _GA_DEBUG_COLLECT_URL = "https://www.google-analytics.com/debug/mp/collect";
+const _MEASUREMENT_ID = /^G-[A-Z0-9]+$/;
 
-type ValidationMessage = { description?: string; validationCode?: string };
-
-const checkGoogleAnalyticsCredentials = async (config: GoogleAnalyticsConfig) =>
+/**
+ * Probe: the Measurement Protocol *debug* endpoint, which validates the request
+ * but records nothing. Google's validation server does not verify the API
+ * secret itself, which the tool's copy says plainly.
+ */
+const checkGoogleAnalyticsCredentials = async ({ apiSecret, measurementId }: GoogleAnalyticsConfig) =>
   handleErrorServerNoAuth({
     cb: async () => {
-      try {
-        const url = `${_GA_DEBUG_COLLECT_URL}?measurement_id=${encodeURIComponent(
-          config.measurementId
-        )}&api_secret=${encodeURIComponent(config.apiSecret)}`;
-
-        const response = await fetch(url, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            client_id: "env-check",
-            events: [{ name: "env_check_test" }]
-          })
-        });
-
-        if (!response.ok) {
-          throw new Error(`Google Analytics API error: ${response.statusText}`);
-        }
-
-        const body = (await response.json()) as { validationMessages?: ValidationMessage[] };
-        const messages = body.validationMessages ?? [];
-
-        if (messages.length > 0) {
-          throw new Error(
-            messages
-              .map((m) => m.description)
-              .filter(Boolean)
-              .join("; ") || "Invalid Measurement Protocol credentials"
-          );
-        }
-
-        return { valid: true };
-      } catch (err) {
-        throw new Error(err instanceof Error ? err.message : "Failed to connect to Google Analytics");
+      if (!_MEASUREMENT_ID.test(measurementId)) {
+        throw new Error("Measurement ID must look like G-XXXXXXXXXX");
       }
+
+      const params = new URLSearchParams({ measurement_id: measurementId, api_secret: apiSecret });
+      const res = await requestService<DebugResponse>("Google Analytics", `${_GA_DEBUG_COLLECT_URL}?${params}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ client_id: "env-check", events: [{ name: "env_check_probe" }] })
+      });
+
+      if (!res.ok) {
+        throw new Error(`Google Analytics returned HTTP ${res.status}`);
+      }
+      const problems = (res.body?.validationMessages ?? []).map((m) => m.description).filter(Boolean);
+      if (problems.length > 0) {
+        throw new Error(redact(problems.join("; "), [apiSecret]));
+      }
+
+      return valid(summarize({ measurementId }));
     }
   });
 

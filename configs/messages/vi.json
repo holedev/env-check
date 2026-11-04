@@ -402,22 +402,29 @@
       },
       "google-analytics": {
         "name": "Google Analytics",
-        "description": "Google Analytics",
+        "description": "Measurement ID và API secret của GA4 Measurement Protocol",
         "form": {
           "measurementId": {
             "label": "Measurement ID",
             "placeholder": "G-XXXXXXXXXX",
-            "description": "Admin -> Data Streams -> web stream của bạn -> Measurement ID"
+            "description": "Admin → Data Streams → web stream của bạn → Measurement ID.",
+            "errors": {
+              "format": "Measurement ID có dạng G-XXXXXXXXXX"
+            }
           },
           "apiSecret": {
             "label": "API Secret",
-            "placeholder": "Nhập Measurement Protocol API secret của bạn",
-            "description": "Admin -> Data Streams -> web stream của bạn -> Measurement Protocol API secrets"
+            "placeholder": "Nhập API secret của Measurement Protocol",
+            "description": "Admin → Data Streams → web stream của bạn → Measurement Protocol API secrets."
           },
-          "submit": "Kiểm tra thông tin"
+          "submit": "Kiểm tra"
         },
-        "validCredentials": "Thông tin Measurement Protocol hợp lệ",
-        "invalidCredentials": "Thông tin Measurement Protocol không hợp lệ!"
+        "validCredentials": "Google chấp nhận request (endpoint debug không xác minh được chính API secret)",
+        "restrictedCredentials": "Được chấp nhận nhưng bị giới hạn",
+        "invalidCredentials": "Google từ chối request Measurement Protocol",
+        "summary": {
+          "measurementId": "Measurement ID"
+        }
       },
       "postgresql": {
         "name": "PostgreSQL",
