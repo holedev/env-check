@@ -22,7 +22,7 @@ export async function BaseLayout({ children, locale }: BaseLayoutType) {
 
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body className={cn(geistSans.variable, geistMono.variable, "min-h-svh w-full antialiased")}>
+      <body className={cn(geistSans.variable, geistMono.variable, "min-h-svh antialiased")}>
         <ThemeProvider attribute='class' defaultTheme='system' disableTransitionOnChange enableSystem nonce={nonce}>
           <TooltipProvider>
             <NextIntlClientProvider messages={messages}>{children}</NextIntlClientProvider>
