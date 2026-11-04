@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/sidebar";
 import { _TOOL_GROUP_LIST, _TOOL_LIST } from "@/constants/tool";
 import { getGroupTools } from "@/lib/tool";
+import { Logo } from "../Logo";
 
 const AppSidebar = () => {
   const t = useTranslations();
@@ -44,8 +45,7 @@ const AppSidebar = () => {
     <Sidebar>
       <SidebarHeader>
         <Link className='flex items-center gap-2 px-2 py-3' href='/' onClick={closeOnMobile}>
-          <span className='size-2.5 rounded-full bg-primary' />
-          <span className='font-extrabold text-lg uppercase tracking-tight'>{t("common.site.logoText")}</span>
+          <Logo />
         </Link>
       </SidebarHeader>
       <SidebarContent>
@@ -63,7 +63,9 @@ const AppSidebar = () => {
           </SidebarMenu>
         </SidebarGroup>
         <SidebarGroup>
-          <SidebarGroupLabel>{t("workspace.sidebar.groups")}</SidebarGroupLabel>
+          <SidebarGroupLabel className='font-mono uppercase tracking-wider'>
+            {t("workspace.sidebar.groups")}
+          </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {_TOOL_GROUP_LIST.map((group) => {

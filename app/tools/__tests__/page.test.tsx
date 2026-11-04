@@ -24,7 +24,7 @@ test("skips groups without tools", () => {
   render(<Page />);
 
   for (const group of _TOOL_GROUP_LIST) {
-    const heading = screen.queryByRole("heading", { name: `tools.groups.${group.path}.name` });
+    const heading = screen.queryByRole("heading", { name: new RegExp(`^tools\\.groups\\.${group.path}\\.name`) });
     if (group.tools.length === 0) {
       expect(heading).not.toBeInTheDocument();
     } else {

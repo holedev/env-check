@@ -23,7 +23,7 @@ export const _TOOL_LIST = defineToolList([
   {
     icon: "minio",
     path: "s3-compatible",
-    probe: { method: "S3", target: "ListBuckets · your endpoint or AWS" },
+    probe: { method: "S3", target: "ListBuckets · AWS / endpoint" },
     progress: "completed",
     libInfo: {
       packageName: "@aws-sdk/client-s3",
@@ -96,7 +96,7 @@ export const _TOOL_LIST = defineToolList([
   {
     icon: "gmail",
     path: "gmail-smtp",
-    probe: { method: "SMTP", target: "AUTH on <host>:465 / 587" },
+    probe: { method: "SMTP", target: "AUTH · <host>:465 / 587" },
     progress: "completed",
     libInfo: {
       packageName: "nodemailer",

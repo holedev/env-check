@@ -15,7 +15,7 @@ export default async function WorkspaceLayout({ children }: WorkspaceLayoutProps
       <AppSidebar />
       <SidebarInset>
         <WorkspaceHeader />
-        <div className='flex-1 p-4 md:p-6'>{children}</div>
+        <div className='mx-auto w-full max-w-6xl flex-1 px-4 py-8 md:px-8'>{children}</div>
       </SidebarInset>
     </SidebarProvider>
   );

@@ -20,16 +20,18 @@ const ToolList = ({ groupPath }: Props) => {
   const tools = getGroupTools(toolGroup);
 
   return (
-    <div className='mx-auto w-full max-w-7xl'>
-      <h1 className='mb-2 font-bold text-2xl'>{t(`tools.groups.${groupPath}.name`)}</h1>
-      <p className='mb-8 text-muted-foreground'>{t(`tools.groups.${groupPath}.description`)}</p>
+    <div className='space-y-8'>
+      <div className='space-y-2'>
+        <h1 className='font-semibold text-3xl tracking-tight'>{t(`tools.groups.${groupPath}.name`)}</h1>
+        <p className='text-muted-foreground'>{t(`tools.groups.${groupPath}.description`)}</p>
+      </div>
 
       {tools.length === 0 ? (
         <p className='rounded-lg border border-dashed p-8 text-center text-muted-foreground'>
           {t("workspace.emptyGroup")}
         </p>
       ) : (
-        <section className='grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3'>
+        <section className='grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3'>
           {tools.map((tool) => (
             <ToolCard groupPath={toolGroup.path} key={tool.path} tool={tool} />
           ))}

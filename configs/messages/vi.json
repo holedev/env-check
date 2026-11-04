@@ -38,38 +38,39 @@
       "yes": "Có",
       "no": "Không",
       "more": "+{count} mục khác",
-      "required": "Vui lòng nhập trường này"
+      "required": "Vui lòng nhập trường này",
+      "checking": "Đang kiểm tra…"
     }
   },
   "tools": {
     "groups": {
       "cloud": {
-        "name": "Cloud Provider",
-        "description": "Cloud Provider"
+        "name": "Cloud",
+        "description": "Hosting, storage và nền tảng cho dev"
       },
       "ai": {
         "name": "AI",
-        "description": "AI tools"
+        "description": "API model và nền tảng AI"
       },
       "database": {
         "name": "Database",
-        "description": "Database"
+        "description": "Connection string của database SQL và NoSQL"
       },
       "payment": {
-        "name": "Payment",
-        "description": "Payment"
+        "name": "Thanh toán",
+        "description": "Cổng thanh toán"
       },
       "messaging": {
-        "name": "Messaging & Communication",
-        "description": "Email, SMS, chat APIs"
+        "name": "Nhắn tin",
+        "description": "Email, chat và SMS"
       },
       "analytics": {
-        "name": "Analytics & Monitoring",
-        "description": "Tools for logging, metrics, and performance tracking"
+        "name": "Analytics & Giám sát",
+        "description": "Phân tích và theo dõi lỗi"
       },
       "others": {
-        "name": "Others",
-        "description": "Other tools and services"
+        "name": "Khác",
+        "description": "Công cụ làm việc"
       }
     },
     "items": {
@@ -955,7 +956,7 @@
     },
     "overview": {
       "title": "Tất cả tools",
-      "description": "{count} trình kiểm tra credential, chia theo loại dịch vụ. Chọn một tool để bắt đầu.",
+      "description": "{count} trình kiểm tra credential. Mỗi tool gửi đúng một Probe đọc-only.",
       "viewGroup": "Xem nhóm"
     },
     "emptyGroup": "Nhóm này chưa có tool nào.",
