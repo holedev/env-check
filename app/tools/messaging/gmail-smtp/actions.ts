@@ -1,74 +1,67 @@
 "use server";
 
 import { createTransport } from "nodemailer";
+import { redact, summarize, valid } from "@/lib/validation";
 import { handleErrorServerNoAuth } from "@/utils/handle-error-server";
 import { assertPublicHost } from "@/utils/network-guard";
 
 type SMTPConfig = {
   host: string;
-  password: string;
-  port: number;
-  secure: boolean;
-  testType: "verify" | "sendEmail";
+  security: string;
   username: string;
+  password: string;
+  testType: string;
 };
 
-const checkSMTPConnection = async (config: SMTPConfig) =>
+/** Fixed list: the form can't send arbitrary ports. */
+const _SECURITY: Record<string, { port: number; secure: boolean }> = {
+  ssl: { port: 465, secure: true },
+  starttls: { port: 587, secure: false }
+};
+
+const _TIMEOUT_MS = 10_000;
+
+/**
+ * Probe: SMTP login (transporter.verify). Optionally, and only when the user
+ * picks it, one test email to their own address: the one Tool whose check may
+ * send something, by explicit choice.
+ */
+const checkSMTPConnection = async ({ host, security, username, password, testType }: SMTPConfig) =>
   handleErrorServerNoAuth({
     cb: async () => {
-      await assertPublicHost(config.host);
+      const mode = Object.hasOwn(_SECURITY, security) ? _SECURITY[security] : undefined;
+      if (!mode) {
+        throw new Error("Unknown SMTP security mode");
+      }
+      await assertPublicHost(host);
+
       const transporter = createTransport({
-        host: config.host,
-        port: config.port,
-        secure: config.secure,
-        auth: {
-          user: config.username,
-          pass: config.password
-        }
+        host,
+        port: mode.port,
+        secure: mode.secure,
+        auth: { user: username, pass: password },
+        connectionTimeout: _TIMEOUT_MS,
+        greetingTimeout: _TIMEOUT_MS
       });
 
       try {
-        // Always verify connection configuration first
         await transporter.verify();
-
-        const result = {
-          success: true,
-          testType: config.testType,
-          connectionDetails: {
-            host: config.host,
-            port: config.port,
-            secure: config.secure,
-            username: config.username
-          },
-          messageId: null as string | null
-        };
-
-        // If user wants to send test email, do it after verification
-        if (config.testType === "sendEmail") {
-          const info = await transporter.sendMail({
-            from: config.username,
-            to: config.username,
-            subject: "Gmail SMTP Test - Connection Successful",
-            text: "This is a test email to verify your Gmail SMTP configuration is working correctly.",
-            html: `
-              <h2>Gmail SMTP Test Successful</h2>
-              <p>This is a test email to verify your Gmail SMTP configuration is working correctly.</p>
-              <p><strong>Connection Details:</strong></p>
-              <ul>
-                <li>Host: ${config.host}</li>
-                <li>Port: ${config.port}</li>
-                <li>Secure: ${config.secure ? "Yes" : "No"}</li>
-                <li>Username: ${config.username}</li>
-              </ul>
-              <p>Your Gmail SMTP is configured properly and ready to use!</p>
-            `
+        let testEmail = false;
+        if (testType === "sendEmail") {
+          await transporter.sendMail({
+            from: username,
+            to: username,
+            subject: "env-check: SMTP test",
+            text: "This test email confirms your SMTP login works. It was sent by env-check because you asked for it."
           });
-          result.messageId = info.messageId;
+          testEmail = true;
         }
 
-        return result;
-      } catch (err) {
-        throw new Error(err instanceof Error ? err.message : "Failed to connect to Gmail SMTP");
+        return valid(summarize({ server: `${host}:${mode.port}`, username, testEmail }));
+      } catch (error) {
+        throw new Error(redact(error instanceof Error ? error.message : "SMTP login failed", [password]));
+      } finally {
+        transporter.close();
       }
     }
   });
