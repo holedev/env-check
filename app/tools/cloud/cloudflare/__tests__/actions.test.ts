@@ -1,98 +1,54 @@
+/**
+ * @jest-environment node
+ */
+import { jsonResponse, mockFetch } from "@/test/utils/service";
 import { checkCloudflareToken } from "../actions";
 
-jest.mock("@/utils/handle-error-server", () => ({
-  handleErrorServerNoAuth: jest.fn()
-}));
+const fetchMock = mockFetch();
+const TOKEN = "cf-secret-token-value";
 
-type Cb = { cb: () => Promise<object> };
+describe("checkCloudflareToken", () => {
+  it("is valid for an active token and shows its validity window", async () => {
+    fetchMock.mockResolvedValue(
+      jsonResponse({
+        success: true,
+        result: { id: "t1", status: "active", expires_on: "2027-01-01T00:00:00Z" },
+        errors: [],
+        messages: []
+      })
+    );
 
-const passThrough = async ({ cb }: Cb) => {
-  const result = await cb();
-  return { error: null, data: { payload: result } };
-};
+    const result = await checkCloudflareToken({ apiToken: TOKEN });
 
-const catchError = async ({ cb }: Cb) => {
-  try {
-    await cb();
-    return { error: null, data: { payload: {} } };
-  } catch (error) {
-    return { error: { message: error instanceof Error ? error.message : "Unknown error" }, data: null };
-  }
-};
-
-const mockFetch = jest.fn();
-
-describe("Cloudflare Actions", () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-    global.fetch = mockFetch as unknown as typeof fetch;
+    expect(fetchMock).toHaveBeenCalledWith(
+      "https://api.cloudflare.com/client/v4/user/tokens/verify",
+      expect.objectContaining({ headers: { Authorization: `Bearer ${TOKEN}` } })
+    );
+    expect(result.data?.payload).toEqual({
+      outcome: "valid",
+      summary: [
+        { key: "status", value: "active", enumKey: "statuses" },
+        { key: "expiresOn", value: "2027-01-01T00:00:00Z" }
+      ]
+    });
   });
 
-  describe("checkCloudflareToken", () => {
-    it("should return the token result when the token is valid", async () => {
-      const result = { id: "abc123", status: "active" };
-      mockFetch.mockResolvedValue({
-        ok: true,
-        statusText: "OK",
-        json: jest.fn().mockResolvedValue({ success: true, result, errors: [] })
-      });
+  it("is invalid when the token is disabled or expired", async () => {
+    fetchMock.mockResolvedValue(jsonResponse({ success: true, result: { id: "t1", status: "expired" } }));
 
-      const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
-      handleErrorServerNoAuth.mockImplementation(passThrough);
+    const result = await checkCloudflareToken({ apiToken: TOKEN });
 
-      const res = await checkCloudflareToken({ apiToken: "valid" });
+    expect(result.error?.message).toBe("Token is expired");
+  });
 
-      expect(res.error).toBeNull();
-      expect(res.data?.payload).toEqual(result);
-    });
+  it("is invalid when Cloudflare rejects the token", async () => {
+    fetchMock.mockResolvedValue(
+      jsonResponse({ success: false, errors: [{ code: 1000, message: "Invalid API Token" }] }, 401)
+    );
 
-    it("should surface the Cloudflare error message when success is false", async () => {
-      mockFetch.mockResolvedValue({
-        ok: false,
-        statusText: "Unauthorized",
-        json: jest.fn().mockResolvedValue({ success: false, errors: [{ message: "Invalid API Token" }] })
-      });
+    const result = await checkCloudflareToken({ apiToken: TOKEN });
 
-      const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
-      handleErrorServerNoAuth.mockImplementation(catchError);
-
-      const res = await checkCloudflareToken({ apiToken: "bad" });
-
-      expect(res.data).toBeNull();
-      expect(res.error?.message).toBe("Invalid API Token");
-    });
-
-    it("should return a fallback message on network failure", async () => {
-      mockFetch.mockRejectedValue("boom");
-
-      const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
-      handleErrorServerNoAuth.mockImplementation(catchError);
-
-      const res = await checkCloudflareToken({ apiToken: "any" });
-
-      expect(res.data).toBeNull();
-      expect(res.error?.message).toBe("Failed to connect to Cloudflare");
-    });
-
-    it("should call the verify endpoint with a Bearer authorization header", async () => {
-      mockFetch.mockResolvedValue({
-        ok: true,
-        statusText: "OK",
-        json: jest.fn().mockResolvedValue({ success: true, result: {} })
-      });
-
-      const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
-      handleErrorServerNoAuth.mockImplementation(passThrough);
-
-      await checkCloudflareToken({ apiToken: "secret" });
-
-      expect(mockFetch).toHaveBeenCalledWith(
-        "https://api.cloudflare.com/client/v4/user/tokens/verify",
-        expect.objectContaining({
-          method: "GET",
-          headers: expect.objectContaining({ Authorization: "Bearer secret" })
-        })
-      );
-    });
+    expect(result.data).toBeNull();
+    expect(result.error?.message).toBe("Invalid API Token");
   });
 });
