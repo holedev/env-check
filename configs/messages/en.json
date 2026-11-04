@@ -190,19 +190,25 @@
       },
       "google-gemini": {
         "name": "Gemini",
-        "description": "Gemini API (AI Studio)",
+        "description": "Google AI Studio (Gemini API) key",
         "form": {
           "apiKey": {
             "label": "API Key",
-            "placeholder": "Enter your Gemini API Key",
-            "description": "Your Gemini API Key can be found in https://aistudio.google.com/apikey."
+            "placeholder": "AIza...",
+            "description": "Create a key at https://aistudio.google.com/apikey.",
+            "errors": {
+              "format": "Gemini keys start with AIza and are 39 characters long"
+            }
           },
-          "submit": "Submit"
+          "submit": "Check API Key"
         },
-        "availableModels": "Available Models",
-        "noAvailableModels": "No available models found!",
-        "validKey": "Your API Key is valid!",
-        "invalidApiKey": "Your API Key is invalid!"
+        "validCredentials": "Gemini API key is valid",
+        "restrictedCredentials": "Key is valid but can't list models",
+        "invalidCredentials": "Gemini API key is invalid",
+        "summary": {
+          "modelsCount": "Models available",
+          "models": "Models"
+        }
       },
       "stripe": {
         "name": "Stripe",

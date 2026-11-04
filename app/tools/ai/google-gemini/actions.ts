@@ -1,25 +1,16 @@
 "use server";
 
-import OpenAI from "openai";
+import { probeOpenAiCompatible } from "@/lib/openai-compatible";
 import { handleErrorServerNoAuth } from "@/utils/handle-error-server";
 
-const _GEMINI_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/openai/";
+type GeminiConfig = { apiKey: string };
 
-const checkAPIKey = async (apiKey: string) =>
+const _GEMINI_MODELS_URL = "https://generativelanguage.googleapis.com/v1beta/openai/models";
+
+/** Probe: list models via Gemini's OpenAI-compatible API. 403 is Restricted. */
+const checkGeminiKey = async ({ apiKey }: GeminiConfig) =>
   handleErrorServerNoAuth({
-    cb: async () => {
-      const openai = new OpenAI({
-        apiKey,
-        baseURL: _GEMINI_BASE_URL
-      });
-      try {
-        const models = await openai.models.list();
-        const dataList = models.data;
-        return dataList;
-      } catch (err) {
-        throw new Error(err instanceof Error ? err.message : "Failed to connect to Google Gemini API");
-      }
-    }
+    cb: async () => probeOpenAiCompatible({ service: "Gemini", modelsUrl: _GEMINI_MODELS_URL, apiKey })
   });
 
-export { checkAPIKey };
+export { checkGeminiKey };

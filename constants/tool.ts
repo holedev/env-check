@@ -83,9 +83,7 @@ export const _TOOL_LIST = defineToolList([
     path: "google-gemini",
     progress: "completed",
     libInfo: {
-      packageName: "openai",
-      url: "https://www.npmjs.com/package/openai",
-      version: "7.47.0"
+      packageName: "fetch"
     }
   },
   {

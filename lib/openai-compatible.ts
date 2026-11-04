@@ -18,7 +18,11 @@ type ProbeOptions = {
   facts?: SummaryItem[];
 };
 
-const errorMessage = (body: ModelsResponse | null): string | undefined => {
+const _MODELS_PREFIX = /^models\//;
+
+const errorMessage = (raw: ModelsResponse | ModelsResponse[] | null): string | undefined => {
+  // Google's OpenAI-compatible endpoint wraps errors in an array.
+  const body = Array.isArray(raw) ? raw[0] : raw;
   if (typeof body?.error === "string") {
     return body.error;
   }
@@ -27,7 +31,7 @@ const errorMessage = (body: ModelsResponse | null): string | undefined => {
 
 /**
  * Validation probe shared by providers with an OpenAI-compatible API (OpenAI,
- * Groq, DeepSeek, Mistral): list models with a Bearer key. 403 is Restricted,
+ * Gemini, Groq, DeepSeek, Mistral): list models with a Bearer key. 403 is Restricted,
  * any other failure throws (invalid). Each provider stays its own Tool.
  */
 export const probeOpenAiCompatible = async ({
@@ -36,7 +40,7 @@ export const probeOpenAiCompatible = async ({
   apiKey,
   facts = []
 }: ProbeOptions): Promise<ValidationResult> => {
-  const res = await requestService<ModelsResponse>(service, modelsUrl, {
+  const res = await requestService<ModelsResponse & ModelsResponse[]>(service, modelsUrl, {
     headers: { Authorization: `Bearer ${apiKey}` }
   });
   const message = redact(errorMessage(res.body) ?? `${service} returned HTTP ${res.status}`, [apiKey]);
@@ -48,6 +52,6 @@ export const probeOpenAiCompatible = async ({
     throw new Error(message);
   }
 
-  const models = (res.body?.data ?? []).map((model) => model.id).sort();
+  const models = (res.body?.data ?? []).map((model) => model.id.replace(_MODELS_PREFIX, "")).sort();
   return valid([...facts, ...summarize({ modelsCount: models.length, models })]);
 };

@@ -168,19 +168,25 @@
       },
       "google-gemini": {
         "name": "Gemini",
-        "description": "Gemini API (AI Studio)",
+        "description": "API key của Google AI Studio (Gemini API)",
         "form": {
           "apiKey": {
             "label": "API Key",
-            "placeholder": "Nhập API Key",
-            "description": "API Key của bạn có thể được tìm thấy tại https://aistudio.google.com/apikey."
+            "placeholder": "AIza...",
+            "description": "Tạo key tại https://aistudio.google.com/apikey.",
+            "errors": {
+              "format": "Key Gemini bắt đầu bằng AIza và dài 39 ký tự"
+            }
           },
-          "submit": "Kiểm tra"
+          "submit": "Kiểm tra API Key"
         },
-        "availableModels": "Các model khả dụng",
-        "noAvailableModels": "Không tìm thấy model nào khả dụng!",
-        "validKey": "API Key của bạn hợp lệ!",
-        "invalidApiKey": "API Key của bạn không hợp lệ!"
+        "validCredentials": "API key Gemini hợp lệ",
+        "restrictedCredentials": "Key hợp lệ nhưng không có quyền liệt kê model",
+        "invalidCredentials": "API key Gemini không hợp lệ",
+        "summary": {
+          "modelsCount": "Số model khả dụng",
+          "models": "Model"
+        }
       },
       "stripe": {
         "name": "Stripe",
