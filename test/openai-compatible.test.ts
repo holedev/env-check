@@ -10,7 +10,7 @@ const probe = (apiKey = "key-secret-123") =>
 
 describe("probeOpenAiCompatible", () => {
   it("sorts model ids and counts them", async () => {
-    fetchMock.mockResolvedValue(jsonResponse({ data: [{ id: "b" }, { id: "a" }] }));
+    fetchMock.mockResolvedValue(jsonResponse({ data: [{ id: "models/b" }, { id: "a" }] }));
 
     await expect(probe()).resolves.toEqual({
       outcome: "valid",
@@ -26,6 +26,7 @@ describe("probeOpenAiCompatible", () => {
     [{ error: "invalid_api_key" }, "invalid_api_key"],
     [{ message: "Unauthorized" }, "Unauthorized"],
     [{ detail: "Authentication failed" }, "Authentication failed"],
+    [[{ error: { code: 400, message: "API key not valid" } }], "API key not valid"],
     [null, "Example returned HTTP 401"]
   ])("reads the error message from %j", async (body, message) => {
     fetchMock.mockResolvedValue(jsonResponse(body, 401));
