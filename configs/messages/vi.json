@@ -757,6 +757,32 @@
           "name": "Tên",
           "siteCount": "Số site"
         }
+      },
+      "digitalocean": {
+        "name": "DigitalOcean",
+        "description": "Personal access token của DigitalOcean",
+        "form": {
+          "token": {
+            "label": "Personal Access Token",
+            "placeholder": "dop_v1_...",
+            "description": "Tạo token tại https://cloud.digitalocean.com/account/api/tokens. Token có scope tuỳ chỉnh cần quyền account:read."
+          },
+          "submit": "Kiểm tra token"
+        },
+        "validCredentials": "Token DigitalOcean hợp lệ",
+        "restrictedCredentials": "Token hợp lệ nhưng thiếu quyền account:read",
+        "invalidCredentials": "Token DigitalOcean không hợp lệ",
+        "summary": {
+          "team": "Team",
+          "status": "Trạng thái tài khoản",
+          "dropletLimit": "Giới hạn droplet",
+          "emailVerified": "Đã xác minh email"
+        },
+        "statuses": {
+          "active": "Đang hoạt động",
+          "warning": "Cảnh báo",
+          "locked": "Bị khoá"
+        }
       }
     },
     "progress": {

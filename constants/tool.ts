@@ -266,6 +266,14 @@ export const _TOOL_LIST = defineToolList([
     libInfo: {
       packageName: "fetch"
     }
+  },
+  {
+    icon: "digitalocean",
+    path: "digitalocean",
+    progress: "completed",
+    libInfo: {
+      packageName: "fetch"
+    }
   }
 ] as const);
 
@@ -276,7 +284,7 @@ export const _TOOL_GROUP_LIST: ToolGroupType[] = [
   },
   {
     path: "cloud",
-    tools: ["s3-compatible", "cloudflare", "supabase", "firebase", "github", "vercel", "netlify"]
+    tools: ["s3-compatible", "cloudflare", "supabase", "firebase", "github", "vercel", "netlify", "digitalocean"]
   },
   {
     path: "database",

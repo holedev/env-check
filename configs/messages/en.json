@@ -757,6 +757,32 @@
           "name": "Name",
           "siteCount": "Sites"
         }
+      },
+      "digitalocean": {
+        "name": "DigitalOcean",
+        "description": "DigitalOcean personal access token",
+        "form": {
+          "token": {
+            "label": "Personal Access Token",
+            "placeholder": "dop_v1_...",
+            "description": "Create a token at https://cloud.digitalocean.com/account/api/tokens. Custom-scoped tokens need account:read."
+          },
+          "submit": "Check Token"
+        },
+        "validCredentials": "DigitalOcean token is valid",
+        "restrictedCredentials": "Token is valid but lacks account:read",
+        "invalidCredentials": "DigitalOcean token is invalid",
+        "summary": {
+          "team": "Team",
+          "status": "Account status",
+          "dropletLimit": "Droplet limit",
+          "emailVerified": "Email verified"
+        },
+        "statuses": {
+          "active": "Active",
+          "warning": "Warning",
+          "locked": "Locked"
+        }
       }
     },
     "progress": {
