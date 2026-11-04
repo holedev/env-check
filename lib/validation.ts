@@ -1,9 +1,11 @@
 import type { SummaryItem, ValidationResult } from "@/types/validation";
 
-/** Builds a Validation summary, dropping facts the service didn't return. */
+/** Builds a Validation summary, dropping facts the service didn't return (empty values and lists). */
 export const summarize = (items: Record<string, SummaryItem["value"] | null | undefined>): SummaryItem[] =>
   Object.entries(items).flatMap(([key, value]) =>
-    value === null || value === undefined || value === "" ? [] : [{ key, value }]
+    value === null || value === undefined || value === "" || (Array.isArray(value) && value.length === 0)
+      ? []
+      : [{ key, value }]
   );
 
 /** A summary fact whose value is a code translated from `tools.items.<tool>.<enumKey>.<value>`. */

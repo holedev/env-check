@@ -550,6 +550,266 @@
           "version": "Phiên bản",
           "mode": "Chế độ"
         }
+      },
+      "groq": {
+        "name": "Groq",
+        "description": "API key của Groq",
+        "form": {
+          "apiKey": {
+            "label": "API Key",
+            "placeholder": "gsk_...",
+            "description": "Tạo key tại https://console.groq.com/keys.",
+            "errors": {
+              "format": "Key của Groq bắt đầu bằng gsk_"
+            }
+          },
+          "submit": "Kiểm tra API Key"
+        },
+        "validCredentials": "API key của Groq hợp lệ",
+        "restrictedCredentials": "Key hợp lệ nhưng không có quyền liệt kê model",
+        "invalidCredentials": "API key của Groq không hợp lệ",
+        "summary": {
+          "modelsCount": "Số model khả dụng",
+          "models": "Model"
+        }
+      },
+      "deepseek": {
+        "name": "DeepSeek",
+        "description": "API key của DeepSeek",
+        "form": {
+          "apiKey": {
+            "label": "API Key",
+            "placeholder": "sk-...",
+            "description": "Tạo key tại https://platform.deepseek.com/api_keys.",
+            "errors": {
+              "format": "Key của DeepSeek bắt đầu bằng sk-"
+            }
+          },
+          "submit": "Kiểm tra API Key"
+        },
+        "validCredentials": "API key của DeepSeek hợp lệ",
+        "restrictedCredentials": "Key hợp lệ nhưng không có quyền liệt kê model",
+        "invalidCredentials": "API key của DeepSeek không hợp lệ",
+        "summary": {
+          "modelsCount": "Số model khả dụng",
+          "models": "Model"
+        }
+      },
+      "mistral": {
+        "name": "Mistral",
+        "description": "API key của Mistral",
+        "form": {
+          "apiKey": {
+            "label": "API Key",
+            "placeholder": "Enter your Mistral API key",
+            "description": "Tạo key tại https://console.mistral.ai/api-keys."
+          },
+          "submit": "Kiểm tra API Key"
+        },
+        "validCredentials": "API key của Mistral hợp lệ",
+        "restrictedCredentials": "Key hợp lệ nhưng không có quyền liệt kê model",
+        "invalidCredentials": "API key của Mistral không hợp lệ",
+        "summary": {
+          "modelsCount": "Số model khả dụng",
+          "models": "Model"
+        }
+      },
+      "openrouter": {
+        "name": "OpenRouter",
+        "description": "API key của OpenRouter, kèm hạn mức và mức đã dùng",
+        "form": {
+          "apiKey": {
+            "label": "API Key",
+            "placeholder": "sk-or-v1-...",
+            "description": "Tạo key tại https://openrouter.ai/settings/keys.",
+            "errors": {
+              "format": "Key của OpenRouter bắt đầu bằng sk-or-"
+            }
+          },
+          "submit": "Kiểm tra API Key"
+        },
+        "validCredentials": "API key của OpenRouter hợp lệ",
+        "restrictedCredentials": "Key hợp lệ nhưng bị giới hạn",
+        "invalidCredentials": "API key của OpenRouter không hợp lệ",
+        "summary": {
+          "label": "Tên key",
+          "usage": "Credit đã dùng",
+          "limit": "Hạn mức credit",
+          "limitRemaining": "Credit còn lại",
+          "freeTier": "Gói miễn phí"
+        },
+        "limits": {
+          "unlimited": "Không giới hạn"
+        }
+      },
+      "huggingface": {
+        "name": "Hugging Face",
+        "description": "User access token của Hugging Face",
+        "form": {
+          "token": {
+            "label": "Access Token",
+            "placeholder": "hf_...",
+            "description": "Tạo token tại https://huggingface.co/settings/tokens.",
+            "errors": {
+              "format": "Token của Hugging Face bắt đầu bằng hf_"
+            }
+          },
+          "submit": "Kiểm tra token"
+        },
+        "validCredentials": "Token Hugging Face hợp lệ",
+        "restrictedCredentials": "Token hợp lệ nhưng bị giới hạn",
+        "invalidCredentials": "Token Hugging Face không hợp lệ",
+        "summary": {
+          "user": "User",
+          "tokenName": "Tên token",
+          "role": "Quyền",
+          "orgs": "Tổ chức"
+        },
+        "roles": {
+          "read": "Đọc",
+          "write": "Ghi",
+          "fineGrained": "Tuỳ chỉnh chi tiết"
+        }
+      },
+      "sendgrid": {
+        "name": "SendGrid",
+        "description": "API key của Twilio SendGrid",
+        "form": {
+          "apiKey": {
+            "label": "API Key",
+            "placeholder": "SG.xxxx.yyyy",
+            "description": "Tạo key tại https://app.sendgrid.com/settings/api_keys.",
+            "errors": {
+              "format": "Key của SendGrid có dạng SG.xxxx.yyyy"
+            }
+          },
+          "region": {
+            "label": "Vùng",
+            "description": "Tài khoản đặt tại EU phải dùng API EU.",
+            "options": {
+              "global": "Toàn cầu (api.sendgrid.com)",
+              "eu": "EU (api.eu.sendgrid.com)"
+            }
+          },
+          "submit": "Kiểm tra API Key"
+        },
+        "validCredentials": "API key của SendGrid hợp lệ",
+        "restrictedCredentials": "Key hợp lệ nhưng không đọc được scope",
+        "invalidCredentials": "API key của SendGrid không hợp lệ",
+        "summary": {
+          "canSendMail": "Được gửi mail",
+          "scopesCount": "Số scope",
+          "scopes": "Scope"
+        }
+      },
+      "twilio": {
+        "name": "Twilio",
+        "description": "Account SID và Auth Token của Twilio",
+        "form": {
+          "accountSid": {
+            "label": "Account SID",
+            "placeholder": "AC...",
+            "description": "Hiện ở trang chủ Twilio Console (https://console.twilio.com).",
+            "errors": {
+              "format": "Account SID gồm AC và 32 ký tự hex"
+            }
+          },
+          "authToken": {
+            "label": "Auth Token",
+            "placeholder": "Nhập Auth Token",
+            "description": "Nằm cạnh Account SID trong Console, bấm Show để hiện."
+          },
+          "submit": "Kiểm tra"
+        },
+        "validCredentials": "Thông tin Twilio hợp lệ",
+        "restrictedCredentials": "Thông tin hợp lệ nhưng bị giới hạn",
+        "invalidCredentials": "Thông tin Twilio không hợp lệ",
+        "summary": {
+          "friendlyName": "Tên tài khoản",
+          "status": "Trạng thái",
+          "type": "Loại tài khoản"
+        },
+        "statuses": {
+          "active": "Đang hoạt động",
+          "suspended": "Bị tạm ngưng",
+          "closed": "Đã đóng"
+        },
+        "types": {
+          "Full": "Full (đã nâng cấp)",
+          "Trial": "Dùng thử"
+        }
+      },
+      "netlify": {
+        "name": "Netlify",
+        "description": "Personal access token của Netlify",
+        "form": {
+          "token": {
+            "label": "Personal Access Token",
+            "placeholder": "nfp_...",
+            "description": "Tạo token tại https://app.netlify.com/user/applications#personal-access-tokens."
+          },
+          "submit": "Kiểm tra token"
+        },
+        "validCredentials": "Token Netlify hợp lệ",
+        "restrictedCredentials": "Token hợp lệ nhưng bị giới hạn",
+        "invalidCredentials": "Token Netlify không hợp lệ",
+        "summary": {
+          "name": "Tên",
+          "siteCount": "Số site"
+        }
+      },
+      "digitalocean": {
+        "name": "DigitalOcean",
+        "description": "Personal access token của DigitalOcean",
+        "form": {
+          "token": {
+            "label": "Personal Access Token",
+            "placeholder": "dop_v1_...",
+            "description": "Tạo token tại https://cloud.digitalocean.com/account/api/tokens. Token có scope tuỳ chỉnh cần quyền account:read."
+          },
+          "submit": "Kiểm tra token"
+        },
+        "validCredentials": "Token DigitalOcean hợp lệ",
+        "restrictedCredentials": "Token hợp lệ nhưng thiếu quyền account:read",
+        "invalidCredentials": "Token DigitalOcean không hợp lệ",
+        "summary": {
+          "team": "Team",
+          "status": "Trạng thái tài khoản",
+          "dropletLimit": "Giới hạn droplet",
+          "emailVerified": "Đã xác minh email"
+        },
+        "statuses": {
+          "active": "Đang hoạt động",
+          "warning": "Cảnh báo",
+          "locked": "Bị khoá"
+        }
+      },
+      "notion": {
+        "name": "Notion",
+        "description": "Integration token của Notion",
+        "form": {
+          "token": {
+            "label": "Integration Token",
+            "placeholder": "ntn_... hoặc secret_...",
+            "description": "Xem ở mục Configuration tại https://www.notion.so/profile/integrations.",
+            "errors": {
+              "format": "Token của Notion bắt đầu bằng ntn_ hoặc secret_"
+            }
+          },
+          "submit": "Kiểm tra token"
+        },
+        "validCredentials": "Token Notion hợp lệ",
+        "restrictedCredentials": "Token hợp lệ nhưng bị giới hạn",
+        "invalidCredentials": "Token Notion không hợp lệ",
+        "summary": {
+          "name": "Integration",
+          "workspace": "Workspace",
+          "ownerType": "Loại integration"
+        },
+        "ownerTypes": {
+          "workspace": "Integration nội bộ",
+          "user": "Integration công khai (OAuth)"
+        }
       }
     },
     "progress": {

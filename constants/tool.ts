@@ -205,17 +205,94 @@ export const _TOOL_LIST = defineToolList([
       url: "https://www.npmjs.com/package/redis",
       version: "6.3.1"
     }
+  },
+  {
+    path: "groq",
+    progress: "completed",
+    libInfo: {
+      packageName: "fetch"
+    }
+  },
+  {
+    icon: "deepseek",
+    path: "deepseek",
+    progress: "completed",
+    libInfo: {
+      packageName: "fetch"
+    }
+  },
+  {
+    icon: "mistralai",
+    path: "mistral",
+    progress: "completed",
+    libInfo: {
+      packageName: "fetch"
+    }
+  },
+  {
+    icon: "openrouter",
+    path: "openrouter",
+    progress: "completed",
+    libInfo: {
+      packageName: "fetch"
+    }
+  },
+  {
+    icon: "huggingface",
+    path: "huggingface",
+    progress: "completed",
+    libInfo: {
+      packageName: "fetch"
+    }
+  },
+  {
+    path: "sendgrid",
+    progress: "completed",
+    libInfo: {
+      packageName: "fetch"
+    }
+  },
+  {
+    path: "twilio",
+    progress: "completed",
+    libInfo: {
+      packageName: "fetch"
+    }
+  },
+  {
+    icon: "netlify",
+    path: "netlify",
+    progress: "completed",
+    libInfo: {
+      packageName: "fetch"
+    }
+  },
+  {
+    icon: "digitalocean",
+    path: "digitalocean",
+    progress: "completed",
+    libInfo: {
+      packageName: "fetch"
+    }
+  },
+  {
+    icon: "notion",
+    path: "notion",
+    progress: "completed",
+    libInfo: {
+      packageName: "fetch"
+    }
   }
 ] as const);
 
 export const _TOOL_GROUP_LIST: ToolGroupType[] = [
   {
     path: "ai",
-    tools: ["google-gemini", "openai", "anthropic"]
+    tools: ["google-gemini", "openai", "anthropic", "groq", "deepseek", "mistral", "openrouter", "huggingface"]
   },
   {
     path: "cloud",
-    tools: ["s3-compatible", "cloudflare", "supabase", "firebase", "github", "vercel"]
+    tools: ["s3-compatible", "cloudflare", "supabase", "firebase", "github", "vercel", "netlify", "digitalocean"]
   },
   {
     path: "database",
@@ -227,7 +304,7 @@ export const _TOOL_GROUP_LIST: ToolGroupType[] = [
   },
   {
     path: "messaging",
-    tools: ["gmail-smtp", "discord", "slack", "telegram", "resend"]
+    tools: ["gmail-smtp", "discord", "slack", "telegram", "resend", "sendgrid", "twilio"]
   },
   {
     path: "analytics",
@@ -235,6 +312,6 @@ export const _TOOL_GROUP_LIST: ToolGroupType[] = [
   },
   {
     path: "others",
-    tools: []
+    tools: ["notion"]
   }
 ];

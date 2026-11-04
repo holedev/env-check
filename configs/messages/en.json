@@ -550,6 +550,266 @@
           "version": "Version",
           "mode": "Mode"
         }
+      },
+      "groq": {
+        "name": "Groq",
+        "description": "Groq API key",
+        "form": {
+          "apiKey": {
+            "label": "API Key",
+            "placeholder": "gsk_...",
+            "description": "Create a key at https://console.groq.com/keys.",
+            "errors": {
+              "format": "Groq keys start with gsk_"
+            }
+          },
+          "submit": "Check API Key"
+        },
+        "validCredentials": "Groq API key is valid",
+        "restrictedCredentials": "Key is valid but can't list models",
+        "invalidCredentials": "Groq API key is invalid",
+        "summary": {
+          "modelsCount": "Models available",
+          "models": "Models"
+        }
+      },
+      "deepseek": {
+        "name": "DeepSeek",
+        "description": "DeepSeek API key",
+        "form": {
+          "apiKey": {
+            "label": "API Key",
+            "placeholder": "sk-...",
+            "description": "Create a key at https://platform.deepseek.com/api_keys.",
+            "errors": {
+              "format": "DeepSeek keys start with sk-"
+            }
+          },
+          "submit": "Check API Key"
+        },
+        "validCredentials": "DeepSeek API key is valid",
+        "restrictedCredentials": "Key is valid but can't list models",
+        "invalidCredentials": "DeepSeek API key is invalid",
+        "summary": {
+          "modelsCount": "Models available",
+          "models": "Models"
+        }
+      },
+      "mistral": {
+        "name": "Mistral",
+        "description": "Mistral API key",
+        "form": {
+          "apiKey": {
+            "label": "API Key",
+            "placeholder": "Enter your Mistral API key",
+            "description": "Create a key at https://console.mistral.ai/api-keys."
+          },
+          "submit": "Check API Key"
+        },
+        "validCredentials": "Mistral API key is valid",
+        "restrictedCredentials": "Key is valid but can't list models",
+        "invalidCredentials": "Mistral API key is invalid",
+        "summary": {
+          "modelsCount": "Models available",
+          "models": "Models"
+        }
+      },
+      "openrouter": {
+        "name": "OpenRouter",
+        "description": "OpenRouter API key, with credit limit and usage",
+        "form": {
+          "apiKey": {
+            "label": "API Key",
+            "placeholder": "sk-or-v1-...",
+            "description": "Create a key at https://openrouter.ai/settings/keys.",
+            "errors": {
+              "format": "OpenRouter keys start with sk-or-"
+            }
+          },
+          "submit": "Check API Key"
+        },
+        "validCredentials": "OpenRouter API key is valid",
+        "restrictedCredentials": "Key is valid but restricted",
+        "invalidCredentials": "OpenRouter API key is invalid",
+        "summary": {
+          "label": "Key name",
+          "usage": "Credits used",
+          "limit": "Credit limit",
+          "limitRemaining": "Credits remaining",
+          "freeTier": "Free tier"
+        },
+        "limits": {
+          "unlimited": "No limit"
+        }
+      },
+      "huggingface": {
+        "name": "Hugging Face",
+        "description": "Hugging Face user access token",
+        "form": {
+          "token": {
+            "label": "Access Token",
+            "placeholder": "hf_...",
+            "description": "Create a token at https://huggingface.co/settings/tokens.",
+            "errors": {
+              "format": "Hugging Face tokens start with hf_"
+            }
+          },
+          "submit": "Check Token"
+        },
+        "validCredentials": "Hugging Face token is valid",
+        "restrictedCredentials": "Token is valid but restricted",
+        "invalidCredentials": "Hugging Face token is invalid",
+        "summary": {
+          "user": "User",
+          "tokenName": "Token name",
+          "role": "Permission",
+          "orgs": "Organizations"
+        },
+        "roles": {
+          "read": "Read",
+          "write": "Write",
+          "fineGrained": "Fine-grained"
+        }
+      },
+      "sendgrid": {
+        "name": "SendGrid",
+        "description": "Twilio SendGrid API key",
+        "form": {
+          "apiKey": {
+            "label": "API Key",
+            "placeholder": "SG.xxxx.yyyy",
+            "description": "Create a key at https://app.sendgrid.com/settings/api_keys.",
+            "errors": {
+              "format": "SendGrid keys look like SG.xxxx.yyyy"
+            }
+          },
+          "region": {
+            "label": "Region",
+            "description": "EU-pinned accounts must use the EU API.",
+            "options": {
+              "global": "Global (api.sendgrid.com)",
+              "eu": "EU (api.eu.sendgrid.com)"
+            }
+          },
+          "submit": "Check API Key"
+        },
+        "validCredentials": "SendGrid API key is valid",
+        "restrictedCredentials": "Key is valid but can't read its scopes",
+        "invalidCredentials": "SendGrid API key is invalid",
+        "summary": {
+          "canSendMail": "Can send mail",
+          "scopesCount": "Scopes granted",
+          "scopes": "Scopes"
+        }
+      },
+      "twilio": {
+        "name": "Twilio",
+        "description": "Twilio Account SID and Auth Token",
+        "form": {
+          "accountSid": {
+            "label": "Account SID",
+            "placeholder": "AC...",
+            "description": "Shown on the Twilio Console home page (https://console.twilio.com).",
+            "errors": {
+              "format": "Account SIDs are AC followed by 32 hex characters"
+            }
+          },
+          "authToken": {
+            "label": "Auth Token",
+            "placeholder": "Enter your Auth Token",
+            "description": "Next to the Account SID in the Console; click Show to reveal it."
+          },
+          "submit": "Check Credentials"
+        },
+        "validCredentials": "Twilio credentials are valid",
+        "restrictedCredentials": "Credentials are valid but restricted",
+        "invalidCredentials": "Twilio credentials are invalid",
+        "summary": {
+          "friendlyName": "Account name",
+          "status": "Status",
+          "type": "Account type"
+        },
+        "statuses": {
+          "active": "Active",
+          "suspended": "Suspended",
+          "closed": "Closed"
+        },
+        "types": {
+          "Full": "Full (upgraded)",
+          "Trial": "Trial"
+        }
+      },
+      "netlify": {
+        "name": "Netlify",
+        "description": "Netlify personal access token",
+        "form": {
+          "token": {
+            "label": "Personal Access Token",
+            "placeholder": "nfp_...",
+            "description": "Create a token at https://app.netlify.com/user/applications#personal-access-tokens."
+          },
+          "submit": "Check Token"
+        },
+        "validCredentials": "Netlify token is valid",
+        "restrictedCredentials": "Token is valid but restricted",
+        "invalidCredentials": "Netlify token is invalid",
+        "summary": {
+          "name": "Name",
+          "siteCount": "Sites"
+        }
+      },
+      "digitalocean": {
+        "name": "DigitalOcean",
+        "description": "DigitalOcean personal access token",
+        "form": {
+          "token": {
+            "label": "Personal Access Token",
+            "placeholder": "dop_v1_...",
+            "description": "Create a token at https://cloud.digitalocean.com/account/api/tokens. Custom-scoped tokens need account:read."
+          },
+          "submit": "Check Token"
+        },
+        "validCredentials": "DigitalOcean token is valid",
+        "restrictedCredentials": "Token is valid but lacks account:read",
+        "invalidCredentials": "DigitalOcean token is invalid",
+        "summary": {
+          "team": "Team",
+          "status": "Account status",
+          "dropletLimit": "Droplet limit",
+          "emailVerified": "Email verified"
+        },
+        "statuses": {
+          "active": "Active",
+          "warning": "Warning",
+          "locked": "Locked"
+        }
+      },
+      "notion": {
+        "name": "Notion",
+        "description": "Notion integration token",
+        "form": {
+          "token": {
+            "label": "Integration Token",
+            "placeholder": "ntn_... or secret_...",
+            "description": "Find it under Configuration at https://www.notion.so/profile/integrations.",
+            "errors": {
+              "format": "Notion tokens start with ntn_ or secret_"
+            }
+          },
+          "submit": "Check Token"
+        },
+        "validCredentials": "Notion token is valid",
+        "restrictedCredentials": "Token is valid but restricted",
+        "invalidCredentials": "Notion token is invalid",
+        "summary": {
+          "name": "Integration",
+          "workspace": "Workspace",
+          "ownerType": "Integration type"
+        },
+        "ownerTypes": {
+          "workspace": "Internal integration",
+          "user": "Public integration (OAuth)"
+        }
       }
     },
     "progress": {
