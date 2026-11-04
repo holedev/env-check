@@ -572,6 +572,28 @@
           "modelsCount": "Models available",
           "models": "Models"
         }
+      },
+      "deepseek": {
+        "name": "DeepSeek",
+        "description": "DeepSeek API key",
+        "form": {
+          "apiKey": {
+            "label": "API Key",
+            "placeholder": "sk-...",
+            "description": "Create a key at https://platform.deepseek.com/api_keys.",
+            "errors": {
+              "format": "DeepSeek keys start with sk-"
+            }
+          },
+          "submit": "Check API Key"
+        },
+        "validCredentials": "DeepSeek API key is valid",
+        "restrictedCredentials": "Key is valid but can't list models",
+        "invalidCredentials": "DeepSeek API key is invalid",
+        "summary": {
+          "modelsCount": "Models available",
+          "models": "Models"
+        }
       }
     },
     "progress": {

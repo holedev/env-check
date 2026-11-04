@@ -572,6 +572,28 @@
           "modelsCount": "Số model khả dụng",
           "models": "Model"
         }
+      },
+      "deepseek": {
+        "name": "DeepSeek",
+        "description": "API key của DeepSeek",
+        "form": {
+          "apiKey": {
+            "label": "API Key",
+            "placeholder": "sk-...",
+            "description": "Tạo key tại https://platform.deepseek.com/api_keys.",
+            "errors": {
+              "format": "Key của DeepSeek bắt đầu bằng sk-"
+            }
+          },
+          "submit": "Kiểm tra API Key"
+        },
+        "validCredentials": "API key của DeepSeek hợp lệ",
+        "restrictedCredentials": "Key hợp lệ nhưng không có quyền liệt kê model",
+        "invalidCredentials": "API key của DeepSeek không hợp lệ",
+        "summary": {
+          "modelsCount": "Số model khả dụng",
+          "models": "Model"
+        }
       }
     },
     "progress": {
