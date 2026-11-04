@@ -8,11 +8,20 @@ export type ToolLibInfo = {
   version?: string;
 };
 
+/** The Tool's single read-only request (see CONTEXT.md: Probe). */
+export type ToolProbe = {
+  /** HTTP verb, or the protocol for non-HTTP probes (SQL, SMTP, REDIS, MONGO, S3, SDK). */
+  method: string;
+  /** Host and path, or the command, shown to the user before they paste anything. */
+  target: string;
+};
+
 export type ToolType = {
   path: string;
   /** simpleicons.org slug; omit when simpleicons has no icon for the brand. */
   icon?: string;
   libInfo?: ToolLibInfo;
+  probe: ToolProbe;
 };
 
 export type ToolWithProgressType = ToolType & {
