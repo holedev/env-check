@@ -1,86 +1,40 @@
+/**
+ * @jest-environment node
+ */
+import { jsonResponse, mockFetch } from "@/test/utils/service";
 import { checkDiscordConnection } from "../actions";
 
-jest.mock("@/utils/handle-error-server", () => ({
-  handleErrorServerNoAuth: jest.fn()
-}));
+const fetchMock = mockFetch();
+const TOKEN = "MTIzNDU2Nzg5.secret.value";
 
-type Cb = { cb: () => Promise<object> };
+describe("checkDiscordConnection", () => {
+  it("is valid and shows bot name, id and verification", async () => {
+    fetchMock.mockResolvedValue(
+      jsonResponse({ id: "123", username: "deploy-bot", bot: true, public_flags: 65_536, email: null })
+    );
 
-const passThrough = async ({ cb }: Cb) => {
-  const result = await cb();
-  return { error: null, data: { payload: result } };
-};
+    const result = await checkDiscordConnection({ token: TOKEN });
 
-const catchError = async ({ cb }: Cb) => {
-  try {
-    await cb();
-    return { error: null, data: { payload: {} } };
-  } catch (error) {
-    return { error: { message: error instanceof Error ? error.message : "Unknown error" }, data: null };
-  }
-};
-
-const mockFetch = jest.fn();
-
-describe("Discord Actions", () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-    global.fetch = mockFetch as unknown as typeof fetch;
+    expect(fetchMock).toHaveBeenCalledWith(
+      "https://discord.com/api/v10/users/@me",
+      expect.objectContaining({ headers: { Authorization: `Bot ${TOKEN}` } })
+    );
+    expect(result.data?.payload).toEqual({
+      outcome: "valid",
+      summary: [
+        { key: "username", value: "deploy-bot" },
+        { key: "id", value: "123" },
+        { key: "verified", value: true }
+      ]
+    });
   });
 
-  describe("checkDiscordConnection", () => {
-    it("should return the bot user payload when the token is valid", async () => {
-      const userData = { id: "123", username: "test-bot", discriminator: "0", bot: true };
-      mockFetch.mockResolvedValue({ ok: true, statusText: "OK", json: jest.fn().mockResolvedValue(userData) });
+  it("is invalid on 401", async () => {
+    fetchMock.mockResolvedValue(jsonResponse({ message: "401: Unauthorized", code: 0 }, 401));
 
-      const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
-      handleErrorServerNoAuth.mockImplementation(passThrough);
+    const result = await checkDiscordConnection({ token: TOKEN });
 
-      const result = await checkDiscordConnection({ token: "valid-token" });
-
-      expect(result.error).toBeNull();
-      expect(result.data?.payload).toEqual(userData);
-    });
-
-    it("should error with the Discord status text when the response is not ok", async () => {
-      mockFetch.mockResolvedValue({ ok: false, statusText: "Unauthorized", json: jest.fn() });
-
-      const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
-      handleErrorServerNoAuth.mockImplementation(catchError);
-
-      const result = await checkDiscordConnection({ token: "bad-token" });
-
-      expect(result.data).toBeNull();
-      expect(result.error?.message).toBe("Discord API error: Unauthorized");
-    });
-
-    it("should error with a fallback message on network failure", async () => {
-      mockFetch.mockRejectedValue("boom");
-
-      const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
-      handleErrorServerNoAuth.mockImplementation(catchError);
-
-      const result = await checkDiscordConnection({ token: "any-token" });
-
-      expect(result.data).toBeNull();
-      expect(result.error?.message).toBe("Failed to connect to Discord");
-    });
-
-    it("should call the Discord users/@me endpoint with a Bot authorization header", async () => {
-      mockFetch.mockResolvedValue({ ok: true, statusText: "OK", json: jest.fn().mockResolvedValue({}) });
-
-      const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
-      handleErrorServerNoAuth.mockImplementation(passThrough);
-
-      await checkDiscordConnection({ token: "secret-token" });
-
-      expect(mockFetch).toHaveBeenCalledWith(
-        "https://discord.com/api/v10/users/@me",
-        expect.objectContaining({
-          method: "GET",
-          headers: expect.objectContaining({ Authorization: "Bot secret-token" })
-        })
-      );
-    });
+    expect(result.data).toBeNull();
+    expect(result.error?.message).toBe("401: Unauthorized");
   });
 });

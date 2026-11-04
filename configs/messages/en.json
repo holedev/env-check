@@ -275,18 +275,23 @@
       },
       "discord": {
         "name": "Discord",
-        "description": "Discord",
+        "description": "Discord bot token",
         "form": {
           "token": {
             "label": "Bot Token",
-            "placeholder": "Enter your Discord Bot Token",
-            "description": "Your Discord Bot Token can be found in https://discord.com/developers/applications."
+            "placeholder": "Enter your Discord bot token",
+            "description": "Application → Bot → Reset Token at https://discord.com/developers/applications."
           },
           "submit": "Check Token"
         },
-        "validCredentials": "Discord Bot Token is valid",
-        "invalidCredentials": "Discord Bot Token is invalid!",
-        "details": "Details"
+        "validCredentials": "Discord bot token is valid",
+        "restrictedCredentials": "Token is valid but restricted",
+        "invalidCredentials": "Discord bot token is invalid",
+        "summary": {
+          "username": "Bot",
+          "id": "Bot ID",
+          "verified": "Verified bot"
+        }
       },
       "sentry": {
         "name": "Sentry",
