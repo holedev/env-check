@@ -15,7 +15,7 @@ const ToolCard = ({ groupPath, tool }: Props) => {
   const toolName = t(`tools.items.${tool.path}.name`);
 
   return (
-    <Card className='h-full transition-all hover:border-brand/50 hover:shadow-md'>
+    <Card className='h-full transition-all hover:border-foreground/50 hover:shadow-md'>
       <Link className='flex h-full flex-col' href={`/tools/${groupPath}/${tool.path}`}>
         <CardHeader>
           <div className='flex items-center gap-3'>

@@ -30,7 +30,7 @@ export default function Page() {
                 </h2>
                 <p className='text-muted-foreground text-sm'>{t(`tools.groups.${group.path}.description`)}</p>
               </div>
-              <Link className='shrink-0 text-brand text-sm hover:underline' href={`/tools/${group.path}`}>
+              <Link className='shrink-0 text-foreground text-sm hover:underline' href={`/tools/${group.path}`}>
                 {t("workspace.overview.viewGroup")}
               </Link>
             </div>

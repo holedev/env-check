@@ -44,7 +44,7 @@ const AppSidebar = () => {
     <Sidebar>
       <SidebarHeader>
         <Link className='flex items-center gap-2 px-2 py-3' href='/' onClick={closeOnMobile}>
-          <span className='size-2.5 rounded-full bg-brand' />
+          <span className='size-2.5 rounded-full bg-primary' />
           <span className='font-extrabold text-lg uppercase tracking-tight'>{t("common.site.logoText")}</span>
         </Link>
       </SidebarHeader>

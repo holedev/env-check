@@ -140,7 +140,7 @@ const ValidationForm = <V extends Values>({
         return (
           <div className='space-y-4' data-outcome={state.result.outcome}>
             {state.result.outcome === "restricted" ? (
-              <Alert className='border-amber-500/50 text-amber-700 dark:text-amber-400 [&>svg]:text-amber-600'>
+              <Alert className='border-warn/40 bg-warn-soft text-warn [&>svg]:text-warn'>
                 <AlertTriangleIcon />
                 <AlertTitle>{tool("restrictedCredentials")}</AlertTitle>
                 {state.result.reason && (
@@ -148,7 +148,7 @@ const ValidationForm = <V extends Values>({
                 )}
               </Alert>
             ) : (
-              <Alert className='border-brand/40 text-brand [&>svg]:text-brand'>
+              <Alert className='border-ok/40 bg-ok-soft text-ok [&>svg]:text-ok'>
                 <CheckCircle2Icon />
                 <AlertTitle>{tool("validCredentials")}</AlertTitle>
               </Alert>
