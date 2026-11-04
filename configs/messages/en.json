@@ -701,6 +701,43 @@
           "scopesCount": "Scopes granted",
           "scopes": "Scopes"
         }
+      },
+      "twilio": {
+        "name": "Twilio",
+        "description": "Twilio Account SID and Auth Token",
+        "form": {
+          "accountSid": {
+            "label": "Account SID",
+            "placeholder": "AC...",
+            "description": "Shown on the Twilio Console home page (https://console.twilio.com).",
+            "errors": {
+              "format": "Account SIDs are AC followed by 32 hex characters"
+            }
+          },
+          "authToken": {
+            "label": "Auth Token",
+            "placeholder": "Enter your Auth Token",
+            "description": "Next to the Account SID in the Console; click Show to reveal it."
+          },
+          "submit": "Check Credentials"
+        },
+        "validCredentials": "Twilio credentials are valid",
+        "restrictedCredentials": "Credentials are valid but restricted",
+        "invalidCredentials": "Twilio credentials are invalid",
+        "summary": {
+          "friendlyName": "Account name",
+          "status": "Status",
+          "type": "Account type"
+        },
+        "statuses": {
+          "active": "Active",
+          "suspended": "Suspended",
+          "closed": "Closed"
+        },
+        "types": {
+          "Full": "Full (upgraded)",
+          "Trial": "Trial"
+        }
       }
     },
     "progress": {

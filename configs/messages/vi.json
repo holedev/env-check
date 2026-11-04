@@ -701,6 +701,43 @@
           "scopesCount": "Số scope",
           "scopes": "Scope"
         }
+      },
+      "twilio": {
+        "name": "Twilio",
+        "description": "Account SID và Auth Token của Twilio",
+        "form": {
+          "accountSid": {
+            "label": "Account SID",
+            "placeholder": "AC...",
+            "description": "Hiện ở trang chủ Twilio Console (https://console.twilio.com).",
+            "errors": {
+              "format": "Account SID gồm AC và 32 ký tự hex"
+            }
+          },
+          "authToken": {
+            "label": "Auth Token",
+            "placeholder": "Nhập Auth Token",
+            "description": "Nằm cạnh Account SID trong Console, bấm Show để hiện."
+          },
+          "submit": "Kiểm tra"
+        },
+        "validCredentials": "Thông tin Twilio hợp lệ",
+        "restrictedCredentials": "Thông tin hợp lệ nhưng bị giới hạn",
+        "invalidCredentials": "Thông tin Twilio không hợp lệ",
+        "summary": {
+          "friendlyName": "Tên tài khoản",
+          "status": "Trạng thái",
+          "type": "Loại tài khoản"
+        },
+        "statuses": {
+          "active": "Đang hoạt động",
+          "suspended": "Bị tạm ngưng",
+          "closed": "Đã đóng"
+        },
+        "types": {
+          "Full": "Full (đã nâng cấp)",
+          "Trial": "Dùng thử"
+        }
       }
     },
     "progress": {
