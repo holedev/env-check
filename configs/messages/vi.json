@@ -404,17 +404,25 @@
       },
       "postgresql": {
         "name": "PostgreSQL",
-        "description": "Kiểm tra chuỗi kết nối PostgreSQL của bạn",
+        "description": "Connection string của PostgreSQL / Neon / Supabase",
         "form": {
           "connectionString": {
-            "label": "Chuỗi kết nối",
-            "placeholder": "postgresql://user:pass@host:5432/db",
-            "description": "Chuỗi kết nối PostgreSQL của bạn"
+            "label": "Connection string",
+            "placeholder": "postgresql://user:password@host:5432/database",
+            "description": "Dùng được cho Neon, Supabase, RDS và Postgres thường. Bản online chặn địa chỉ private và local.",
+            "errors": {
+              "format": "Connection string bắt đầu bằng postgres:// hoặc postgresql://"
+            }
           },
           "submit": "Kiểm tra kết nối"
         },
-        "validCredentials": "Kết nối PostgreSQL thành công!",
-        "invalidCredentials": "Kết nối PostgreSQL thất bại!"
+        "validCredentials": "Kết nối PostgreSQL thành công",
+        "restrictedCredentials": "Kết nối được nhưng bị giới hạn",
+        "invalidCredentials": "Không kết nối được PostgreSQL",
+        "summary": {
+          "tablesCount": "Số bảng trong public",
+          "tables": "Tên bảng"
+        }
       },
       "mysql": {
         "name": "MySQL",

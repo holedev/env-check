@@ -168,17 +168,25 @@
       },
       "postgresql": {
         "name": "PostgreSQL",
-        "description": "Test your PostgreSQL connection string",
+        "description": "PostgreSQL / Neon / Supabase connection string",
         "form": {
           "connectionString": {
-            "label": "Connection String",
-            "placeholder": "postgresql://user:pass@host:5432/db",
-            "description": "Your PostgreSQL connection string"
+            "label": "Connection string",
+            "placeholder": "postgresql://user:password@host:5432/database",
+            "description": "Works with Neon, Supabase, RDS and plain Postgres. Private and local addresses are blocked on the hosted site.",
+            "errors": {
+              "format": "Connection strings start with postgres:// or postgresql://"
+            }
           },
-          "submit": "Test Connection"
+          "submit": "Check Connection"
         },
-        "validCredentials": "PostgreSQL connection successful!",
-        "invalidCredentials": "PostgreSQL connection failed!"
+        "validCredentials": "Connected to PostgreSQL",
+        "restrictedCredentials": "Connected, but restricted",
+        "invalidCredentials": "Could not connect to PostgreSQL",
+        "summary": {
+          "tablesCount": "Tables in public",
+          "tables": "Table names"
+        }
       },
       "google-gemini": {
         "name": "Gemini",

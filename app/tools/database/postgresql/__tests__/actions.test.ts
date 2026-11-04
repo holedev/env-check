@@ -1,165 +1,68 @@
+/**
+ * @jest-environment node
+ */
+import { Client } from "pg";
+import { assertPublicConnectionString } from "@/utils/network-guard";
 import { checkPostgreSqlConnection } from "../actions";
 
-// Mock the pg Client
-jest.mock("pg", () => {
-  return {
-    Client: jest.fn().mockImplementation(() => ({
-      connect: jest.fn(),
-      query: jest.fn(),
-      end: jest.fn()
-    }))
+jest.mock("pg", () => ({ Client: jest.fn() }));
+jest.mock("@/utils/network-guard", () => ({ assertPublicConnectionString: jest.fn() }));
+
+const MockClient = Client as unknown as jest.Mock;
+const guard = assertPublicConnectionString as jest.Mock;
+const URI = "postgresql://app:p%40ssw0rd@db.example.com:5432/shop";
+
+const fakeClient = ({ connect, query }: { connect?: jest.Mock; query?: jest.Mock } = {}) => {
+  const client = {
+    connect: connect ?? jest.fn().mockResolvedValue(undefined),
+    query: query ?? jest.fn().mockResolvedValue({ rows: [{ table_name: "orders" }, { table_name: "users" }] }),
+    end: jest.fn().mockResolvedValue(undefined)
   };
+  MockClient.mockImplementation(() => client);
+  return client;
+};
+
+beforeEach(() => {
+  jest.resetAllMocks();
+  jest.spyOn(console, "error").mockImplementation(() => undefined);
 });
 
-// Mock the error handler
-jest.mock("@/utils/handle-error-server", () => ({
-  handleErrorServerNoAuth: jest.fn()
-}));
+describe("checkPostgreSqlConnection", () => {
+  it("is valid and lists the public tables", async () => {
+    const client = fakeClient();
 
-jest.mock("@/utils/network-guard", () => ({
-  assertPublicHost: jest.fn(),
-  assertPublicConnectionString: jest.fn()
-}));
+    const result = await checkPostgreSqlConnection({ connectionString: URI });
 
-describe("PostgreSQL Actions", () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
+    expect(guard).toHaveBeenCalledWith(URI);
+    expect(MockClient).toHaveBeenCalledWith({ connectionString: URI, connectionTimeoutMillis: 10_000 });
+    expect(result.data?.payload).toEqual({
+      outcome: "valid",
+      summary: [
+        { key: "tablesCount", value: 2 },
+        { key: "tables", value: ["orders", "users"] }
+      ]
+    });
+    expect(client.end).toHaveBeenCalled();
   });
 
-  describe("checkPostgreSqlConnection", () => {
-    it("should return success with tables when connection is valid", async () => {
-      const mockConnect = jest.fn().mockResolvedValue(undefined);
-      const mockQuery = jest.fn().mockResolvedValue({
-        rows: [{ table_name: "users" }, { table_name: "posts" }]
-      });
-      const mockEnd = jest.fn().mockResolvedValue(undefined);
-
-      const { Client } = require("pg");
-      Client.mockImplementation(() => ({
-        connect: mockConnect,
-        query: mockQuery,
-        end: mockEnd
-      }));
-
-      const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
-      handleErrorServerNoAuth.mockImplementation(async ({ cb }: { cb: () => Promise<object> }) => {
-        const result = await cb();
-        return { error: null, data: { payload: result } };
-      });
-
-      const result = await checkPostgreSqlConnection({ connectionString: "postgresql://user:pass@host:5432/db" });
-
-      expect(result.error).toBeNull();
-      expect(result.data).toBeDefined();
-      expect(result.data?.payload).toMatchObject({
-        success: true,
-        tables: ["users", "posts"],
-        tablesCount: 2
-      });
-      expect(mockEnd).toHaveBeenCalled();
+  it("is invalid on bad credentials, without leaking the password", async () => {
+    const client = fakeClient({
+      connect: jest.fn().mockRejectedValue(new Error('password authentication failed for user "app" (p@ssw0rd)'))
     });
 
-    it("should return error when connection fails", async () => {
-      const mockConnect = jest.fn().mockRejectedValue(new Error("connection refused"));
-      const mockEnd = jest.fn().mockResolvedValue(undefined);
+    const result = await checkPostgreSqlConnection({ connectionString: URI });
 
-      const { Client } = require("pg");
-      Client.mockImplementation(() => ({
-        connect: mockConnect,
-        query: jest.fn(),
-        end: mockEnd
-      }));
-
-      const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
-      handleErrorServerNoAuth.mockImplementation(async ({ cb }: { cb: () => Promise<object> }) => {
-        try {
-          await cb();
-        } catch (error) {
-          return { error: { message: error instanceof Error ? error.message : "Unknown error" }, data: null };
-        }
-      });
-
-      const result = await checkPostgreSqlConnection({ connectionString: "postgresql://user:wrong@host:5432/db" });
-
-      expect(result.error).toBeDefined();
-      expect(result.error?.message).toBe("connection refused");
-      expect(result.data).toBeNull();
-      expect(mockEnd).toHaveBeenCalled();
-    });
-
-    it("should return error on network failure", async () => {
-      const mockConnect = jest.fn().mockRejectedValue(new Error("getaddrinfo ENOTFOUND unknown-host"));
-      const mockEnd = jest.fn().mockResolvedValue(undefined);
-
-      const { Client } = require("pg");
-      Client.mockImplementation(() => ({
-        connect: mockConnect,
-        query: jest.fn(),
-        end: mockEnd
-      }));
-
-      const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
-      handleErrorServerNoAuth.mockImplementation(async ({ cb }: { cb: () => Promise<object> }) => {
-        try {
-          await cb();
-        } catch (error) {
-          return { error: { message: error instanceof Error ? error.message : "Unknown error" }, data: null };
-        }
-      });
-
-      const result = await checkPostgreSqlConnection({
-        connectionString: "postgresql://user:pass@unknown-host:5432/db"
-      });
-
-      expect(result.error).toBeDefined();
-      expect(result.error?.message).toBe("getaddrinfo ENOTFOUND unknown-host");
-      expect(result.data).toBeNull();
-    });
-
-    it("should instantiate Client with the provided connection string", async () => {
-      const mockConnect = jest.fn().mockResolvedValue(undefined);
-      const mockQuery = jest.fn().mockResolvedValue({ rows: [] });
-      const mockEnd = jest.fn().mockResolvedValue(undefined);
-
-      const { Client } = require("pg");
-      Client.mockImplementation(() => ({
-        connect: mockConnect,
-        query: mockQuery,
-        end: mockEnd
-      }));
-
-      const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
-      handleErrorServerNoAuth.mockImplementation(async ({ cb }: { cb: () => Promise<object> }) => {
-        const result = await cb();
-        return { error: null, data: { payload: result } };
-      });
-
-      const connectionString = "postgresql://admin:secret@db.example.com:5432/mydb";
-      await checkPostgreSqlConnection({ connectionString });
-
-      expect(Client).toHaveBeenCalledWith({ connectionString });
-    });
+    expect(result.data).toBeNull();
+    expect(result.error?.message).toBe('password authentication failed for user "app" (***)');
+    expect(client.end).toHaveBeenCalled();
   });
-});
 
-describe("private network guard", () => {
-  it("refuses private hosts before connecting", async () => {
-    const guard = require("@/utils/network-guard").assertPublicConnectionString as jest.Mock;
-    guard.mockRejectedValueOnce(new Error("Connections to private or internal network addresses are blocked."));
-    const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
-    handleErrorServerNoAuth.mockImplementation(async ({ cb }: { cb: () => Promise<object> }) => {
-      try {
-        return { error: null, data: { payload: await cb() } };
-      } catch (error) {
-        return { error: { message: (error as Error).message }, data: null };
-      }
-    });
-    const driver = require("pg").Client as jest.Mock;
-    driver.mockClear();
+  it("does not connect when the host is private", async () => {
+    guard.mockRejectedValue(new Error("Connections to private or internal network addresses are blocked."));
 
-    const result = await checkPostgreSqlConnection({ connectionString: "postgresql://user:pass@127.0.0.1:5432/db" });
+    const result = await checkPostgreSqlConnection({ connectionString: "postgresql://u:p@127.0.0.1/db" });
 
+    expect(MockClient).not.toHaveBeenCalled();
     expect(result.error?.message).toContain("private or internal network");
-    expect(driver).not.toHaveBeenCalled();
   });
 });
