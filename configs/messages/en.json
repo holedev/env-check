@@ -970,75 +970,73 @@
     }
   },
   "landing": {
+    "meta": {
+      "title": "ENV Check: validate API keys in seconds",
+      "description": "Paste an API key or credential and ENV Check makes one real authenticated call to the service to tell you whether it works. Open source, nothing stored."
+    },
     "header": {
       "openWorkspace": "Open Workspace"
+    },
+    "hero": {
+      "badge": "{count} tools · open source · self-hostable",
+      "title": "Check an API key with one request.",
+      "description": "Paste a credential and env-check sends a single read-only Probe to its service, then tells you whether it is valid, restricted or unusable, and why.",
+      "searchHint": "Stripe, OpenAI, Redis…",
+      "primary": "Start checking",
+      "secondary": "View source"
+    },
+    "terminal": {
+      "title": "probe.log",
+      "valid": "✓ 200 · valid · test mode · secret key",
+      "restricted": "! restricted · not_allowed_token_type",
+      "blocked": "✗ blocked · private network address"
+    },
+    "services": {
+      "title": "{count} services · {groups} groups"
+    },
+    "security": {
+      "title": "Your key goes nowhere else.",
+      "description": "Each tool sends one read request to the key’s own service. No database, no cache, no emails sent, no charges made.",
+      "probe": {
+        "tag": "01 · PROBE",
+        "title": "One read-only request",
+        "body": "Every tool declares exactly what it sends. Nothing is sent, charged or written."
+      },
+      "redact": {
+        "tag": "02 · REDACT",
+        "title": "Secrets never come back",
+        "body": "Keys and passwords are masked out of service errors before they are shown or logged."
+      },
+      "guard": {
+        "tag": "03 · GUARD",
+        "title": "Private networks are blocked",
+        "body": "Database and SMTP tools refuse localhost, LAN and cloud-metadata addresses, so the server can’t be used to probe its own network."
+      }
+    },
+    "steps": {
+      "title": "Three steps, no sign-up.",
+      "pick": {
+        "title": "Pick a tool",
+        "description": "Search with Ctrl K or browse by service group."
+      },
+      "paste": {
+        "title": "Paste the credential",
+        "description": "Inputs are masked. See the Probe before you check."
+      },
+      "result": {
+        "title": "Read the result",
+        "description": "Valid, Restricted or invalid, with what the service returned."
+      }
+    },
+    "dotenv": {
+      "badge": "Coming soon",
+      "title": "Paste a whole .env file",
+      "description": "env-check will recognise each key by its prefix and check them all at once."
     },
     "footer": {
       "tagline": "Validate API keys without handing them to a third party.",
       "source": "Source code",
       "license": "GPL-3.0 licensed"
-    },
-    "meta": {
-      "title": "ENV Check: validate API keys in seconds",
-      "description": "Paste an API key or credential and ENV Check makes one real authenticated call to the service to tell you whether it works. Open source, nothing stored."
-    },
-    "hero": {
-      "badge": "Open source · Self-hostable",
-      "title": "Is your API key actually working?",
-      "description": "Paste a credential and ENV Check makes one real authenticated call to the service, then tells you whether it works and why not.",
-      "primary": "Start checking",
-      "secondary": "View on GitHub"
-    },
-    "preview": {
-      "title": "Validation result",
-      "valid": "Valid",
-      "invalid": "Invalid"
-    },
-    "stats": {
-      "tools": "tools",
-      "groups": "service groups",
-      "locales": "languages"
-    },
-    "security": {
-      "title": "Your keys stay with you",
-      "description": "Built for credentials you would rather not paste into a random website.",
-      "serverAction": {
-        "title": "Server-side only",
-        "description": "Every check runs in a Next.js Server Action. Your key goes from your browser to this server and on to the service being checked. No other third party sees it."
-      },
-      "noStorage": {
-        "title": "Nothing stored",
-        "description": "There is no database and no cache. A key lives only for the single request that validates it."
-      },
-      "openSource": {
-        "title": "Open source",
-        "description": "Read exactly what each check does, or run your own instance with Docker or Vercel."
-      }
-    },
-    "steps": {
-      "title": "How it works",
-      "pick": {
-        "title": "Pick a tool",
-        "description": "Choose the service your credential belongs to."
-      },
-      "paste": {
-        "title": "Paste the credential",
-        "description": "Inputs are masked by default, with a one-click paste."
-      },
-      "result": {
-        "title": "Get a clear answer",
-        "description": "See success, or the exact error the service returned."
-      }
-    },
-    "groups": {
-      "title": "What you can check",
-      "description": "Tools are grouped by the kind of service they validate.",
-      "count": "{count, plural, one {# tool} other {# tools}}"
-    },
-    "cta": {
-      "title": "Ready to check a key?",
-      "description": "No sign-up. Pick a tool and paste.",
-      "button": "Open Workspace"
     }
   }
 }

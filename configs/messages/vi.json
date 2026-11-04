@@ -970,75 +970,73 @@
     }
   },
   "landing": {
+    "meta": {
+      "title": "ENV Check: kiểm tra API key trong vài giây",
+      "description": "Dán API key hoặc credential, ENV Check gọi thật một request có xác thực tới dịch vụ để cho bạn biết key có hoạt động hay không. Mã nguồn mở, không lưu trữ."
+    },
     "header": {
       "openWorkspace": "Mở Workspace"
+    },
+    "hero": {
+      "badge": "{count} tools · mã nguồn mở · tự host được",
+      "title": "Kiểm tra API key bằng một request.",
+      "description": "Dán credential, env-check gửi đúng một Probe đọc-only tới dịch vụ và cho bạn biết key hợp lệ, bị giới hạn quyền hay không dùng được, kèm lý do.",
+      "searchHint": "Stripe, OpenAI, Redis…",
+      "primary": "Bắt đầu kiểm tra",
+      "secondary": "Xem mã nguồn"
+    },
+    "terminal": {
+      "title": "probe.log",
+      "valid": "✓ 200 · hợp lệ · test mode · secret key",
+      "restricted": "! restricted · not_allowed_token_type",
+      "blocked": "✗ bị chặn · địa chỉ mạng nội bộ"
+    },
+    "services": {
+      "title": "{count} dịch vụ · {groups} nhóm"
+    },
+    "security": {
+      "title": "Key của bạn không đi đâu khác.",
+      "description": "Mỗi tool chỉ gửi một request đọc tới đúng dịch vụ của key. Không database, không cache, không gửi email, không tạo charge.",
+      "probe": {
+        "tag": "01 · PROBE",
+        "title": "Chỉ một request đọc",
+        "body": "Mỗi tool khai báo rõ request nó gửi. Không gửi tin, không tạo charge, không ghi dữ liệu."
+      },
+      "redact": {
+        "tag": "02 · REDACT",
+        "title": "Secret không quay lại trình duyệt",
+        "body": "Lỗi từ dịch vụ được che key và mật khẩu trước khi hiển thị hoặc ghi log."
+      },
+      "guard": {
+        "tag": "03 · GUARD",
+        "title": "Chặn mạng nội bộ",
+        "body": "Tool database và SMTP từ chối localhost, LAN và địa chỉ metadata cloud để server không bị dùng dò mạng."
+      }
+    },
+    "steps": {
+      "title": "Ba bước, không cần đăng ký.",
+      "pick": {
+        "title": "Chọn tool",
+        "description": "Tìm bằng Ctrl K hoặc duyệt theo nhóm dịch vụ."
+      },
+      "paste": {
+        "title": "Dán credential",
+        "description": "Ô nhập được che mặc định. Xem trước Probe sẽ gửi gì."
+      },
+      "result": {
+        "title": "Đọc kết quả",
+        "description": "Hợp lệ, Restricted hoặc không hợp lệ, kèm những gì dịch vụ trả về."
+      }
+    },
+    "dotenv": {
+      "badge": "Sắp ra mắt",
+      "title": "Dán cả file .env",
+      "description": "env-check sẽ nhận ra từng key thuộc dịch vụ nào theo tiền tố và kiểm tra hết một lượt."
     },
     "footer": {
       "tagline": "Kiểm tra API key mà không phải giao nó cho bên thứ ba.",
       "source": "Mã nguồn",
       "license": "Giấy phép GPL-3.0"
-    },
-    "meta": {
-      "title": "ENV Check: kiểm tra API key trong vài giây",
-      "description": "Dán API key hoặc credential, ENV Check gọi thật một request có xác thực tới dịch vụ để cho bạn biết key có hoạt động hay không. Mã nguồn mở, không lưu trữ."
-    },
-    "hero": {
-      "badge": "Mã nguồn mở · Tự host được",
-      "title": "API key của bạn có thật sự hoạt động?",
-      "description": "Dán credential, ENV Check gọi thật một request có xác thực tới dịch vụ và cho bạn biết key có hoạt động hay không, kèm lý do nếu lỗi.",
-      "primary": "Bắt đầu kiểm tra",
-      "secondary": "Xem trên GitHub"
-    },
-    "preview": {
-      "title": "Kết quả kiểm tra",
-      "valid": "Hợp lệ",
-      "invalid": "Không hợp lệ"
-    },
-    "stats": {
-      "tools": "tools",
-      "groups": "nhóm dịch vụ",
-      "locales": "ngôn ngữ"
-    },
-    "security": {
-      "title": "Key của bạn vẫn ở chỗ bạn",
-      "description": "Làm ra cho những credential bạn không muốn dán vào một trang web lạ.",
-      "serverAction": {
-        "title": "Chỉ chạy phía server",
-        "description": "Mọi lần kiểm tra chạy trong Next.js Server Action. Key đi từ trình duyệt tới server này rồi tới dịch vụ cần kiểm tra. Không bên thứ ba nào khác nhìn thấy."
-      },
-      "noStorage": {
-        "title": "Không lưu trữ",
-        "description": "Không có database, không có cache. Key chỉ tồn tại trong đúng một request dùng để kiểm tra nó."
-      },
-      "openSource": {
-        "title": "Mã nguồn mở",
-        "description": "Đọc chính xác từng tool làm gì, hoặc tự chạy một bản riêng bằng Docker hay Vercel."
-      }
-    },
-    "steps": {
-      "title": "Cách hoạt động",
-      "pick": {
-        "title": "Chọn tool",
-        "description": "Chọn dịch vụ mà credential của bạn thuộc về."
-      },
-      "paste": {
-        "title": "Dán credential",
-        "description": "Ô nhập được che mặc định, có nút dán một chạm."
-      },
-      "result": {
-        "title": "Nhận kết quả rõ ràng",
-        "description": "Thấy ngay thành công, hoặc đúng lỗi mà dịch vụ trả về."
-      }
-    },
-    "groups": {
-      "title": "Bạn có thể kiểm tra gì",
-      "description": "Các tool được chia nhóm theo loại dịch vụ.",
-      "count": "{count} tools"
-    },
-    "cta": {
-      "title": "Sẵn sàng kiểm tra key?",
-      "description": "Không cần đăng ký. Chọn tool và dán.",
-      "button": "Mở Workspace"
     }
   }
 }

@@ -19,7 +19,14 @@ import type { ToolItem, ToolPath, ToolWithProgressType } from "@/types/tool";
 import { ToolIcon } from "../Tools/ToolIcon";
 import { ToolProgress } from "../Tools/ToolProgress";
 
-const SearchCommand = () => {
+type SearchCommandProps = {
+  /** "hero": a large input-like trigger for the Landing; "default": the compact header button. */
+  variant?: "default" | "hero";
+  /** Hint shown inside the hero trigger. */
+  heroHint?: string;
+};
+
+const SearchCommand = ({ variant = "default", heroHint }: SearchCommandProps) => {
   const [open, setOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const router = useRouter();
@@ -89,19 +96,31 @@ const SearchCommand = () => {
 
   return (
     <>
-      <Button
-        aria-label={t("common.search.placeholder")}
-        className='relative w-9 justify-center px-0 text-muted-foreground text-sm sm:w-48 sm:justify-start sm:px-3 sm:pr-16 lg:w-64'
-        onClick={() => setOpen(true)}
-        variant='outline'
-      >
-        <SearchIcon />
-        <span className='hidden lg:inline-flex'>{t("common.search.placeholder")}</span>
-        <span className='hidden sm:inline-flex lg:hidden'>{t("common.search.filter")}</span>
-        <span className='pointer-events-none absolute top-1/2 right-1.5 hidden h-5 -translate-y-1/2 transform select-none items-center gap-1 rounded border bg-muted px-1.5 font-medium font-mono text-[10px] opacity-100 sm:flex'>
-          <span className='text-xs'>Ctrl + K</span>
-        </span>
-      </Button>
+      {variant === "hero" ? (
+        <button
+          className='flex h-13 w-full items-center gap-3 rounded-lg border bg-card px-4 text-left text-base text-muted-foreground transition-colors hover:border-foreground/25'
+          onClick={() => setOpen(true)}
+          type='button'
+        >
+          <SearchIcon aria-hidden className='size-5 shrink-0' />
+          <span className='flex-1 truncate'>{heroHint ?? t("common.search.placeholder")}</span>
+          <kbd className='rounded border px-2 py-0.5 font-mono text-xs'>Ctrl K</kbd>
+        </button>
+      ) : (
+        <Button
+          aria-label={t("common.search.placeholder")}
+          className='relative w-9 justify-center px-0 text-muted-foreground text-sm sm:w-48 sm:justify-start sm:px-3 sm:pr-16 lg:w-64'
+          onClick={() => setOpen(true)}
+          variant='outline'
+        >
+          <SearchIcon />
+          <span className='hidden lg:inline-flex'>{t("common.search.placeholder")}</span>
+          <span className='hidden sm:inline-flex lg:hidden'>{t("common.search.filter")}</span>
+          <span className='pointer-events-none absolute top-1/2 right-1.5 hidden h-5 -translate-y-1/2 transform select-none items-center gap-1 rounded border bg-muted px-1.5 font-medium font-mono text-[10px] opacity-100 sm:flex'>
+            <span className='text-xs'>Ctrl + K</span>
+          </span>
+        </Button>
+      )}
       <CommandDialog onOpenChange={setOpen} open={open}>
         <Command shouldFilter={false}>
           <CommandInput
