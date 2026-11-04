@@ -62,7 +62,7 @@ Set `NEXT_PUBLIC_SITE_URL` (e.g. `https://your-domain.com`) on your own deployme
 | Variable | Default | Purpose |
 |---|---|---|
 | `NEXT_PUBLIC_SITE_URL` | `https://envcheck.vercel.app` | Public origin for canonical URLs, Open Graph and `sitemap.xml`. |
-| `ALLOW_PRIVATE_NETWORK` | unset | Tools that connect to a host you type (PostgreSQL, MongoDB, MySQL, Redis, SMTP, S3 endpoint) refuse loopback, private and link-local addresses so the server can't be used to probe its own network. Set to `true` on a self-hosted instance that needs to check services on your LAN. |
+| `ALLOW_PRIVATE_NETWORK` | unset | Tools that connect to a host you type (PostgreSQL, MongoDB, MySQL, Redis, SMTP, S3 endpoint, Supabase project URL) refuse loopback, private and link-local addresses so the server can't be used to probe its own network. Set to `true` on a self-hosted instance that needs to check services on your LAN. |
 
 ## Development
 
