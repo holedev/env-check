@@ -26,6 +26,7 @@ import {
   useSidebar
 } from "@/components/ui/sidebar";
 import { _TOOL_GROUP_LIST, _TOOL_LIST } from "@/constants/tool";
+import { getGroupTools } from "@/lib/tool";
 
 const AppSidebar = () => {
   const t = useTranslations();
@@ -102,12 +103,7 @@ const AppSidebar = () => {
                       </CollapsibleTrigger>
                       <CollapsibleContent>
                         <SidebarMenuSub>
-                          {group.tools.map((toolPath) => {
-                            const tool = _TOOL_LIST.find((item) => item.path === toolPath);
-                            if (!tool) {
-                              return null;
-                            }
-
+                          {getGroupTools(group).map((tool) => {
                             const toolHref = `${groupHref}/${tool.path}`;
                             const toolName = t(`tools.items.${tool.path}.name`);
 
@@ -115,7 +111,7 @@ const AppSidebar = () => {
                               <SidebarMenuSubItem key={tool.path}>
                                 <SidebarMenuSubButton asChild isActive={pathname === toolHref}>
                                   <Link href={toolHref} onClick={closeOnMobile}>
-                                    <ToolIcon icon={tool.icon} size={16} />
+                                    <ToolIcon decorative icon={tool.icon} name={toolName} size={16} />
                                     <span>{toolName}</span>
                                   </Link>
                                 </SidebarMenuSubButton>

@@ -117,7 +117,7 @@ export default function Page() {
               {_PREVIEW_ROWS.map(({ tool, icon, valid }) => (
                 <div className='flex items-center justify-between rounded-lg border px-3 py-2.5' key={tool}>
                   <div className='flex items-center gap-3'>
-                    <ToolIcon icon={icon} size={20} />
+                    <ToolIcon decorative icon={icon} name={t(`tools.items.${tool}.name`)} size={20} />
                     <span className='font-medium text-sm'>{t(`tools.items.${tool}.name`)}</span>
                     <span className='font-mono text-muted-foreground text-xs'>••••••••</span>
                   </div>

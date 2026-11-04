@@ -6,7 +6,7 @@ A developer tool for quickly validating API keys across multiple popular service
 
 ## Features
 
-- 🔑 Instant API key validation across AI, cloud, database, messaging and analytics services
+- 🔑 Instant API key validation across AI, cloud, database, payment, messaging and analytics services
 - 🚀 Clean, modern interface built with Next.js
 - 🔒 Validation runs in Next.js Server Actions - keys go only to the service being checked, and nothing is stored
 - 🛡️ Nonce-based CSP plus HSTS and anti-framing headers out of the box
@@ -56,6 +56,13 @@ You can deploy this application to Vercel with a single click:
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fholedev%2Fenv-check)
 
 Set `NEXT_PUBLIC_SITE_URL` (e.g. `https://your-domain.com`) on your own deployment so canonical URLs, Open Graph tags and `sitemap.xml` point at your domain instead of `https://envcheck.vercel.app`.
+
+### Environment variables
+
+| Variable | Default | Purpose |
+|---|---|---|
+| `NEXT_PUBLIC_SITE_URL` | `https://envcheck.vercel.app` | Public origin for canonical URLs, Open Graph and `sitemap.xml`. |
+| `ALLOW_PRIVATE_NETWORK` | unset | Tools that connect to a host you type (PostgreSQL, MongoDB, MySQL, Redis, SMTP, S3 endpoint) refuse loopback, private and link-local addresses so the server can't be used to probe its own network. Set to `true` on a self-hosted instance that needs to check services on your LAN. |
 
 ## Development
 

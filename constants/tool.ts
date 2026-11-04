@@ -123,33 +123,115 @@ export const _TOOL_LIST = defineToolList([
       url: "https://www.npmjs.com/package/@octokit/rest",
       version: "22.0.1"
     }
+  },
+  {
+    path: "openai",
+    progress: "completed",
+    libInfo: {
+      packageName: "fetch"
+    }
+  },
+  {
+    icon: "anthropic",
+    path: "anthropic",
+    progress: "completed",
+    libInfo: {
+      packageName: "fetch"
+    }
+  },
+  {
+    icon: "stripe",
+    path: "stripe",
+    progress: "completed",
+    libInfo: {
+      packageName: "fetch"
+    }
+  },
+  {
+    path: "slack",
+    progress: "completed",
+    libInfo: {
+      packageName: "fetch"
+    }
+  },
+  {
+    icon: "telegram",
+    path: "telegram",
+    progress: "completed",
+    libInfo: {
+      packageName: "fetch"
+    }
+  },
+  {
+    icon: "resend",
+    path: "resend",
+    progress: "completed",
+    libInfo: {
+      packageName: "fetch"
+    }
+  },
+  {
+    icon: "vercel",
+    path: "vercel",
+    progress: "completed",
+    libInfo: {
+      packageName: "fetch"
+    }
+  },
+  {
+    icon: "sentry",
+    path: "sentry",
+    progress: "completed",
+    libInfo: {
+      packageName: "fetch"
+    }
+  },
+  {
+    icon: "mysql",
+    path: "mysql",
+    progress: "completed",
+    libInfo: {
+      packageName: "mysql2",
+      url: "https://www.npmjs.com/package/mysql2",
+      version: "3.24.6"
+    }
+  },
+  {
+    icon: "redis",
+    path: "redis",
+    progress: "completed",
+    libInfo: {
+      packageName: "redis",
+      url: "https://www.npmjs.com/package/redis",
+      version: "6.3.1"
+    }
   }
 ] as const);
 
 export const _TOOL_GROUP_LIST: ToolGroupType[] = [
   {
     path: "ai",
-    tools: ["google-gemini"]
+    tools: ["google-gemini", "openai", "anthropic"]
   },
   {
     path: "cloud",
-    tools: ["s3-compatible", "cloudflare", "supabase", "firebase", "github"]
+    tools: ["s3-compatible", "cloudflare", "supabase", "firebase", "github", "vercel"]
   },
   {
     path: "database",
-    tools: ["mongodb", "postgresql"]
+    tools: ["mongodb", "postgresql", "mysql", "redis"]
   },
   {
     path: "payment",
-    tools: []
+    tools: ["stripe"]
   },
   {
     path: "messaging",
-    tools: ["gmail-smtp", "discord"]
+    tools: ["gmail-smtp", "discord", "slack", "telegram", "resend"]
   },
   {
     path: "analytics",
-    tools: ["google-analytics"]
+    tools: ["google-analytics", "sentry"]
   },
   {
     path: "others",

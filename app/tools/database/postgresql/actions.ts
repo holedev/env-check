@@ -2,6 +2,7 @@
 
 import { Client } from "pg";
 import { handleErrorServerNoAuth } from "@/utils/handle-error-server";
+import { assertPublicConnectionString } from "@/utils/network-guard";
 
 type PostgreSqlConfig = {
   connectionString: string;
@@ -10,6 +11,7 @@ type PostgreSqlConfig = {
 const checkPostgreSqlConnection = async (config: PostgreSqlConfig) =>
   handleErrorServerNoAuth({
     cb: async () => {
+      await assertPublicConnectionString(config.connectionString);
       const client = new Client({ connectionString: config.connectionString });
 
       try {

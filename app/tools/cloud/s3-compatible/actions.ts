@@ -2,6 +2,7 @@
 
 import { ListBucketsCommand, S3Client, type S3ClientConfig } from "@aws-sdk/client-s3";
 import { handleErrorServerNoAuth } from "@/utils/handle-error-server";
+import { assertPublicHost } from "@/utils/network-guard";
 
 type S3Config = {
   accessKeyId: string;
@@ -24,6 +25,7 @@ const checkS3Connection = async (config: S3Config) =>
 
       // Add endpoint if provided (for non-AWS S3-compatible services)
       if (config.endpoint && config.endpoint.trim() !== "") {
+        await assertPublicHost(new URL(config.endpoint).hostname);
         clientConfig.endpoint = config.endpoint;
         clientConfig.forcePathStyle = true; // Required for most S3-compatible services
       }

@@ -29,6 +29,16 @@
         "message": "Action was failed.",
         "unknownError": "Unknown error. Please contact admin."
       }
+    },
+    "validation": {
+      "valid": "Valid",
+      "restricted": "Restricted",
+      "invalid": "Invalid",
+      "summary": "Details",
+      "yes": "Yes",
+      "no": "No",
+      "more": "+{count} more",
+      "required": "This field is required"
     }
   },
   "tools": {
@@ -63,14 +73,6 @@
       }
     },
     "items": {
-      "aws": {
-        "name": "AWS",
-        "description": "Amazon Web Services"
-      },
-      "google-cloud": {
-        "name": "Google Cloud",
-        "description": "Google Cloud Platform"
-      },
       "cloudflare": {
         "name": "Cloudflare",
         "description": "Cloudflare",
@@ -85,10 +87,6 @@
         "validCredentials": "Cloudflare API Token is valid",
         "invalidCredentials": "Cloudflare API Token is invalid!",
         "details": "Details"
-      },
-      "digital-ocean": {
-        "name": "Digital Ocean",
-        "description": "Digital Ocean"
       },
       "supabase": {
         "name": "Supabase",
@@ -171,11 +169,66 @@
       },
       "stripe": {
         "name": "Stripe",
-        "description": "Stripe Payment"
+        "description": "Stripe secret or restricted API key",
+        "form": {
+          "apiKey": {
+            "label": "Secret or restricted key",
+            "placeholder": "sk_test_... or rk_live_...",
+            "description": "Find keys at https://dashboard.stripe.com/apikeys. Publishable keys (pk_) can't be validated server-side.",
+            "errors": {
+              "publishable": "This is a publishable key (pk_). Paste a secret (sk_) or restricted (rk_) key instead.",
+              "format": "Stripe keys look like sk_live_…, sk_test_…, rk_live_… or rk_test_…"
+            }
+          },
+          "submit": "Check Key"
+        },
+        "validCredentials": "Stripe key is valid",
+        "restrictedCredentials": "Key is valid but can't read the balance",
+        "invalidCredentials": "Stripe key is invalid",
+        "summary": {
+          "mode": "Mode",
+          "keyType": "Key type",
+          "currencies": "Balance currencies"
+        },
+        "modes": {
+          "live": "Live",
+          "test": "Test"
+        },
+        "keyTypes": {
+          "secret": "Secret key",
+          "restricted": "Restricted key"
+        }
       },
       "slack": {
         "name": "Slack",
-        "description": "Slack"
+        "description": "Slack bot, user or app-level token",
+        "form": {
+          "token": {
+            "label": "Token",
+            "placeholder": "xoxb-... or xoxp-...",
+            "description": "Find tokens under OAuth & Permissions at https://api.slack.com/apps.",
+            "errors": {
+              "format": "Slack tokens start with xoxb-, xoxp-, xoxe- or xapp-"
+            }
+          },
+          "submit": "Check Token"
+        },
+        "validCredentials": "Slack token is valid",
+        "restrictedCredentials": "Token is valid but can't call auth.test",
+        "invalidCredentials": "Slack token is invalid",
+        "summary": {
+          "team": "Workspace",
+          "url": "Workspace URL",
+          "user": "User",
+          "tokenType": "Token type",
+          "scopes": "Scopes"
+        },
+        "tokenTypes": {
+          "bot": "Bot token",
+          "user": "User token",
+          "appLevel": "App-level token",
+          "other": "Other token"
+        }
       },
       "discord": {
         "name": "Discord",
@@ -194,7 +247,36 @@
       },
       "sentry": {
         "name": "Sentry",
-        "description": "Sentry"
+        "description": "Sentry auth token (sentry.io)",
+        "form": {
+          "token": {
+            "label": "Auth Token",
+            "placeholder": "sntrys_... or sntryu_...",
+            "description": "Organization tokens: Settings → Developer Settings → Organization Tokens. Personal tokens: User settings → Personal Tokens. Self-hosted Sentry isn't supported."
+          },
+          "region": {
+            "label": "Data region",
+            "description": "Where your Sentry organization's data is stored.",
+            "options": {
+              "us": "United States (sentry.io)",
+              "eu": "European Union (de.sentry.io)"
+            }
+          },
+          "submit": "Check Token"
+        },
+        "validCredentials": "Sentry token is valid",
+        "restrictedCredentials": "Token is valid but restricted",
+        "invalidCredentials": "Sentry token is invalid",
+        "summary": {
+          "tokenType": "Token type",
+          "user": "User",
+          "scopes": "Scopes"
+        },
+        "tokenTypes": {
+          "organization": "Organization token",
+          "user": "Personal token",
+          "legacy": "Legacy token"
+        }
       },
       "github": {
         "name": "GitHub",
@@ -213,19 +295,23 @@
       },
       "vercel": {
         "name": "Vercel",
-        "description": "Vercel API"
-      },
-      "netlify": {
-        "name": "Netlify",
-        "description": "Netlify API"
-      },
-      "render": {
-        "name": "Render",
-        "description": "Render Hosting API"
-      },
-      "minio": {
-        "name": "MinIO",
-        "description": "MinIO"
+        "description": "Vercel access token",
+        "form": {
+          "token": {
+            "label": "Access Token",
+            "placeholder": "Enter your Vercel access token",
+            "description": "Create a token at https://vercel.com/account/settings/tokens."
+          },
+          "submit": "Check Token"
+        },
+        "validCredentials": "Vercel token is valid",
+        "restrictedCredentials": "Token is valid but can't read the account",
+        "invalidCredentials": "Vercel token is invalid",
+        "summary": {
+          "username": "Username",
+          "name": "Name",
+          "plan": "Plan"
+        }
       },
       "gmail-smtp": {
         "name": "Gmail SMTP",
@@ -291,7 +377,26 @@
       },
       "mysql": {
         "name": "MySQL",
-        "description": "MySQL"
+        "description": "MySQL / MariaDB connection string",
+        "form": {
+          "connectionString": {
+            "label": "Connection string",
+            "placeholder": "mysql://user:password@host:3306/database",
+            "description": "Works with MySQL, MariaDB, PlanetScale, TiDB and Aiven. For TLS add ?ssl={\"rejectUnauthorized\":true}. Private and local addresses are blocked on the hosted site.",
+            "errors": {
+              "format": "Connection strings start with mysql://"
+            }
+          },
+          "submit": "Check Connection"
+        },
+        "validCredentials": "Connected to MySQL",
+        "restrictedCredentials": "Connected, but restricted",
+        "invalidCredentials": "Could not connect to MySQL",
+        "summary": {
+          "version": "Server version",
+          "database": "Database",
+          "user": "Connected as"
+        }
       },
       "s3-compatible": {
         "name": "S3 Compatible",
@@ -322,6 +427,129 @@
         "validCredentials": "S3 connection successful!",
         "invalidCredentials": "S3 connection failed!",
         "connectionDetails": "Connection Details"
+      },
+      "openai": {
+        "name": "OpenAI",
+        "description": "OpenAI API key (platform.openai.com)",
+        "form": {
+          "apiKey": {
+            "label": "API Key",
+            "placeholder": "sk-proj-...",
+            "description": "Create a key at https://platform.openai.com/api-keys. Project, service-account and legacy user keys are supported.",
+            "errors": {
+              "format": "OpenAI keys start with sk-"
+            }
+          },
+          "submit": "Check API Key"
+        },
+        "validCredentials": "OpenAI API key is valid",
+        "restrictedCredentials": "Key is valid but can't list models",
+        "invalidCredentials": "OpenAI API key is invalid",
+        "summary": {
+          "keyType": "Key type",
+          "modelsCount": "Models available",
+          "models": "Models"
+        },
+        "keyTypes": {
+          "project": "Project key",
+          "serviceAccount": "Service account key",
+          "admin": "Admin key",
+          "user": "User key (legacy)"
+        }
+      },
+      "anthropic": {
+        "name": "Anthropic (Claude)",
+        "description": "Claude API key (console.anthropic.com)",
+        "form": {
+          "apiKey": {
+            "label": "API Key",
+            "placeholder": "sk-ant-api03-...",
+            "description": "Create a key at https://console.anthropic.com/settings/keys.",
+            "errors": {
+              "format": "Anthropic keys start with sk-ant-"
+            }
+          },
+          "submit": "Check API Key"
+        },
+        "validCredentials": "Claude API key is valid",
+        "restrictedCredentials": "Key is valid but can't list models",
+        "invalidCredentials": "Claude API key is invalid",
+        "summary": {
+          "modelsCount": "Models available",
+          "models": "Models"
+        }
+      },
+      "telegram": {
+        "name": "Telegram Bot",
+        "description": "Telegram Bot API token from @BotFather",
+        "form": {
+          "token": {
+            "label": "Bot Token",
+            "placeholder": "123456789:AAE...",
+            "description": "Get a token from @BotFather on Telegram (/newbot or /token).",
+            "errors": {
+              "format": "Bot tokens look like 123456789:AAE… (bot id, colon, secret)"
+            }
+          },
+          "submit": "Check Token"
+        },
+        "validCredentials": "Telegram bot token is valid",
+        "restrictedCredentials": "Token is valid but restricted",
+        "invalidCredentials": "Telegram bot token is invalid",
+        "summary": {
+          "username": "Username",
+          "name": "Name",
+          "id": "Bot ID",
+          "canJoinGroups": "Can join groups",
+          "canReadAllGroupMessages": "Reads all group messages",
+          "supportsInlineQueries": "Inline mode"
+        }
+      },
+      "resend": {
+        "name": "Resend",
+        "description": "Resend email API key",
+        "form": {
+          "apiKey": {
+            "label": "API Key",
+            "placeholder": "re_...",
+            "description": "Create a key at https://resend.com/api-keys. Sending-only keys are reported as restricted.",
+            "errors": {
+              "format": "Resend keys start with re_"
+            }
+          },
+          "submit": "Check API Key"
+        },
+        "validCredentials": "Resend API key is valid (full access)",
+        "restrictedCredentials": "Key is valid but limited to sending emails",
+        "invalidCredentials": "Resend API key is invalid",
+        "summary": {
+          "domainsCount": "Domains",
+          "domains": "Domain status"
+        }
+      },
+      "redis": {
+        "name": "Redis",
+        "description": "Redis / Valkey connection URL",
+        "form": {
+          "connectionString": {
+            "label": "Connection URL",
+            "placeholder": "rediss://default:password@host:6379",
+            "description": "Use rediss:// for TLS (Upstash, Redis Cloud, Aiven). Private and local addresses are blocked on the hosted site.",
+            "errors": {
+              "format": "Connection URLs start with redis:// or rediss://"
+            }
+          },
+          "submit": "Check Connection"
+        },
+        "validCredentials": "Connected to Redis",
+        "restrictedCredentials": "Connected, but this user can't run INFO",
+        "invalidCredentials": "Could not connect to Redis",
+        "summary": {
+          "ping": "PING",
+          "server": "Server",
+          "version": "Version",
+          "mode": "Mode"
+        }
       }
     },
     "progress": {

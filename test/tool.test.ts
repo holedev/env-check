@@ -6,11 +6,14 @@ describe("Tools", () => {
   describe("_TOOL_LIST", () => {
     it("should contain valid tool definitions", () => {
       for (const tool of _TOOL_LIST) {
-        expect(tool).toHaveProperty("icon");
         expect(tool).toHaveProperty("path");
 
-        expect(typeof tool.icon).toBe("string");
-        expect(tool.icon.length).toBeGreaterThan(0);
+        // icon is optional (brands missing from simpleicons get a letter tile)
+        const { icon } = tool as ToolWithProgressType;
+        if (icon !== undefined) {
+          expect(typeof icon).toBe("string");
+          expect(icon.length).toBeGreaterThan(0);
+        }
 
         expect(typeof tool.path).toBe("string");
         expect(tool.path.length).toBeGreaterThan(0);

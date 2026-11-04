@@ -15,7 +15,7 @@ import {
   CommandList
 } from "@/components/ui/command";
 import { _TOOL_GROUP_LIST, _TOOL_LIST } from "@/constants/tool";
-import type { ToolPath, ToolWithProgressType } from "@/types/tool";
+import type { ToolItem, ToolPath, ToolWithProgressType } from "@/types/tool";
 import { ToolIcon } from "../Tools/ToolIcon";
 import { ToolProgress } from "../Tools/ToolProgress";
 
@@ -125,7 +125,12 @@ const SearchCommand = () => {
                         {index + 1}
                       </span>
                     )}
-                    <ToolIcon icon={tool.icon} size={18} />
+                    <ToolIcon
+                      decorative
+                      icon={(tool as ToolItem).icon}
+                      name={t(`tools.items.${tool.path}.name`)}
+                      size={18}
+                    />
                     <span>{t(`tools.items.${tool.path}.name`)}</span>
                   </div>
                   <ToolProgress progress={(tool as ToolWithProgressType).progress || "notStarted"} />

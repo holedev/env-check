@@ -2,6 +2,7 @@
 
 import { createTransport } from "nodemailer";
 import { handleErrorServerNoAuth } from "@/utils/handle-error-server";
+import { assertPublicHost } from "@/utils/network-guard";
 
 type SMTPConfig = {
   host: string;
@@ -15,6 +16,7 @@ type SMTPConfig = {
 const checkSMTPConnection = async (config: SMTPConfig) =>
   handleErrorServerNoAuth({
     cb: async () => {
+      await assertPublicHost(config.host);
       const transporter = createTransport({
         host: config.host,
         port: config.port,

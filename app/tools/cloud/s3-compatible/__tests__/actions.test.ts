@@ -15,6 +15,11 @@ jest.mock("@/utils/handle-error-server", () => ({
   handleErrorServerNoAuth: jest.fn()
 }));
 
+jest.mock("@/utils/network-guard", () => ({
+  assertPublicHost: jest.fn(),
+  assertPublicConnectionString: jest.fn()
+}));
+
 describe("S3 Compatible Actions", () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -194,5 +199,32 @@ describe("S3 Compatible Actions", () => {
       expect(result.error?.message).toBe("Failed to connect to S3-compatible service");
       expect(result.data).toBeNull();
     });
+  });
+});
+
+describe("private network guard", () => {
+  it("refuses private hosts before connecting", async () => {
+    const guard = require("@/utils/network-guard").assertPublicHost as jest.Mock;
+    guard.mockRejectedValueOnce(new Error("Connections to private or internal network addresses are blocked."));
+    const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
+    handleErrorServerNoAuth.mockImplementation(async ({ cb }: { cb: () => Promise<object> }) => {
+      try {
+        return { error: null, data: { payload: await cb() } };
+      } catch (error) {
+        return { error: { message: (error as Error).message }, data: null };
+      }
+    });
+    const driver = require("@aws-sdk/client-s3").S3Client as jest.Mock;
+    driver.mockClear();
+
+    const result = await checkS3Connection({
+      accessKeyId: "AKIA",
+      secretAccessKey: "secret",
+      region: "us-east-1",
+      endpoint: "http://169.254.169.254"
+    });
+
+    expect(result.error?.message).toContain("private or internal network");
+    expect(driver).not.toHaveBeenCalled();
   });
 });

@@ -29,6 +29,16 @@
         "message": "Thao tác thất bại.",
         "unknownError": "Lỗi không xác định. Vui lòng liên hệ quản trị viên."
       }
+    },
+    "validation": {
+      "valid": "Hợp lệ",
+      "restricted": "Bị giới hạn quyền",
+      "invalid": "Không hợp lệ",
+      "summary": "Chi tiết",
+      "yes": "Có",
+      "no": "Không",
+      "more": "+{count} mục khác",
+      "required": "Vui lòng nhập trường này"
     }
   },
   "tools": {
@@ -63,14 +73,6 @@
       }
     },
     "items": {
-      "aws": {
-        "name": "AWS",
-        "description": "Amazon Web Services"
-      },
-      "google-cloud": {
-        "name": "Google Cloud",
-        "description": "Google Cloud Platform"
-      },
       "cloudflare": {
         "name": "Cloudflare",
         "description": "Cloudflare",
@@ -85,10 +87,6 @@
         "validCredentials": "Cloudflare API Token hợp lệ",
         "invalidCredentials": "Cloudflare API Token không hợp lệ!",
         "details": "Chi tiết"
-      },
-      "digital-ocean": {
-        "name": "Digital Ocean",
-        "description": "Digital Ocean"
       },
       "supabase": {
         "name": "Supabase",
@@ -157,11 +155,66 @@
       },
       "stripe": {
         "name": "Stripe",
-        "description": "Stripe Payment"
+        "description": "Secret key hoặc restricted key của Stripe",
+        "form": {
+          "apiKey": {
+            "label": "Secret key hoặc restricted key",
+            "placeholder": "sk_test_... hoặc rk_live_...",
+            "description": "Lấy key tại https://dashboard.stripe.com/apikeys. Publishable key (pk_) không kiểm tra được phía server.",
+            "errors": {
+              "publishable": "Đây là publishable key (pk_). Hãy dán secret key (sk_) hoặc restricted key (rk_).",
+              "format": "Key của Stripe có dạng sk_live_…, sk_test_…, rk_live_… hoặc rk_test_…"
+            }
+          },
+          "submit": "Kiểm tra key"
+        },
+        "validCredentials": "Key Stripe hợp lệ",
+        "restrictedCredentials": "Key hợp lệ nhưng không có quyền đọc số dư",
+        "invalidCredentials": "Key Stripe không hợp lệ",
+        "summary": {
+          "mode": "Chế độ",
+          "keyType": "Loại key",
+          "currencies": "Loại tiền trong số dư"
+        },
+        "modes": {
+          "live": "Live",
+          "test": "Test"
+        },
+        "keyTypes": {
+          "secret": "Secret key",
+          "restricted": "Restricted key"
+        }
       },
       "slack": {
         "name": "Slack",
-        "description": "Slack"
+        "description": "Token bot, user hoặc app-level của Slack",
+        "form": {
+          "token": {
+            "label": "Token",
+            "placeholder": "xoxb-... hoặc xoxp-...",
+            "description": "Lấy token ở mục OAuth & Permissions tại https://api.slack.com/apps.",
+            "errors": {
+              "format": "Token của Slack bắt đầu bằng xoxb-, xoxp-, xoxe- hoặc xapp-"
+            }
+          },
+          "submit": "Kiểm tra token"
+        },
+        "validCredentials": "Token Slack hợp lệ",
+        "restrictedCredentials": "Token hợp lệ nhưng không gọi được auth.test",
+        "invalidCredentials": "Token Slack không hợp lệ",
+        "summary": {
+          "team": "Workspace",
+          "url": "URL workspace",
+          "user": "User",
+          "tokenType": "Loại token",
+          "scopes": "Scope"
+        },
+        "tokenTypes": {
+          "bot": "Bot token",
+          "user": "User token",
+          "appLevel": "App-level token",
+          "other": "Token khác"
+        }
       },
       "discord": {
         "name": "Discord",
@@ -180,7 +233,36 @@
       },
       "sentry": {
         "name": "Sentry",
-        "description": "Sentry"
+        "description": "Auth token của Sentry (sentry.io)",
+        "form": {
+          "token": {
+            "label": "Auth Token",
+            "placeholder": "sntrys_... hoặc sntryu_...",
+            "description": "Token tổ chức: Settings → Developer Settings → Organization Tokens. Token cá nhân: User settings → Personal Tokens. Chưa hỗ trợ Sentry tự host."
+          },
+          "region": {
+            "label": "Vùng dữ liệu",
+            "description": "Nơi lưu dữ liệu của tổ chức Sentry.",
+            "options": {
+              "us": "Hoa Kỳ (sentry.io)",
+              "eu": "Liên minh châu Âu (de.sentry.io)"
+            }
+          },
+          "submit": "Kiểm tra token"
+        },
+        "validCredentials": "Token Sentry hợp lệ",
+        "restrictedCredentials": "Token hợp lệ nhưng bị giới hạn",
+        "invalidCredentials": "Token Sentry không hợp lệ",
+        "summary": {
+          "tokenType": "Loại token",
+          "user": "User",
+          "scopes": "Scope"
+        },
+        "tokenTypes": {
+          "organization": "Token tổ chức",
+          "user": "Token cá nhân",
+          "legacy": "Token cũ"
+        }
       },
       "github": {
         "name": "GitHub",
@@ -199,19 +281,23 @@
       },
       "vercel": {
         "name": "Vercel",
-        "description": "Vercel API"
-      },
-      "netlify": {
-        "name": "Netlify",
-        "description": "Netlify API"
-      },
-      "render": {
-        "name": "Render",
-        "description": "Render Hosting API"
-      },
-      "minio": {
-        "name": "MinIO",
-        "description": "MinIO"
+        "description": "Access token của Vercel",
+        "form": {
+          "token": {
+            "label": "Access Token",
+            "placeholder": "Nhập access token của Vercel",
+            "description": "Tạo token tại https://vercel.com/account/settings/tokens."
+          },
+          "submit": "Kiểm tra token"
+        },
+        "validCredentials": "Token Vercel hợp lệ",
+        "restrictedCredentials": "Token hợp lệ nhưng không đọc được thông tin tài khoản",
+        "invalidCredentials": "Token Vercel không hợp lệ",
+        "summary": {
+          "username": "Username",
+          "name": "Tên",
+          "plan": "Gói"
+        }
       },
       "gmail-smtp": {
         "name": "Gmail SMTP",
@@ -291,7 +377,26 @@
       },
       "mysql": {
         "name": "MySQL",
-        "description": "MySQL"
+        "description": "Connection string của MySQL / MariaDB",
+        "form": {
+          "connectionString": {
+            "label": "Connection string",
+            "placeholder": "mysql://user:password@host:3306/database",
+            "description": "Dùng được cho MySQL, MariaDB, PlanetScale, TiDB và Aiven. Cần TLS thì thêm ?ssl={\"rejectUnauthorized\":true}. Bản online chặn địa chỉ private và local.",
+            "errors": {
+              "format": "Connection string bắt đầu bằng mysql://"
+            }
+          },
+          "submit": "Kiểm tra kết nối"
+        },
+        "validCredentials": "Kết nối MySQL thành công",
+        "restrictedCredentials": "Kết nối được nhưng bị giới hạn",
+        "invalidCredentials": "Không kết nối được MySQL",
+        "summary": {
+          "version": "Phiên bản server",
+          "database": "Database",
+          "user": "Đăng nhập với"
+        }
       },
       "s3-compatible": {
         "name": "S3 Compatible",
@@ -322,6 +427,129 @@
         "validCredentials": "Kết nối S3 thành công!",
         "invalidCredentials": "Kết nối S3 thất bại!",
         "connectionDetails": "Chi Tiết Kết Nối"
+      },
+      "openai": {
+        "name": "OpenAI",
+        "description": "API key của OpenAI (platform.openai.com)",
+        "form": {
+          "apiKey": {
+            "label": "API Key",
+            "placeholder": "sk-proj-...",
+            "description": "Tạo key tại https://platform.openai.com/api-keys. Hỗ trợ key project, service account và key user cũ.",
+            "errors": {
+              "format": "Key của OpenAI bắt đầu bằng sk-"
+            }
+          },
+          "submit": "Kiểm tra API Key"
+        },
+        "validCredentials": "API key của OpenAI hợp lệ",
+        "restrictedCredentials": "Key hợp lệ nhưng không có quyền liệt kê model",
+        "invalidCredentials": "API key của OpenAI không hợp lệ",
+        "summary": {
+          "keyType": "Loại key",
+          "modelsCount": "Số model khả dụng",
+          "models": "Model"
+        },
+        "keyTypes": {
+          "project": "Key project",
+          "serviceAccount": "Key service account",
+          "admin": "Key admin",
+          "user": "Key user (cũ)"
+        }
+      },
+      "anthropic": {
+        "name": "Anthropic (Claude)",
+        "description": "API key của Claude (console.anthropic.com)",
+        "form": {
+          "apiKey": {
+            "label": "API Key",
+            "placeholder": "sk-ant-api03-...",
+            "description": "Tạo key tại https://console.anthropic.com/settings/keys.",
+            "errors": {
+              "format": "Key của Anthropic bắt đầu bằng sk-ant-"
+            }
+          },
+          "submit": "Kiểm tra API Key"
+        },
+        "validCredentials": "API key của Claude hợp lệ",
+        "restrictedCredentials": "Key hợp lệ nhưng không có quyền liệt kê model",
+        "invalidCredentials": "API key của Claude không hợp lệ",
+        "summary": {
+          "modelsCount": "Số model khả dụng",
+          "models": "Model"
+        }
+      },
+      "telegram": {
+        "name": "Telegram Bot",
+        "description": "Token Bot API của Telegram từ @BotFather",
+        "form": {
+          "token": {
+            "label": "Bot Token",
+            "placeholder": "123456789:AAE...",
+            "description": "Lấy token từ @BotFather trên Telegram (/newbot hoặc /token).",
+            "errors": {
+              "format": "Bot token có dạng 123456789:AAE… (id bot, dấu hai chấm, mã bí mật)"
+            }
+          },
+          "submit": "Kiểm tra token"
+        },
+        "validCredentials": "Token bot Telegram hợp lệ",
+        "restrictedCredentials": "Token hợp lệ nhưng bị giới hạn",
+        "invalidCredentials": "Token bot Telegram không hợp lệ",
+        "summary": {
+          "username": "Username",
+          "name": "Tên",
+          "id": "ID bot",
+          "canJoinGroups": "Được vào nhóm",
+          "canReadAllGroupMessages": "Đọc mọi tin trong nhóm",
+          "supportsInlineQueries": "Chế độ inline"
+        }
+      },
+      "resend": {
+        "name": "Resend",
+        "description": "API key gửi email của Resend",
+        "form": {
+          "apiKey": {
+            "label": "API Key",
+            "placeholder": "re_...",
+            "description": "Tạo key tại https://resend.com/api-keys. Key chỉ có quyền gửi sẽ được báo là bị giới hạn.",
+            "errors": {
+              "format": "Key của Resend bắt đầu bằng re_"
+            }
+          },
+          "submit": "Kiểm tra API Key"
+        },
+        "validCredentials": "API key của Resend hợp lệ (toàn quyền)",
+        "restrictedCredentials": "Key hợp lệ nhưng chỉ có quyền gửi email",
+        "invalidCredentials": "API key của Resend không hợp lệ",
+        "summary": {
+          "domainsCount": "Số domain",
+          "domains": "Trạng thái domain"
+        }
+      },
+      "redis": {
+        "name": "Redis",
+        "description": "URL kết nối Redis / Valkey",
+        "form": {
+          "connectionString": {
+            "label": "URL kết nối",
+            "placeholder": "rediss://default:password@host:6379",
+            "description": "Dùng rediss:// cho TLS (Upstash, Redis Cloud, Aiven). Bản online chặn địa chỉ private và local.",
+            "errors": {
+              "format": "URL kết nối bắt đầu bằng redis:// hoặc rediss://"
+            }
+          },
+          "submit": "Kiểm tra kết nối"
+        },
+        "validCredentials": "Kết nối Redis thành công",
+        "restrictedCredentials": "Kết nối được nhưng user này không có quyền chạy INFO",
+        "invalidCredentials": "Không kết nối được Redis",
+        "summary": {
+          "ping": "PING",
+          "server": "Server",
+          "version": "Phiên bản",
+          "mode": "Chế độ"
+        }
       }
     },
     "progress": {
