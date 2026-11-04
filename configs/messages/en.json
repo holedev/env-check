@@ -98,23 +98,30 @@
       },
       "supabase": {
         "name": "Supabase",
-        "description": "Supabase",
+        "description": "Supabase project URL and service_role key",
         "form": {
           "projectUrl": {
             "label": "Project URL",
             "placeholder": "https://your-project.supabase.co",
-            "description": "Project Settings -> API -> Project URL"
+            "description": "Project Settings → API → Project URL.",
+            "errors": {
+              "format": "Enter the project's https:// URL"
+            }
           },
           "serviceRoleKey": {
             "label": "Service Role Key",
             "placeholder": "Enter your service_role key",
-            "description": "Project Settings -> API -> service_role secret. Never expose this key in a browser app."
+            "description": "Project Settings → API → service_role secret. An anon key is reported as restricted."
           },
           "submit": "Check Credentials"
         },
-        "validCredentials": "Supabase credentials are valid",
-        "invalidCredentials": "Supabase credentials are invalid!",
-        "details": "Details"
+        "validCredentials": "Supabase service_role key is valid",
+        "restrictedCredentials": "Key works but has no admin access (anon key?)",
+        "invalidCredentials": "Supabase credentials are invalid",
+        "summary": {
+          "project": "Project",
+          "adminAccess": "Admin access"
+        }
       },
       "firebase": {
         "name": "Firebase",

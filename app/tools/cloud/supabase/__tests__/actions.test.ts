@@ -1,88 +1,80 @@
+/**
+ * @jest-environment node
+ */
+import { createClient } from "@supabase/supabase-js";
+import { assertPublicHost } from "@/utils/network-guard";
 import { checkSupabaseCredentials } from "../actions";
 
-jest.mock("@supabase/supabase-js", () => ({
-  createClient: jest.fn()
-}));
+jest.mock("@supabase/supabase-js", () => ({ createClient: jest.fn() }));
+jest.mock("@/utils/network-guard", () => ({ assertPublicHost: jest.fn() }));
 
-jest.mock("@/utils/handle-error-server", () => ({
-  handleErrorServerNoAuth: jest.fn()
-}));
+const mockCreateClient = createClient as unknown as jest.Mock;
+const guard = assertPublicHost as jest.Mock;
+const KEY = "service-role-secret-key";
+const URL = "https://abcd.supabase.co";
 
-type Cb = { cb: () => Promise<object> };
+const listUsersReturns = (result: object) =>
+  mockCreateClient.mockReturnValue({ auth: { admin: { listUsers: jest.fn().mockResolvedValue(result) } } });
 
-const passThrough = async ({ cb }: Cb) => {
-  const result = await cb();
-  return { error: null, data: { payload: result } };
-};
+beforeEach(() => {
+  jest.resetAllMocks();
+  jest.spyOn(console, "error").mockImplementation(() => undefined);
+});
 
-const catchError = async ({ cb }: Cb) => {
-  try {
-    await cb();
-    return { error: null, data: { payload: {} } };
-  } catch (error) {
-    return { error: { message: error instanceof Error ? error.message : "Unknown error" }, data: null };
-  }
-};
+describe("checkSupabaseCredentials", () => {
+  it("is valid for a service_role key", async () => {
+    listUsersReturns({ data: { users: [{ id: "u1", email: "a@example.com" }] }, error: null });
 
-const mockClient = (listUsers: jest.Mock) => {
-  const { createClient } = require("@supabase/supabase-js");
-  createClient.mockReturnValue({ auth: { admin: { listUsers } } });
-  return createClient;
-};
+    const result = await checkSupabaseCredentials({ projectUrl: `${URL}/`, serviceRoleKey: KEY });
 
-const creds = { projectUrl: "https://abc.supabase.co", serviceRoleKey: "service-role-key" };
-
-describe("Supabase Actions", () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
+    expect(guard).toHaveBeenCalledWith("abcd.supabase.co");
+    expect(mockCreateClient).toHaveBeenCalledWith(URL, KEY, expect.anything());
+    expect(result.data?.payload).toEqual({
+      outcome: "valid",
+      summary: [
+        { key: "project", value: "abcd.supabase.co" },
+        { key: "adminAccess", value: true }
+      ]
+    });
+    expect(JSON.stringify(result)).not.toContain("a@example.com");
   });
 
-  describe("checkSupabaseCredentials", () => {
-    it("should return the user count when the credentials are valid", async () => {
-      mockClient(jest.fn().mockResolvedValue({ data: { users: [{ id: "u1" }] }, error: null }));
+  it("is restricted for an anon key (403 User not allowed)", async () => {
+    listUsersReturns({ data: { users: [] }, error: { message: "User not allowed", status: 403 } });
 
-      const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
-      handleErrorServerNoAuth.mockImplementation(passThrough);
+    const result = await checkSupabaseCredentials({ projectUrl: URL, serviceRoleKey: KEY });
 
-      const res = await checkSupabaseCredentials(creds);
-
-      expect(res.error).toBeNull();
-      expect(res.data?.payload).toEqual({ success: true, userCount: 1 });
+    expect(result.data?.payload).toEqual({
+      outcome: "restricted",
+      reason: "User not allowed",
+      summary: [
+        { key: "project", value: "abcd.supabase.co" },
+        { key: "adminAccess", value: false }
+      ]
     });
+  });
 
-    it("should error with the Supabase message when the key is rejected", async () => {
-      mockClient(jest.fn().mockResolvedValue({ data: null, error: { message: "Invalid API key" } }));
+  it("is invalid for a bad key", async () => {
+    listUsersReturns({ data: { users: [] }, error: { message: "Invalid API key", status: 401 } });
 
-      const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
-      handleErrorServerNoAuth.mockImplementation(catchError);
+    const result = await checkSupabaseCredentials({ projectUrl: URL, serviceRoleKey: KEY });
 
-      const res = await checkSupabaseCredentials(creds);
+    expect(result.error?.message).toBe("Invalid API key");
+  });
 
-      expect(res.data).toBeNull();
-      expect(res.error?.message).toBe("Invalid API key");
-    });
+  it("refuses private project URLs before creating a client", async () => {
+    guard.mockRejectedValue(new Error("Connections to private or internal network addresses are blocked."));
 
-    it("should return a fallback message when the client throws", async () => {
-      mockClient(jest.fn().mockRejectedValue(new Error("fetch failed")));
+    const result = await checkSupabaseCredentials({ projectUrl: "http://169.254.169.254", serviceRoleKey: KEY });
 
-      const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
-      handleErrorServerNoAuth.mockImplementation(catchError);
+    expect(mockCreateClient).not.toHaveBeenCalled();
+    expect(result.error?.message).toContain("private or internal network");
+  });
 
-      const res = await checkSupabaseCredentials(creds);
+  it("refuses non-http URLs", async () => {
+    const result = await checkSupabaseCredentials({ projectUrl: "file:///etc/passwd", serviceRoleKey: KEY });
 
-      expect(res.data).toBeNull();
-      expect(res.error?.message).toBe("fetch failed");
-    });
-
-    it("should build the client with the project URL and service role key", async () => {
-      const createClient = mockClient(jest.fn().mockResolvedValue({ data: { users: [] }, error: null }));
-
-      const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
-      handleErrorServerNoAuth.mockImplementation(passThrough);
-
-      await checkSupabaseCredentials(creds);
-
-      expect(createClient).toHaveBeenCalledWith(creds.projectUrl, creds.serviceRoleKey, expect.any(Object));
-    });
+    expect(guard).not.toHaveBeenCalled();
+    expect(result.error?.message).toBe("Project URL must be an http(s) URL");
   });
 });
