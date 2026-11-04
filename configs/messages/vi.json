@@ -783,6 +783,33 @@
           "warning": "Cảnh báo",
           "locked": "Bị khoá"
         }
+      },
+      "notion": {
+        "name": "Notion",
+        "description": "Integration token của Notion",
+        "form": {
+          "token": {
+            "label": "Integration Token",
+            "placeholder": "ntn_... hoặc secret_...",
+            "description": "Xem ở mục Configuration tại https://www.notion.so/profile/integrations.",
+            "errors": {
+              "format": "Token của Notion bắt đầu bằng ntn_ hoặc secret_"
+            }
+          },
+          "submit": "Kiểm tra token"
+        },
+        "validCredentials": "Token Notion hợp lệ",
+        "restrictedCredentials": "Token hợp lệ nhưng bị giới hạn",
+        "invalidCredentials": "Token Notion không hợp lệ",
+        "summary": {
+          "name": "Integration",
+          "workspace": "Workspace",
+          "ownerType": "Loại integration"
+        },
+        "ownerTypes": {
+          "workspace": "Integration nội bộ",
+          "user": "Integration công khai (OAuth)"
+        }
       }
     },
     "progress": {

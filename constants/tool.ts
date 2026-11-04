@@ -274,6 +274,14 @@ export const _TOOL_LIST = defineToolList([
     libInfo: {
       packageName: "fetch"
     }
+  },
+  {
+    icon: "notion",
+    path: "notion",
+    progress: "completed",
+    libInfo: {
+      packageName: "fetch"
+    }
   }
 ] as const);
 
@@ -304,6 +312,6 @@ export const _TOOL_GROUP_LIST: ToolGroupType[] = [
   },
   {
     path: "others",
-    tools: []
+    tools: ["notion"]
   }
 ];

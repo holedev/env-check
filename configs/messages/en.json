@@ -783,6 +783,33 @@
           "warning": "Warning",
           "locked": "Locked"
         }
+      },
+      "notion": {
+        "name": "Notion",
+        "description": "Notion integration token",
+        "form": {
+          "token": {
+            "label": "Integration Token",
+            "placeholder": "ntn_... or secret_...",
+            "description": "Find it under Configuration at https://www.notion.so/profile/integrations.",
+            "errors": {
+              "format": "Notion tokens start with ntn_ or secret_"
+            }
+          },
+          "submit": "Check Token"
+        },
+        "validCredentials": "Notion token is valid",
+        "restrictedCredentials": "Token is valid but restricted",
+        "invalidCredentials": "Notion token is invalid",
+        "summary": {
+          "name": "Integration",
+          "workspace": "Workspace",
+          "ownerType": "Integration type"
+        },
+        "ownerTypes": {
+          "workspace": "Internal integration",
+          "user": "Public integration (OAuth)"
+        }
       }
     },
     "progress": {
