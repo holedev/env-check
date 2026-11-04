@@ -670,6 +670,37 @@
           "write": "Ghi",
           "fineGrained": "Tuỳ chỉnh chi tiết"
         }
+      },
+      "sendgrid": {
+        "name": "SendGrid",
+        "description": "API key của Twilio SendGrid",
+        "form": {
+          "apiKey": {
+            "label": "API Key",
+            "placeholder": "SG.xxxx.yyyy",
+            "description": "Tạo key tại https://app.sendgrid.com/settings/api_keys.",
+            "errors": {
+              "format": "Key của SendGrid có dạng SG.xxxx.yyyy"
+            }
+          },
+          "region": {
+            "label": "Vùng",
+            "description": "Tài khoản đặt tại EU phải dùng API EU.",
+            "options": {
+              "global": "Toàn cầu (api.sendgrid.com)",
+              "eu": "EU (api.eu.sendgrid.com)"
+            }
+          },
+          "submit": "Kiểm tra API Key"
+        },
+        "validCredentials": "API key của SendGrid hợp lệ",
+        "restrictedCredentials": "Key hợp lệ nhưng không đọc được scope",
+        "invalidCredentials": "API key của SendGrid không hợp lệ",
+        "summary": {
+          "canSendMail": "Được gửi mail",
+          "scopesCount": "Số scope",
+          "scopes": "Scope"
+        }
       }
     },
     "progress": {

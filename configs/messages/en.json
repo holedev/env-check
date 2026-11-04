@@ -670,6 +670,37 @@
           "write": "Write",
           "fineGrained": "Fine-grained"
         }
+      },
+      "sendgrid": {
+        "name": "SendGrid",
+        "description": "Twilio SendGrid API key",
+        "form": {
+          "apiKey": {
+            "label": "API Key",
+            "placeholder": "SG.xxxx.yyyy",
+            "description": "Create a key at https://app.sendgrid.com/settings/api_keys.",
+            "errors": {
+              "format": "SendGrid keys look like SG.xxxx.yyyy"
+            }
+          },
+          "region": {
+            "label": "Region",
+            "description": "EU-pinned accounts must use the EU API.",
+            "options": {
+              "global": "Global (api.sendgrid.com)",
+              "eu": "EU (api.eu.sendgrid.com)"
+            }
+          },
+          "submit": "Check API Key"
+        },
+        "validCredentials": "SendGrid API key is valid",
+        "restrictedCredentials": "Key is valid but can't read its scopes",
+        "invalidCredentials": "SendGrid API key is invalid",
+        "summary": {
+          "canSendMail": "Can send mail",
+          "scopesCount": "Scopes granted",
+          "scopes": "Scopes"
+        }
       }
     },
     "progress": {
