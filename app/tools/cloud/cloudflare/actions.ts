@@ -1,36 +1,38 @@
 "use server";
 
+import { enumFact, redact, requestService, summarize, valid } from "@/lib/validation";
 import { handleErrorServerNoAuth } from "@/utils/handle-error-server";
 
-type CloudflareConfig = {
-  apiToken: string;
+type CloudflareConfig = { apiToken: string };
+
+type CloudflareVerify = {
+  success?: boolean;
+  result?: { status?: string; expires_on?: string; not_before?: string };
+  errors?: { message?: string }[];
 };
 
 const _CLOUDFLARE_VERIFY_URL = "https://api.cloudflare.com/client/v4/user/tokens/verify";
 
-const checkCloudflareToken = async (config: CloudflareConfig) =>
+/** Probe: the token-verify endpoint. Only an `active` token counts as valid. */
+const checkCloudflareToken = async ({ apiToken }: CloudflareConfig) =>
   handleErrorServerNoAuth({
     cb: async () => {
-      try {
-        const response = await fetch(_CLOUDFLARE_VERIFY_URL, {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${config.apiToken}`,
-            "Content-Type": "application/json"
-          }
-        });
+      const res = await requestService<CloudflareVerify>("Cloudflare", _CLOUDFLARE_VERIFY_URL, {
+        headers: { Authorization: `Bearer ${apiToken}` }
+      });
+      const body = res.body;
 
-        const body = await response.json();
-
-        if (!response.ok || body.success === false) {
-          const message = body?.errors?.[0]?.message ?? `Cloudflare API error: ${response.statusText}`;
-          throw new Error(message);
-        }
-
-        return body.result as { id: string; status: string };
-      } catch (err) {
-        throw new Error(err instanceof Error ? err.message : "Failed to connect to Cloudflare");
+      if (!(res.ok && body?.success && body.result)) {
+        throw new Error(redact(body?.errors?.[0]?.message ?? `Cloudflare returned HTTP ${res.status}`, [apiToken]));
       }
+      if (body.result.status !== "active") {
+        throw new Error(`Token is ${body.result.status ?? "not active"}`);
+      }
+
+      return valid([
+        enumFact("status", "statuses", "active"),
+        ...summarize({ expiresOn: body.result.expires_on, notBefore: body.result.not_before })
+      ]);
     }
   });
 

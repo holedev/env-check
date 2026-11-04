@@ -75,18 +75,26 @@
     "items": {
       "cloudflare": {
         "name": "Cloudflare",
-        "description": "Cloudflare",
+        "description": "API token user của Cloudflare",
         "form": {
           "apiToken": {
             "label": "API Token",
-            "placeholder": "Nhập Cloudflare API Token của bạn",
+            "placeholder": "Nhập API token của Cloudflare",
             "description": "Tạo token tại https://dash.cloudflare.com/profile/api-tokens. Không hỗ trợ Global API Key cũ."
           },
-          "submit": "Xác minh Token"
+          "submit": "Kiểm tra token"
         },
-        "validCredentials": "Cloudflare API Token hợp lệ",
-        "invalidCredentials": "Cloudflare API Token không hợp lệ!",
-        "details": "Chi tiết"
+        "validCredentials": "API token Cloudflare đang hoạt động",
+        "restrictedCredentials": "Token hợp lệ nhưng bị giới hạn",
+        "invalidCredentials": "API token Cloudflare không hợp lệ",
+        "summary": {
+          "status": "Trạng thái",
+          "expiresOn": "Hết hạn",
+          "notBefore": "Hiệu lực từ"
+        },
+        "statuses": {
+          "active": "Đang hoạt động"
+        }
       },
       "supabase": {
         "name": "Supabase",

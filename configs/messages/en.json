@@ -75,18 +75,26 @@
     "items": {
       "cloudflare": {
         "name": "Cloudflare",
-        "description": "Cloudflare",
+        "description": "Cloudflare user API token",
         "form": {
           "apiToken": {
             "label": "API Token",
-            "placeholder": "Enter your Cloudflare API Token",
+            "placeholder": "Enter your Cloudflare API token",
             "description": "Create a token at https://dash.cloudflare.com/profile/api-tokens. The legacy Global API Key is not supported."
           },
           "submit": "Verify Token"
         },
-        "validCredentials": "Cloudflare API Token is valid",
-        "invalidCredentials": "Cloudflare API Token is invalid!",
-        "details": "Details"
+        "validCredentials": "Cloudflare API token is active",
+        "restrictedCredentials": "Token is valid but restricted",
+        "invalidCredentials": "Cloudflare API token is invalid",
+        "summary": {
+          "status": "Status",
+          "expiresOn": "Expires",
+          "notBefore": "Valid from"
+        },
+        "statuses": {
+          "active": "Active"
+        }
       },
       "supabase": {
         "name": "Supabase",
