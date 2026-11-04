@@ -431,33 +431,42 @@
       },
       "s3-compatible": {
         "name": "S3 Compatible",
-        "description": "S3-compatible storage services (AWS S3, MinIO, DigitalOcean Spaces, etc.)",
+        "description": "AWS S3, Cloudflare R2, MinIO, DigitalOcean Spaces and other S3 APIs",
         "form": {
           "endpoint": {
             "label": "Endpoint URL",
-            "placeholder": "https://s3.amazonaws.com",
-            "description": "S3 endpoint URL (leave empty for AWS S3)"
+            "placeholder": "https://<account>.r2.cloudflarestorage.com",
+            "description": "Leave empty for AWS S3. Private and local addresses are blocked on the hosted site."
           },
           "region": {
             "label": "Region",
             "placeholder": "us-east-1",
-            "description": "AWS region or equivalent for other providers"
+            "description": "AWS region, or auto / the provider's region."
           },
-          "accessKey": {
+          "accessKeyId": {
             "label": "Access Key ID",
-            "placeholder": "AKIAIOSFODNN7EXAMPLE",
-            "description": "Your S3 access key ID"
+            "placeholder": "AKIA...",
+            "description": "The access key's public ID."
           },
-          "secretKey": {
+          "secretAccessKey": {
             "label": "Secret Access Key",
             "placeholder": "Enter your secret access key",
-            "description": "Your S3 secret access key"
+            "description": "Shown once when the key is created."
           },
-          "submit": "Test S3 Connection"
+          "submit": "Check Credentials"
         },
-        "validCredentials": "S3 connection successful!",
-        "invalidCredentials": "S3 connection failed!",
-        "connectionDetails": "Connection Details"
+        "validCredentials": "S3 credentials are valid",
+        "restrictedCredentials": "Key is valid but can't list buckets",
+        "invalidCredentials": "S3 credentials are invalid",
+        "summary": {
+          "endpoint": "Endpoint",
+          "region": "Region",
+          "bucketsCount": "Buckets",
+          "buckets": "Bucket names"
+        },
+        "endpoints": {
+          "aws": "AWS S3"
+        }
       },
       "openai": {
         "name": "OpenAI",

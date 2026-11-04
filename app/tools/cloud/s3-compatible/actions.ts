@@ -1,60 +1,56 @@
 "use server";
 
 import { ListBucketsCommand, S3Client, type S3ClientConfig } from "@aws-sdk/client-s3";
+import { enumFact, redact, restricted, summarize, valid } from "@/lib/validation";
+import type { SummaryItem } from "@/types/validation";
 import { handleErrorServerNoAuth } from "@/utils/handle-error-server";
 import { assertPublicHost } from "@/utils/network-guard";
 
 type S3Config = {
   accessKeyId: string;
-  endpoint?: string;
+  endpoint: string;
   region: string;
   secretAccessKey: string;
 };
 
-const checkS3Connection = async (config: S3Config) =>
+const nameOf = (error: unknown) =>
+  typeof error === "object" && error !== null && "name" in error ? String(error.name) : "";
+
+/**
+ * Probe: ListBuckets. A custom endpoint is user-supplied, so it must be http(s)
+ * and pass the network guard. AccessDenied (a key scoped to one bucket, common
+ * on R2) is Restricted.
+ */
+const checkS3Connection = async ({ accessKeyId, endpoint, region, secretAccessKey }: S3Config) =>
   handleErrorServerNoAuth({
     cb: async () => {
-      // Configure S3 client
-      const clientConfig: S3ClientConfig = {
-        region: config.region,
-        credentials: {
-          accessKeyId: config.accessKeyId,
-          secretAccessKey: config.secretAccessKey
-        }
-      };
+      const clientConfig: S3ClientConfig = { region, credentials: { accessKeyId, secretAccessKey } };
+      let endpointFact: SummaryItem = enumFact("endpoint", "endpoints", "aws");
 
-      // Add endpoint if provided (for non-AWS S3-compatible services)
-      if (config.endpoint && config.endpoint.trim() !== "") {
-        await assertPublicHost(new URL(config.endpoint).hostname);
-        clientConfig.endpoint = config.endpoint;
-        clientConfig.forcePathStyle = true; // Required for most S3-compatible services
+      if (endpoint.trim() !== "") {
+        const url = new URL(endpoint.trim());
+        if (!(url.protocol === "https:" || url.protocol === "http:")) {
+          throw new Error("Endpoint must be an http(s) URL");
+        }
+        await assertPublicHost(url.hostname);
+        clientConfig.endpoint = url.origin;
+        clientConfig.forcePathStyle = true;
+        endpointFact = { key: "endpoint", value: url.host };
       }
 
-      const s3Client = new S3Client(clientConfig);
-
+      const facts = [endpointFact, ...summarize({ region })];
       try {
-        // Test: List buckets (basic connectivity test)
-        const listBucketsCommand = new ListBucketsCommand({});
-        const bucketsResponse = await s3Client.send(listBucketsCommand);
-
-        const result = {
-          success: true,
-          connectionDetails: {
-            endpoint: config.endpoint || "AWS S3",
-            region: config.region,
-            accessKeyId: config.accessKeyId
-          },
-          buckets:
-            bucketsResponse.Buckets?.map((bucket) => ({
-              name: bucket.Name || "Unknown",
-              creationDate: bucket.CreationDate?.toISOString() || null
-            })) || [],
-          bucketsCount: bucketsResponse.Buckets?.length || 0
-        };
-
-        return result;
-      } catch (err) {
-        throw new Error(err instanceof Error ? err.message : "Failed to connect to S3-compatible service");
+        const response = await new S3Client(clientConfig).send(new ListBucketsCommand({}));
+        const buckets = (response.Buckets ?? []).map((bucket) => bucket.Name ?? "").filter(Boolean);
+        return valid([...facts, ...summarize({ bucketsCount: buckets.length, buckets })]);
+      } catch (error) {
+        const message = redact(error instanceof Error ? error.message : "Failed to reach the S3 endpoint", [
+          secretAccessKey
+        ]);
+        if (nameOf(error) === "AccessDenied") {
+          return restricted(message, facts);
+        }
+        throw new Error(message);
       }
     }
   });
