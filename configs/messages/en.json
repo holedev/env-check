@@ -38,38 +38,39 @@
       "yes": "Yes",
       "no": "No",
       "more": "+{count} more",
-      "required": "This field is required"
+      "required": "This field is required",
+      "checking": "Checking…"
     }
   },
   "tools": {
     "groups": {
       "cloud": {
-        "name": "Cloud Provider",
-        "description": "Cloud Provider"
+        "name": "Cloud",
+        "description": "Hosting, storage and developer platforms"
       },
       "ai": {
         "name": "AI",
-        "description": "AI tools"
+        "description": "Model APIs and AI platforms"
       },
       "database": {
         "name": "Database",
-        "description": "Database"
+        "description": "Connection strings for SQL and NoSQL databases"
       },
       "payment": {
         "name": "Payment",
-        "description": "Payment"
+        "description": "Payment gateways"
       },
       "messaging": {
-        "name": "Messaging & Communication",
-        "description": "Email, SMS, chat APIs"
+        "name": "Messaging",
+        "description": "Email, chat and SMS"
       },
       "analytics": {
         "name": "Analytics & Monitoring",
-        "description": "Tools for logging, metrics, and performance tracking"
+        "description": "Analytics and error tracking"
       },
       "others": {
         "name": "Others",
-        "description": "Other tools and services"
+        "description": "Productivity and workspace tools"
       }
     },
     "items": {
@@ -955,7 +956,7 @@
     },
     "overview": {
       "title": "All tools",
-      "description": "{count} credential validators, grouped by service type. Pick one to start checking.",
+      "description": "{count} credential validators. Each one sends a single read-only Probe.",
       "viewGroup": "View group"
     },
     "emptyGroup": "No tools in this group yet.",

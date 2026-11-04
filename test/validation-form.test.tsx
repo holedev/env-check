@@ -3,10 +3,12 @@ import { z } from "zod";
 import { ValidationForm } from "@/components/custom/Tools/ValidationForm.client";
 import type { ResponseType } from "@/types/response";
 
-jest.mock("next-intl", () => ({
-  useTranslations: () => (key: string, values?: Record<string, unknown>) =>
-    values ? `${key}(${JSON.stringify(values)})` : key
-}));
+jest.mock("next-intl", () => {
+  const t = (key: string, values?: Record<string, unknown>) => (values ? `${key}(${JSON.stringify(values)})` : key);
+  t.has = (key: string) => key.endsWith(".summary") || key.endsWith(".never");
+  t.raw = (key: string) => (key.endsWith(".summary") ? { login: "Login label" } : ["Repositories"]);
+  return { useTranslations: () => t };
+});
 
 jest.mock("sonner", () => ({ toast: { success: jest.fn(), warning: jest.fn(), error: jest.fn() } }));
 
@@ -33,6 +35,15 @@ const fillAndSubmit = (value: string) => {
   fireEvent.change(screen.getByPlaceholderText("tools.items.github.form.apiKey.placeholder"), { target: { value } });
   fireEvent.click(screen.getByRole("button", { name: "tools.items.github.form.submit" }));
 };
+
+test("shows how the tool is checked before the first submit", () => {
+  renderForm(jest.fn());
+
+  expect(screen.getByRole("heading", { name: "workspace.howItWorks.title" })).toBeInTheDocument();
+  expect(screen.getByText("api.github.com/user")).toBeInTheDocument();
+  expect(screen.getByText("Login label")).toBeInTheDocument();
+  expect(screen.getByText("Repositories")).toBeInTheDocument();
+});
 
 test("renders a valid outcome with its summary", async () => {
   const action = jest.fn().mockResolvedValue({
