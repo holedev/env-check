@@ -253,18 +253,23 @@
       },
       "discord": {
         "name": "Discord",
-        "description": "Discord",
+        "description": "Bot token của Discord",
         "form": {
           "token": {
             "label": "Bot Token",
-            "placeholder": "Nhập Bot Token của bạn",
-            "description": "Bot Token của bạn có thể được tìm thấy tại https://discord.com/developers/applications."
+            "placeholder": "Nhập bot token của Discord",
+            "description": "Application → Bot → Reset Token tại https://discord.com/developers/applications."
           },
-          "submit": "Kiểm tra Token"
+          "submit": "Kiểm tra token"
         },
-        "validCredentials": "Bot Token Discord hợp lệ",
-        "invalidCredentials": "Bot Token Discord không hợp lệ!",
-        "details": "Chi tiết"
+        "validCredentials": "Bot token Discord hợp lệ",
+        "restrictedCredentials": "Token hợp lệ nhưng bị giới hạn",
+        "invalidCredentials": "Bot token Discord không hợp lệ",
+        "summary": {
+          "username": "Bot",
+          "id": "ID bot",
+          "verified": "Bot đã xác minh"
+        }
       },
       "sentry": {
         "name": "Sentry",
