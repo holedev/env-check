@@ -431,33 +431,42 @@
       },
       "s3-compatible": {
         "name": "S3 Compatible",
-        "description": "Dịch vụ lưu trữ tương thích S3 (AWS S3, MinIO, DigitalOcean Spaces, v.v.)",
+        "description": "AWS S3, Cloudflare R2, MinIO, DigitalOcean Spaces và các API tương thích S3",
         "form": {
           "endpoint": {
-            "label": "URL Endpoint",
-            "placeholder": "https://s3.amazonaws.com",
-            "description": "URL endpoint S3 (để trống cho AWS S3)"
+            "label": "Endpoint URL",
+            "placeholder": "https://<account>.r2.cloudflarestorage.com",
+            "description": "Để trống nếu dùng AWS S3. Bản online chặn địa chỉ private và local."
           },
           "region": {
-            "label": "Vùng",
+            "label": "Region",
             "placeholder": "us-east-1",
-            "description": "Vùng AWS hoặc tương đương cho các nhà cung cấp khác"
+            "description": "Region của AWS, hoặc auto / region của nhà cung cấp."
           },
-          "accessKey": {
+          "accessKeyId": {
             "label": "Access Key ID",
-            "placeholder": "AKIAIOSFODNN7EXAMPLE",
-            "description": "Access key ID S3 của bạn"
+            "placeholder": "AKIA...",
+            "description": "ID công khai của access key."
           },
-          "secretKey": {
+          "secretAccessKey": {
             "label": "Secret Access Key",
-            "placeholder": "Nhập secret access key của bạn",
-            "description": "Secret access key S3 của bạn"
+            "placeholder": "Nhập secret access key",
+            "description": "Chỉ hiện một lần khi tạo key."
           },
-          "submit": "Kiểm Tra Kết Nối S3"
+          "submit": "Kiểm tra"
         },
-        "validCredentials": "Kết nối S3 thành công!",
-        "invalidCredentials": "Kết nối S3 thất bại!",
-        "connectionDetails": "Chi Tiết Kết Nối"
+        "validCredentials": "Thông tin S3 hợp lệ",
+        "restrictedCredentials": "Key hợp lệ nhưng không liệt kê được bucket",
+        "invalidCredentials": "Thông tin S3 không hợp lệ",
+        "summary": {
+          "endpoint": "Endpoint",
+          "region": "Region",
+          "bucketsCount": "Số bucket",
+          "buckets": "Tên bucket"
+        },
+        "endpoints": {
+          "aws": "AWS S3"
+        }
       },
       "openai": {
         "name": "OpenAI",
