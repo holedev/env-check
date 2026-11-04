@@ -613,6 +613,34 @@
           "modelsCount": "Models available",
           "models": "Models"
         }
+      },
+      "openrouter": {
+        "name": "OpenRouter",
+        "description": "OpenRouter API key, with credit limit and usage",
+        "form": {
+          "apiKey": {
+            "label": "API Key",
+            "placeholder": "sk-or-v1-...",
+            "description": "Create a key at https://openrouter.ai/settings/keys.",
+            "errors": {
+              "format": "OpenRouter keys start with sk-or-"
+            }
+          },
+          "submit": "Check API Key"
+        },
+        "validCredentials": "OpenRouter API key is valid",
+        "restrictedCredentials": "Key is valid but restricted",
+        "invalidCredentials": "OpenRouter API key is invalid",
+        "summary": {
+          "label": "Key name",
+          "usage": "Credits used",
+          "limit": "Credit limit",
+          "limitRemaining": "Credits remaining",
+          "freeTier": "Free tier"
+        },
+        "limits": {
+          "unlimited": "No limit"
+        }
       }
     },
     "progress": {

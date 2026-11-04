@@ -228,13 +228,21 @@ export const _TOOL_LIST = defineToolList([
     libInfo: {
       packageName: "fetch"
     }
+  },
+  {
+    icon: "openrouter",
+    path: "openrouter",
+    progress: "completed",
+    libInfo: {
+      packageName: "fetch"
+    }
   }
 ] as const);
 
 export const _TOOL_GROUP_LIST: ToolGroupType[] = [
   {
     path: "ai",
-    tools: ["google-gemini", "openai", "anthropic", "groq", "deepseek", "mistral"]
+    tools: ["google-gemini", "openai", "anthropic", "groq", "deepseek", "mistral", "openrouter"]
   },
   {
     path: "cloud",

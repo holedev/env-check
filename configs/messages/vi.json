@@ -613,6 +613,34 @@
           "modelsCount": "Số model khả dụng",
           "models": "Model"
         }
+      },
+      "openrouter": {
+        "name": "OpenRouter",
+        "description": "API key của OpenRouter, kèm hạn mức và mức đã dùng",
+        "form": {
+          "apiKey": {
+            "label": "API Key",
+            "placeholder": "sk-or-v1-...",
+            "description": "Tạo key tại https://openrouter.ai/settings/keys.",
+            "errors": {
+              "format": "Key của OpenRouter bắt đầu bằng sk-or-"
+            }
+          },
+          "submit": "Kiểm tra API Key"
+        },
+        "validCredentials": "API key của OpenRouter hợp lệ",
+        "restrictedCredentials": "Key hợp lệ nhưng bị giới hạn",
+        "invalidCredentials": "API key của OpenRouter không hợp lệ",
+        "summary": {
+          "label": "Tên key",
+          "usage": "Credit đã dùng",
+          "limit": "Hạn mức credit",
+          "limitRemaining": "Credit còn lại",
+          "freeTier": "Gói miễn phí"
+        },
+        "limits": {
+          "unlimited": "Không giới hạn"
+        }
       }
     },
     "progress": {
