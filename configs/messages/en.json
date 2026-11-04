@@ -550,6 +550,28 @@
           "version": "Version",
           "mode": "Mode"
         }
+      },
+      "groq": {
+        "name": "Groq",
+        "description": "Groq API key",
+        "form": {
+          "apiKey": {
+            "label": "API Key",
+            "placeholder": "gsk_...",
+            "description": "Create a key at https://console.groq.com/keys.",
+            "errors": {
+              "format": "Groq keys start with gsk_"
+            }
+          },
+          "submit": "Check API Key"
+        },
+        "validCredentials": "Groq API key is valid",
+        "restrictedCredentials": "Key is valid but can't list models",
+        "invalidCredentials": "Groq API key is invalid",
+        "summary": {
+          "modelsCount": "Models available",
+          "models": "Models"
+        }
       }
     },
     "progress": {

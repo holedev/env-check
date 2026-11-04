@@ -550,6 +550,28 @@
           "version": "Phiên bản",
           "mode": "Chế độ"
         }
+      },
+      "groq": {
+        "name": "Groq",
+        "description": "API key của Groq",
+        "form": {
+          "apiKey": {
+            "label": "API Key",
+            "placeholder": "gsk_...",
+            "description": "Tạo key tại https://console.groq.com/keys.",
+            "errors": {
+              "format": "Key của Groq bắt đầu bằng gsk_"
+            }
+          },
+          "submit": "Kiểm tra API Key"
+        },
+        "validCredentials": "API key của Groq hợp lệ",
+        "restrictedCredentials": "Key hợp lệ nhưng không có quyền liệt kê model",
+        "invalidCredentials": "API key của Groq không hợp lệ",
+        "summary": {
+          "modelsCount": "Số model khả dụng",
+          "models": "Model"
+        }
       }
     },
     "progress": {

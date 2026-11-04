@@ -205,13 +205,20 @@ export const _TOOL_LIST = defineToolList([
       url: "https://www.npmjs.com/package/redis",
       version: "6.3.1"
     }
+  },
+  {
+    path: "groq",
+    progress: "completed",
+    libInfo: {
+      packageName: "fetch"
+    }
   }
 ] as const);
 
 export const _TOOL_GROUP_LIST: ToolGroupType[] = [
   {
     path: "ai",
-    tools: ["google-gemini", "openai", "anthropic"]
+    tools: ["google-gemini", "openai", "anthropic", "groq"]
   },
   {
     path: "cloud",
