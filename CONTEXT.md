@@ -15,7 +15,7 @@ A category that buckets tools in the navigation: one of `ai`, `cloud`, `database
 _Avoid_: section, module
 
 **Progress state**:
-A tool's build status, shown as a coloured badge by `ToolHeader`. One of `notStarted` (registered, no page), `inProgress` (page exists, not test-complete), `completed` (page + actions + full tests).
+A tool's build status, for developers: users only see it as a badge while a tool is unfinished. One of `notStarted` (registered, no page), `inProgress` (page exists, not test-complete), `completed` (page + actions + full tests).
 _Avoid_: status, stage, planned, coming-soon
 
 **libInfo**:
@@ -63,7 +63,7 @@ The app shell wrapping every Tool and Tool Group page under `/tools`: a sidebar 
 _Avoid_: tool UI, dashboard, app
 
 **`ToolHeader`**:
-The server component atop every tool page. Given a `toolPath`, it renders the tool's name, description, `libInfo` link, and progress badge from the constants.
+The server component atop every tool page. Given a `toolPath`, it renders the tool's icon, name and description, plus the progress badge while the tool is unfinished. The Probe, not `libInfo`, is what users see about how a tool checks.
 
 **`InputWithPaste`**:
 The input component (`components/custom/InputWithPaste.tsx`) used for every credential field. `hidden` (default `true`) masks the value with a show/hide toggle; a paste-from-clipboard button is always present.
