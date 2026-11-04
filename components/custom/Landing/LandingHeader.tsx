@@ -12,7 +12,7 @@ const LandingHeader = () => {
     <header className='sticky top-0 z-20 border-b bg-background/80 backdrop-blur'>
       <div className='mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4'>
         <Link className='flex items-center gap-2' href='/'>
-          <span className='size-2.5 rounded-full bg-brand' />
+          <span className='size-2.5 rounded-full bg-primary' />
           <span className='font-extrabold text-lg uppercase tracking-tight'>{t("common.site.logoText")}</span>
         </Link>
         <div className='flex items-center gap-2'>
@@ -20,7 +20,7 @@ const LandingHeader = () => {
             <LocaleSelect />
           </div>
           <ThemeToggle />
-          <Button asChild className='bg-brand text-brand-foreground hover:bg-brand/90'>
+          <Button asChild className='bg-primary text-primary-foreground hover:bg-primary/90'>
             <Link href='/tools'>
               {t("landing.header.openWorkspace")}
               <ArrowRightIcon />

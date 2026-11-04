@@ -1,5 +1,5 @@
 import "@/app/globals.css";
-import { Roboto } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import { headers } from "next/headers";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
@@ -10,7 +10,8 @@ import type { locale } from "@/types/global";
 import { ThemeProvider } from "../theme-provider";
 import { TooltipProvider } from "../ui/tooltip";
 
-const roboto = Roboto({ subsets: ["latin"], weight: ["300", "400", "500", "700"], style: ["italic", "normal"] });
+const geistSans = Geist({ subsets: ["latin", "vietnamese"], variable: "--font-geist-sans", display: "swap" });
+const geistMono = Geist_Mono({ subsets: ["latin", "vietnamese"], variable: "--font-geist-mono", display: "swap" });
 
 type BaseLayoutType = { children: ReactNode; locale: locale };
 
@@ -21,7 +22,7 @@ export async function BaseLayout({ children, locale }: BaseLayoutType) {
 
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body className={cn(roboto.className, "min-h-svh w-full antialiased")}>
+      <body className={cn(geistSans.variable, geistMono.variable, "min-h-svh w-full antialiased")}>
         <ThemeProvider attribute='class' defaultTheme='system' disableTransitionOnChange enableSystem nonce={nonce}>
           <TooltipProvider>
             <NextIntlClientProvider messages={messages}>{children}</NextIntlClientProvider>

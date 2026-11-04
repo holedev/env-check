@@ -75,12 +75,12 @@ export default function Page() {
           className='pointer-events-none absolute inset-0'
           style={{
             backgroundImage:
-              "radial-gradient(60% 50% at 50% 0%, color-mix(in oklch, var(--brand) 18%, transparent), transparent)"
+              "radial-gradient(60% 50% at 50% 0%, color-mix(in oklch, var(--foreground) 18%, transparent), transparent)"
           }}
         />
         <div className='relative mx-auto grid max-w-6xl items-center gap-12 px-4 py-16 md:py-24 lg:grid-cols-2'>
           <div className='space-y-6 text-center lg:text-left'>
-            <Badge className='border-brand/30 bg-brand/10 text-brand' variant='outline'>
+            <Badge className='border-foreground/30 bg-primary/10 text-foreground' variant='outline'>
               {t("landing.hero.badge")}
             </Badge>
             <h1 className='text-balance font-extrabold text-4xl tracking-tight sm:text-5xl'>
@@ -90,7 +90,7 @@ export default function Page() {
               {t("landing.hero.description")}
             </p>
             <div className='flex flex-col justify-center gap-3 sm:flex-row lg:justify-start'>
-              <Button asChild className='bg-brand text-brand-foreground hover:bg-brand/90' size='lg'>
+              <Button asChild className='bg-primary text-primary-foreground hover:bg-primary/90' size='lg'>
                 <Link href='/tools'>
                   {t("landing.hero.primary")}
                   <ArrowRightIcon />
@@ -122,7 +122,7 @@ export default function Page() {
                     <span className='font-mono text-muted-foreground text-xs'>••••••••</span>
                   </div>
                   {valid ? (
-                    <span className='flex items-center gap-1 font-medium text-brand text-xs'>
+                    <span className='flex items-center gap-1 font-medium text-foreground text-xs'>
                       <CheckCircle2Icon className='size-4' />
                       {t("landing.preview.valid")}
                     </span>
@@ -163,7 +163,7 @@ export default function Page() {
           {_SECURITY_POINTS.map(({ key, Icon }) => (
             <Card key={key}>
               <CardHeader className='space-y-3'>
-                <span className='flex size-10 items-center justify-center rounded-lg bg-brand/10 text-brand'>
+                <span className='flex size-10 items-center justify-center rounded-lg bg-primary/10 text-foreground'>
                   <Icon className='size-5' />
                 </span>
                 <CardTitle>{t(`landing.security.${key}.title`)}</CardTitle>
@@ -188,7 +188,7 @@ export default function Page() {
                 </span>
                 <div className='space-y-1'>
                   <h3 className='flex items-center gap-2 font-semibold'>
-                    <Icon className='size-4 text-brand' />
+                    <Icon className='size-4 text-foreground' />
                     {t(`landing.steps.${key}.title`)}
                   </h3>
                   <p className='text-muted-foreground text-sm'>{t(`landing.steps.${key}.description`)}</p>
@@ -208,11 +208,11 @@ export default function Page() {
         <div className='grid gap-6 sm:grid-cols-2 lg:grid-cols-3'>
           {groups.map((group) => (
             <Link className='group' href={`/tools/${group.path}`} key={group.path}>
-              <Card className='h-full transition-all group-hover:border-brand/50 group-hover:shadow-md'>
+              <Card className='h-full transition-all group-hover:border-foreground/50 group-hover:shadow-md'>
                 <CardHeader>
                   <CardTitle className='flex items-center justify-between gap-2'>
                     {t(`tools.groups.${group.path}.name`)}
-                    <ArrowRightIcon className='size-4 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-brand' />
+                    <ArrowRightIcon className='size-4 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-foreground' />
                   </CardTitle>
                   <CardDescription>{t(`tools.groups.${group.path}.description`)}</CardDescription>
                 </CardHeader>
@@ -227,10 +227,10 @@ export default function Page() {
 
       {/* Final CTA */}
       <section className='mx-auto max-w-6xl px-4 pb-20'>
-        <div className='flex flex-col items-center gap-4 rounded-2xl border bg-brand/5 px-6 py-12 text-center'>
+        <div className='flex flex-col items-center gap-4 rounded-2xl border bg-primary/5 px-6 py-12 text-center'>
           <h2 className='font-bold text-2xl tracking-tight sm:text-3xl'>{t("landing.cta.title")}</h2>
           <p className='text-muted-foreground'>{t("landing.cta.description")}</p>
-          <Button asChild className='bg-brand text-brand-foreground hover:bg-brand/90' size='lg'>
+          <Button asChild className='bg-primary text-primary-foreground hover:bg-primary/90' size='lg'>
             <Link href='/tools'>
               {t("landing.cta.button")}
               <ArrowRightIcon />
