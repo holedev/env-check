@@ -147,3 +147,47 @@
     @apply font-mono;
   }
 }
+
+/* Landing: probe.log terminal. Lines fade in one after another and loop. */
+@layer components {
+  .probe-line {
+    opacity: 0;
+    animation: probe-line 10s infinite;
+  }
+  .probe-caret {
+    animation: probe-caret 1s steps(1) infinite;
+  }
+}
+
+@keyframes probe-line {
+  0%,
+  4% {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  10%,
+  88% {
+    opacity: 1;
+    transform: none;
+  }
+  96%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes probe-caret {
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .probe-line {
+    opacity: 1;
+    animation: none;
+  }
+  .probe-caret {
+    animation: none;
+  }
+}

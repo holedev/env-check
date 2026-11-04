@@ -1,26 +1,14 @@
-import {
-  ArrowRightIcon,
-  CheckCircle2Icon,
-  ClipboardPasteIcon,
-  CodeIcon,
-  DatabaseIcon,
-  ListChecksIcon,
-  MousePointerClickIcon,
-  ServerIcon,
-  XCircleIcon
-} from "lucide-react";
+import { ArrowRightIcon } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { getLocale, getTranslations } from "next-intl/server";
+import { SearchCommand } from "@/components/custom/Header/SearchCommand.client";
 import { ToolIcon } from "@/components/custom/Tools/ToolIcon";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { _LOCALES } from "@/constants/lang";
 import { _REPO_URL } from "@/constants/site";
 import { _TOOL_GROUP_LIST, _TOOL_LIST } from "@/constants/tool";
-import type { ToolPath } from "@/types/tool";
+import type { ToolItem } from "@/types/tool";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("landing.meta");
@@ -35,7 +23,7 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       type: "website",
       url: "/",
-      siteName: "ENV Check",
+      siteName: "env-check",
       title,
       description,
       locale: locale === "vi" ? "vi_VN" : "en_US"
@@ -44,198 +32,178 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-const _PREVIEW_ROWS: { tool: ToolPath; icon: string; valid: boolean }[] = [
-  { tool: "github", icon: "github", valid: true },
-  { tool: "postgresql", icon: "postgresql", valid: true },
-  { tool: "cloudflare", icon: "cloudflare", valid: false }
-];
-
-const _SECURITY_POINTS = [
-  { key: "serverAction", Icon: ServerIcon },
-  { key: "noStorage", Icon: DatabaseIcon },
-  { key: "openSource", Icon: CodeIcon }
+/** probe.log lines, staggered by CSS (.probe-line); `tone` picks the outcome colour. */
+const _TERMINAL = [
+  { text: "$ env-check stripe", tone: "muted" },
+  { text: "→ GET api.stripe.com/v1/balance", tone: "plain" },
+  { key: "valid", tone: "ok" },
+  { text: "$ env-check slack", tone: "muted" },
+  { text: "→ POST slack.com/api/auth.test", tone: "plain" },
+  { key: "restricted", tone: "warn" },
+  { text: "$ env-check redis", tone: "muted" },
+  { text: "→ redis://127.0.0.1:6379", tone: "plain" },
+  { key: "blocked", tone: "bad" }
 ] as const;
 
-const _STEPS = [
-  { key: "pick", Icon: MousePointerClickIcon },
-  { key: "paste", Icon: ClipboardPasteIcon },
-  { key: "result", Icon: ListChecksIcon }
+const _TONE_CLASS = {
+  muted: "text-muted-foreground",
+  plain: "",
+  ok: "text-ok",
+  warn: "text-warn",
+  bad: "text-bad"
+} as const;
+
+const _PILLARS = [
+  { key: "probe", code: "GET api.stripe.com/v1/balance" },
+  { key: "redact", code: "Incorrect API key provided: ***" },
+  { key: "guard", code: "127.0.0.1 · 10.0.0.0/8 · 169.254.169.254" }
 ] as const;
+
+const _STEPS = ["pick", "paste", "result"] as const;
+
+const _DOTENV_EXAMPLE = `OPENAI_API_KEY=sk-proj-••••••••
+STRIPE_SECRET_KEY=sk_test_••••••••
+DATABASE_URL=postgresql://app:••••@db/app
+SLACK_BOT_TOKEN=xoxb-••••••••`;
 
 export default function Page() {
   const t = useTranslations();
-  const groups = _TOOL_GROUP_LIST.filter((group) => group.tools.length > 0);
+  const tools = _TOOL_LIST as readonly ToolItem[];
+  const groupCount = _TOOL_GROUP_LIST.filter((group) => group.tools.length > 0).length;
 
   return (
     <>
       {/* Hero */}
-      <section className='relative overflow-hidden border-b'>
-        <div
-          aria-hidden
-          className='pointer-events-none absolute inset-0'
-          style={{
-            backgroundImage:
-              "radial-gradient(60% 50% at 50% 0%, color-mix(in oklch, var(--foreground) 18%, transparent), transparent)"
-          }}
-        />
-        <div className='relative mx-auto grid max-w-6xl items-center gap-12 px-4 py-16 md:py-24 lg:grid-cols-2'>
-          <div className='space-y-6 text-center lg:text-left'>
-            <Badge className='border-foreground/30 bg-primary/10 text-foreground' variant='outline'>
-              {t("landing.hero.badge")}
-            </Badge>
-            <h1 className='text-balance font-extrabold text-4xl tracking-tight sm:text-5xl'>
-              {t("landing.hero.title")}
-            </h1>
-            <p className='mx-auto max-w-xl text-pretty text-lg text-muted-foreground lg:mx-0'>
-              {t("landing.hero.description")}
-            </p>
-            <div className='flex flex-col justify-center gap-3 sm:flex-row lg:justify-start'>
-              <Button asChild className='bg-primary text-primary-foreground hover:bg-primary/90' size='lg'>
-                <Link href='/tools'>
-                  {t("landing.hero.primary")}
-                  <ArrowRightIcon />
-                </Link>
-              </Button>
-              <Button asChild size='lg' variant='outline'>
-                <a href={_REPO_URL} rel='noopener noreferrer' target='_blank'>
-                  {t("landing.hero.secondary")}
-                </a>
-              </Button>
-            </div>
+      <section className='mx-auto grid max-w-6xl items-center gap-14 px-4 pt-20 pb-16 md:pt-28 lg:grid-cols-2'>
+        <div className='flex flex-col gap-6'>
+          <span className='inline-flex items-center gap-2 self-start rounded-full border px-3 py-1.5 font-mono text-muted-foreground text-xs'>
+            <span aria-hidden className='size-1.5 rounded-full bg-ok' />
+            {t("landing.hero.badge", { count: tools.length })}
+          </span>
+          <h1 className='text-balance font-semibold text-5xl leading-[1.05] tracking-tight sm:text-6xl'>
+            {t("landing.hero.title")}
+          </h1>
+          <p className='max-w-xl text-pretty text-lg text-muted-foreground leading-relaxed'>
+            {t("landing.hero.description")}
+          </p>
+          <div className='max-w-xl'>
+            <SearchCommand heroHint={t("landing.hero.searchHint")} variant='hero' />
           </div>
-
-          <Card aria-hidden className='mx-auto w-full max-w-md shadow-lg'>
-            <CardHeader className='border-b'>
-              <div className='flex items-center gap-1.5'>
-                <span className='size-2.5 rounded-full bg-red-400' />
-                <span className='size-2.5 rounded-full bg-yellow-400' />
-                <span className='size-2.5 rounded-full bg-green-400' />
-                <span className='ml-2 text-muted-foreground text-xs'>{t("landing.preview.title")}</span>
-              </div>
-            </CardHeader>
-            <CardContent className='space-y-3 pt-2'>
-              {_PREVIEW_ROWS.map(({ tool, icon, valid }) => (
-                <div className='flex items-center justify-between rounded-lg border px-3 py-2.5' key={tool}>
-                  <div className='flex items-center gap-3'>
-                    <ToolIcon decorative icon={icon} name={t(`tools.items.${tool}.name`)} size={20} />
-                    <span className='font-medium text-sm'>{t(`tools.items.${tool}.name`)}</span>
-                    <span className='font-mono text-muted-foreground text-xs'>••••••••</span>
-                  </div>
-                  {valid ? (
-                    <span className='flex items-center gap-1 font-medium text-foreground text-xs'>
-                      <CheckCircle2Icon className='size-4' />
-                      {t("landing.preview.valid")}
-                    </span>
-                  ) : (
-                    <span className='flex items-center gap-1 font-medium text-destructive text-xs'>
-                      <XCircleIcon className='size-4' />
-                      {t("landing.preview.invalid")}
-                    </span>
-                  )}
-                </div>
-              ))}
-            </CardContent>
-          </Card>
+          <div className='flex flex-wrap gap-3'>
+            <Button asChild size='lg'>
+              <Link href='/tools'>
+                {t("landing.hero.primary")}
+                <ArrowRightIcon />
+              </Link>
+            </Button>
+            <Button asChild size='lg' variant='outline'>
+              <a href={_REPO_URL} rel='noopener noreferrer' target='_blank'>
+                {t("landing.hero.secondary")}
+              </a>
+            </Button>
+          </div>
         </div>
 
-        <dl className='relative mx-auto grid max-w-6xl grid-cols-3 gap-4 px-4 pb-12 text-center'>
-          {[
-            { value: _TOOL_LIST.length, label: t("landing.stats.tools") },
-            { value: groups.length, label: t("landing.stats.groups") },
-            { value: _LOCALES.length, label: t("landing.stats.locales") }
-          ].map(({ value, label }) => (
-            <div key={label}>
-              <dt className='sr-only'>{label}</dt>
-              <dd className='font-bold text-3xl'>{value}</dd>
-              <dd className='text-muted-foreground text-sm'>{label}</dd>
+        <figure aria-label={t("landing.terminal.title")} className='overflow-hidden rounded-lg border bg-card'>
+          <div className='flex items-center gap-2 border-b px-4 py-3'>
+            <span aria-hidden className='size-2.5 rounded-full border' />
+            <span aria-hidden className='size-2.5 rounded-full border' />
+            <span aria-hidden className='size-2.5 rounded-full border' />
+            <span className='ml-2 font-mono text-muted-foreground text-xs'>{t("landing.terminal.title")}</span>
+          </div>
+          <div className='flex flex-col px-5 pt-5 pb-6 font-mono text-sm leading-8'>
+            {_TERMINAL.map((line, index) => (
+              <div
+                className={`probe-line ${_TONE_CLASS[line.tone]}`}
+                key={"key" in line ? line.key : line.text}
+                style={{ animationDelay: `${index * 0.6}s` }}
+              >
+                {"key" in line ? t(`landing.terminal.${line.key}`) : line.text}
+              </div>
+            ))}
+            <div className='probe-line text-muted-foreground' style={{ animationDelay: `${_TERMINAL.length * 0.6}s` }}>
+              $ <span aria-hidden className='probe-caret inline-block h-4 w-2 bg-foreground align-[-2px]' />
             </div>
-          ))}
-        </dl>
+          </div>
+        </figure>
+      </section>
+
+      {/* Services */}
+      <section aria-labelledby='services' className='border-y bg-card'>
+        <div className='mx-auto flex max-w-6xl flex-col gap-5 px-4 py-10'>
+          <h2 className='font-mono text-muted-foreground text-xs uppercase tracking-wider' id='services'>
+            {t("landing.services.title", { count: tools.length, groups: groupCount })}
+          </h2>
+          <ul className='flex flex-wrap gap-2'>
+            {tools.map((tool) => {
+              const name = t(`tools.items.${tool.path}.name`);
+              return (
+                <li
+                  className='inline-flex items-center gap-2 rounded-md border bg-background py-1.5 pr-3 pl-2 text-sm'
+                  key={tool.path}
+                >
+                  <ToolIcon decorative icon={tool.icon} name={name} size={16} />
+                  {name}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
       </section>
 
       {/* Security */}
-      <section className='mx-auto max-w-6xl space-y-10 px-4 py-16 md:py-20'>
-        <div className='mx-auto max-w-2xl space-y-3 text-center'>
-          <h2 className='font-bold text-3xl tracking-tight'>{t("landing.security.title")}</h2>
-          <p className='text-muted-foreground'>{t("landing.security.description")}</p>
+      <section aria-labelledby='security' className='mx-auto flex max-w-6xl flex-col gap-10 px-4 py-24'>
+        <div className='flex max-w-2xl flex-col gap-3'>
+          <h2 className='font-semibold text-4xl tracking-tight' id='security'>
+            {t("landing.security.title")}
+          </h2>
+          <p className='text-lg text-muted-foreground leading-relaxed'>{t("landing.security.description")}</p>
         </div>
-        <div className='grid gap-6 md:grid-cols-3'>
-          {_SECURITY_POINTS.map(({ key, Icon }) => (
-            <Card key={key}>
-              <CardHeader className='space-y-3'>
-                <span className='flex size-10 items-center justify-center rounded-lg bg-primary/10 text-foreground'>
-                  <Icon className='size-5' />
-                </span>
-                <CardTitle>{t(`landing.security.${key}.title`)}</CardTitle>
-                <CardDescription className='leading-relaxed'>
-                  {t(`landing.security.${key}.description`)}
-                </CardDescription>
-              </CardHeader>
-            </Card>
+        <div className='grid gap-4 md:grid-cols-3'>
+          {_PILLARS.map(({ key, code }) => (
+            <article className='flex flex-col gap-3 rounded-lg border bg-card p-6' key={key}>
+              <span className='font-mono text-muted-foreground text-xs'>{t(`landing.security.${key}.tag`)}</span>
+              <h3 className='font-semibold text-lg'>{t(`landing.security.${key}.title`)}</h3>
+              <p className='text-muted-foreground text-sm leading-relaxed'>{t(`landing.security.${key}.body`)}</p>
+              <code className='wrap-anywhere mt-auto rounded-md border bg-background px-3 py-2 text-[13px]'>
+                {code}
+              </code>
+            </article>
           ))}
         </div>
       </section>
 
-      {/* How it works */}
-      <section className='border-y bg-muted/40'>
-        <div className='mx-auto max-w-6xl space-y-10 px-4 py-16 md:py-20'>
-          <h2 className='text-center font-bold text-3xl tracking-tight'>{t("landing.steps.title")}</h2>
-          <ol className='grid gap-8 md:grid-cols-3'>
-            {_STEPS.map(({ key, Icon }, index) => (
-              <li className='flex gap-4' key={key}>
-                <span className='flex size-10 shrink-0 items-center justify-center rounded-full border bg-background font-semibold'>
-                  {index + 1}
-                </span>
-                <div className='space-y-1'>
-                  <h3 className='flex items-center gap-2 font-semibold'>
-                    <Icon className='size-4 text-foreground' />
-                    {t(`landing.steps.${key}.title`)}
-                  </h3>
-                  <p className='text-muted-foreground text-sm'>{t(`landing.steps.${key}.description`)}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
-
-      {/* Tool groups */}
-      <section className='mx-auto max-w-6xl space-y-10 px-4 py-16 md:py-20'>
-        <div className='mx-auto max-w-2xl space-y-3 text-center'>
-          <h2 className='font-bold text-3xl tracking-tight'>{t("landing.groups.title")}</h2>
-          <p className='text-muted-foreground'>{t("landing.groups.description")}</p>
-        </div>
-        <div className='grid gap-6 sm:grid-cols-2 lg:grid-cols-3'>
-          {groups.map((group) => (
-            <Link className='group' href={`/tools/${group.path}`} key={group.path}>
-              <Card className='h-full transition-all group-hover:border-foreground/50 group-hover:shadow-md'>
-                <CardHeader>
-                  <CardTitle className='flex items-center justify-between gap-2'>
-                    {t(`tools.groups.${group.path}.name`)}
-                    <ArrowRightIcon className='size-4 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-foreground' />
-                  </CardTitle>
-                  <CardDescription>{t(`tools.groups.${group.path}.description`)}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Badge variant='secondary'>{t("landing.groups.count", { count: group.tools.length })}</Badge>
-                </CardContent>
-              </Card>
-            </Link>
+      {/* Steps */}
+      <section aria-labelledby='steps' className='border-t'>
+        <div className='mx-auto grid max-w-6xl gap-8 px-4 py-20 md:grid-cols-4'>
+          <h2 className='font-semibold text-2xl tracking-tight' id='steps'>
+            {t("landing.steps.title")}
+          </h2>
+          {_STEPS.map((step, index) => (
+            <div className='flex flex-col gap-2' key={step}>
+              <span className='font-mono text-muted-foreground text-sm'>{String(index + 1).padStart(2, "0")}</span>
+              <h3 className='font-semibold'>{t(`landing.steps.${step}.title`)}</h3>
+              <p className='text-muted-foreground text-sm leading-relaxed'>{t(`landing.steps.${step}.description`)}</p>
+            </div>
           ))}
         </div>
       </section>
 
-      {/* Final CTA */}
-      <section className='mx-auto max-w-6xl px-4 pb-20'>
-        <div className='flex flex-col items-center gap-4 rounded-2xl border bg-primary/5 px-6 py-12 text-center'>
-          <h2 className='font-bold text-2xl tracking-tight sm:text-3xl'>{t("landing.cta.title")}</h2>
-          <p className='text-muted-foreground'>{t("landing.cta.description")}</p>
-          <Button asChild className='bg-primary text-primary-foreground hover:bg-primary/90' size='lg'>
-            <Link href='/tools'>
-              {t("landing.cta.button")}
-              <ArrowRightIcon />
-            </Link>
-          </Button>
+      {/* .env, coming soon */}
+      <section aria-labelledby='dotenv' className='mx-auto max-w-6xl px-4 pb-24'>
+        <div className='grid items-center gap-8 rounded-lg border border-dashed p-8 md:grid-cols-2'>
+          <div className='flex flex-col gap-3'>
+            <span className='self-start rounded-full border px-2.5 py-1 font-mono text-muted-foreground text-xs'>
+              {t("landing.dotenv.badge")}
+            </span>
+            <h2 className='font-semibold text-2xl' id='dotenv'>
+              {t("landing.dotenv.title")}
+            </h2>
+            <p className='text-muted-foreground leading-relaxed'>{t("landing.dotenv.description")}</p>
+          </div>
+          <pre className='overflow-x-auto rounded-md border bg-card p-4 text-[13px] text-muted-foreground leading-7'>
+            {_DOTENV_EXAMPLE}
+          </pre>
         </div>
       </section>
     </>
