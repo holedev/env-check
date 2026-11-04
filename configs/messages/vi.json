@@ -125,18 +125,22 @@
       },
       "firebase": {
         "name": "Firebase",
-        "description": "Firebase",
+        "description": "File JSON service account của Firebase Admin",
         "form": {
           "serviceAccountJson": {
             "label": "Service Account JSON",
-            "placeholder": "Dán toàn bộ nội dung JSON của service account",
-            "description": "Project Settings -> Service accounts -> Generate new private key. Dán nội dung file JSON đã tải về."
+            "placeholder": "Dán toàn bộ JSON của service account",
+            "description": "Project Settings → Service accounts → Generate new private key. Dán nội dung file JSON đã tải."
           },
-          "submit": "Xác minh Service Account"
+          "submit": "Kiểm tra service account"
         },
         "validCredentials": "Service account Firebase hợp lệ",
-        "invalidCredentials": "Service account Firebase không hợp lệ!",
-        "details": "Chi tiết"
+        "restrictedCredentials": "Service account hợp lệ nhưng không liệt kê được user",
+        "invalidCredentials": "Service account Firebase không hợp lệ",
+        "summary": {
+          "projectId": "Project ID",
+          "clientEmail": "Service account"
+        }
       },
       "mongodb": {
         "name": "MongoDB",

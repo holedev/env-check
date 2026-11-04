@@ -125,18 +125,22 @@
       },
       "firebase": {
         "name": "Firebase",
-        "description": "Firebase",
+        "description": "Firebase Admin service account JSON",
         "form": {
           "serviceAccountJson": {
             "label": "Service Account JSON",
             "placeholder": "Paste the full service account JSON",
-            "description": "Project Settings -> Service accounts -> Generate new private key. Paste the downloaded JSON."
+            "description": "Project Settings → Service accounts → Generate new private key. Paste the downloaded JSON."
           },
           "submit": "Verify Service Account"
         },
         "validCredentials": "Firebase service account is valid",
-        "invalidCredentials": "Firebase service account is invalid!",
-        "details": "Details"
+        "restrictedCredentials": "Service account is valid but can't list users",
+        "invalidCredentials": "Firebase service account is invalid",
+        "summary": {
+          "projectId": "Project ID",
+          "clientEmail": "Service account"
+        }
       },
       "mongodb": {
         "name": "MongoDB",

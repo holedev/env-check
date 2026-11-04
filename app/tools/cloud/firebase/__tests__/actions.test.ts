@@ -1,112 +1,81 @@
+/**
+ * @jest-environment node
+ */
+import { deleteApp, initializeApp } from "firebase-admin/app";
+import { getAuth } from "firebase-admin/auth";
 import { checkFirebaseServiceAccount } from "../actions";
 
 jest.mock("firebase-admin/app", () => ({
-  initializeApp: jest.fn(() => ({ name: "env-check-test" })),
-  cert: jest.fn((value) => value),
+  cert: jest.fn((sa) => sa),
+  initializeApp: jest.fn(() => ({ name: "app" })),
   deleteApp: jest.fn().mockResolvedValue(undefined)
 }));
+jest.mock("firebase-admin/auth", () => ({ getAuth: jest.fn() }));
 
-jest.mock("firebase-admin/auth", () => ({
-  getAuth: jest.fn()
-}));
-
-jest.mock("@/utils/handle-error-server", () => ({
-  handleErrorServerNoAuth: jest.fn()
-}));
-
-type Cb = { cb: () => Promise<object> };
-
-const passThrough = async ({ cb }: Cb) => {
-  const result = await cb();
-  return { error: null, data: { payload: result } };
-};
-
-const catchError = async ({ cb }: Cb) => {
-  try {
-    await cb();
-    return { error: null, data: { payload: {} } };
-  } catch (error) {
-    return { error: { message: error instanceof Error ? error.message : "Unknown error" }, data: null };
-  }
-};
-
-const validAccount = JSON.stringify({
-  project_id: "demo-project",
-  client_email: "sa@demo-project.iam.gserviceaccount.com",
-  private_key: "-----BEGIN PRIVATE KEY-----\nabc\n-----END PRIVATE KEY-----\n"
+const mockGetAuth = getAuth as unknown as jest.Mock;
+const PRIVATE_KEY = "-----BEGIN PRIVATE KEY-----\\nMIIEsecretsecret\\n-----END PRIVATE KEY-----\\n";
+const SERVICE_ACCOUNT = JSON.stringify({
+  type: "service_account",
+  project_id: "envcheck-demo",
+  client_email: "admin@envcheck-demo.iam.gserviceaccount.com",
+  private_key: PRIVATE_KEY
 });
 
-const mockListUsers = (impl: jest.Mock) => {
-  const { getAuth } = require("firebase-admin/auth");
-  getAuth.mockReturnValue({ listUsers: impl });
-};
+const listUsers = (impl: jest.Mock) => mockGetAuth.mockReturnValue({ listUsers: impl });
 
-describe("Firebase Actions", () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
+beforeEach(() => {
+  jest.clearAllMocks();
+  jest.spyOn(console, "error").mockImplementation(() => undefined);
+});
+
+describe("checkFirebaseServiceAccount", () => {
+  it("is valid and shows project and service account", async () => {
+    listUsers(jest.fn().mockResolvedValue({ users: [{ email: "someone@example.com" }] }));
+
+    const result = await checkFirebaseServiceAccount({ serviceAccountJson: SERVICE_ACCOUNT });
+
+    expect(result.data?.payload).toEqual({
+      outcome: "valid",
+      summary: [
+        { key: "projectId", value: "envcheck-demo" },
+        { key: "clientEmail", value: "admin@envcheck-demo.iam.gserviceaccount.com" }
+      ]
+    });
+    expect(JSON.stringify(result)).not.toContain("someone@example.com");
+    expect(deleteApp).toHaveBeenCalled();
   });
 
-  describe("checkFirebaseServiceAccount", () => {
-    it("should return the project id when the service account is valid", async () => {
-      mockListUsers(jest.fn().mockResolvedValue({ users: [] }));
+  it("is restricted without the Auth admin role", async () => {
+    listUsers(
+      jest
+        .fn()
+        .mockRejectedValue(
+          Object.assign(new Error("Caller lacks permission"), { code: "auth/insufficient-permission" })
+        )
+    );
 
-      const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
-      handleErrorServerNoAuth.mockImplementation(passThrough);
+    const result = await checkFirebaseServiceAccount({ serviceAccountJson: SERVICE_ACCOUNT });
 
-      const res = await checkFirebaseServiceAccount({ serviceAccountJson: validAccount });
+    expect(result.data?.payload).toMatchObject({ outcome: "restricted", reason: "Caller lacks permission" });
+  });
 
-      expect(res.error).toBeNull();
-      expect(res.data?.payload).toEqual({ success: true, projectId: "demo-project" });
+  it("is invalid for a rejected key, without leaking it", async () => {
+    listUsers(jest.fn().mockRejectedValue(new Error(`invalid_grant for key ${PRIVATE_KEY}`)));
 
-      const { deleteApp } = require("firebase-admin/app");
-      expect(deleteApp).toHaveBeenCalled();
-    });
+    const result = await checkFirebaseServiceAccount({ serviceAccountJson: SERVICE_ACCOUNT });
 
-    it("should error when the JSON cannot be parsed", async () => {
-      const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
-      handleErrorServerNoAuth.mockImplementation(catchError);
+    expect(result.data).toBeNull();
+    expect(result.error?.message).toBe("invalid_grant for key ***");
+    expect(deleteApp).toHaveBeenCalled();
+  });
 
-      const res = await checkFirebaseServiceAccount({ serviceAccountJson: "{not json" });
+  it.each([
+    ["not json", "Service account must be valid JSON"],
+    [JSON.stringify({ project_id: "p" }), "Service account is missing project_id, client_email or private_key"]
+  ])("rejects %s before initialising the SDK", async (serviceAccountJson, message) => {
+    const result = await checkFirebaseServiceAccount({ serviceAccountJson });
 
-      expect(res.data).toBeNull();
-      expect(res.error?.message).toBe("Service account must be valid JSON");
-    });
-
-    it("should error when required fields are missing", async () => {
-      const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
-      handleErrorServerNoAuth.mockImplementation(catchError);
-
-      const res = await checkFirebaseServiceAccount({ serviceAccountJson: JSON.stringify({ project_id: "x" }) });
-
-      expect(res.data).toBeNull();
-      expect(res.error?.message).toBe("Service account is missing project_id, client_email or private_key");
-    });
-
-    it("should error and still tear down the app when auth is rejected", async () => {
-      mockListUsers(jest.fn().mockRejectedValue(new Error("Invalid JWT Signature")));
-
-      const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
-      handleErrorServerNoAuth.mockImplementation(catchError);
-
-      const res = await checkFirebaseServiceAccount({ serviceAccountJson: validAccount });
-
-      expect(res.data).toBeNull();
-      expect(res.error?.message).toBe("Invalid JWT Signature");
-
-      const { deleteApp } = require("firebase-admin/app");
-      expect(deleteApp).toHaveBeenCalled();
-    });
-
-    it("should build the credential from the parsed service account", async () => {
-      mockListUsers(jest.fn().mockResolvedValue({ users: [] }));
-
-      const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
-      handleErrorServerNoAuth.mockImplementation(passThrough);
-
-      await checkFirebaseServiceAccount({ serviceAccountJson: validAccount });
-
-      const { cert } = require("firebase-admin/app");
-      expect(cert).toHaveBeenCalledWith(expect.objectContaining({ projectId: "demo-project" }));
-    });
+    expect(initializeApp).not.toHaveBeenCalled();
+    expect(result.error?.message).toBe(message);
   });
 });
