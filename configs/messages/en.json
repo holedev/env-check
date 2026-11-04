@@ -280,18 +280,30 @@
       },
       "github": {
         "name": "GitHub",
-        "description": "GitHub Token",
+        "description": "GitHub personal access token (classic or fine-grained)",
         "form": {
           "token": {
             "label": "Personal Access Token",
-            "placeholder": "Enter your GitHub Personal Access Token",
-            "description": "Create one at https://github.com/settings/tokens. Only Personal Access Tokens are supported."
+            "placeholder": "ghp_... or github_pat_...",
+            "description": "Create one at https://github.com/settings/tokens."
           },
           "submit": "Check Token"
         },
         "validCredentials": "GitHub token is valid",
-        "invalidCredentials": "GitHub token is invalid!",
-        "details": "Details"
+        "restrictedCredentials": "Token is valid but can't read the user",
+        "invalidCredentials": "GitHub token is invalid",
+        "summary": {
+          "login": "Login",
+          "name": "Name",
+          "tokenType": "Token type",
+          "scopes": "Scopes"
+        },
+        "tokenTypes": {
+          "classic": "Classic token",
+          "fineGrained": "Fine-grained token",
+          "oauth": "OAuth token",
+          "other": "Other token"
+        }
       },
       "vercel": {
         "name": "Vercel",
