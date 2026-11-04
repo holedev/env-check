@@ -266,18 +266,30 @@
       },
       "github": {
         "name": "GitHub",
-        "description": "GitHub Token",
+        "description": "Personal access token của GitHub (classic hoặc fine-grained)",
         "form": {
           "token": {
             "label": "Personal Access Token",
-            "placeholder": "Nhập GitHub Personal Access Token của bạn",
-            "description": "Tạo token tại https://github.com/settings/tokens. Chỉ hỗ trợ Personal Access Token."
+            "placeholder": "ghp_... hoặc github_pat_...",
+            "description": "Tạo token tại https://github.com/settings/tokens."
           },
-          "submit": "Kiểm tra"
+          "submit": "Kiểm tra token"
         },
         "validCredentials": "Token GitHub hợp lệ",
-        "invalidCredentials": "Token GitHub không hợp lệ!",
-        "details": "Chi tiết"
+        "restrictedCredentials": "Token hợp lệ nhưng không đọc được thông tin user",
+        "invalidCredentials": "Token GitHub không hợp lệ",
+        "summary": {
+          "login": "Login",
+          "name": "Tên",
+          "tokenType": "Loại token",
+          "scopes": "Scope"
+        },
+        "tokenTypes": {
+          "classic": "Token classic",
+          "fineGrained": "Token fine-grained",
+          "oauth": "Token OAuth",
+          "other": "Token khác"
+        }
       },
       "vercel": {
         "name": "Vercel",

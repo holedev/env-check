@@ -1,89 +1,80 @@
+/**
+ * @jest-environment node
+ */
+import { Octokit } from "@octokit/rest";
 import { checkGithubToken } from "../actions";
 
-jest.mock("@octokit/rest", () => ({
-  Octokit: jest.fn()
-}));
+jest.mock("@octokit/rest", () => ({ Octokit: jest.fn() }));
 
-jest.mock("@/utils/handle-error-server", () => ({
-  handleErrorServerNoAuth: jest.fn()
-}));
+const MockOctokit = Octokit as unknown as jest.Mock;
+const TOKEN = "ghp_secretvalue123";
 
-type Cb = { cb: () => Promise<object> };
+const respondWith = (getAuthenticated: jest.Mock) =>
+  MockOctokit.mockImplementation(() => ({ rest: { users: { getAuthenticated } } }));
 
-const passThrough = async ({ cb }: Cb) => {
-  const result = await cb();
-  return { error: null, data: { payload: result } };
-};
+beforeEach(() => {
+  jest.resetAllMocks();
+  jest.spyOn(console, "error").mockImplementation(() => undefined);
+});
 
-const catchError = async ({ cb }: Cb) => {
-  try {
-    await cb();
-    return { error: null, data: { payload: {} } };
-  } catch (error) {
-    return { error: { message: error instanceof Error ? error.message : "Unknown error" }, data: null };
-  }
-};
+describe("checkGithubToken", () => {
+  it("is valid and shows login, name, token type and scopes but not the email", async () => {
+    respondWith(
+      jest.fn().mockResolvedValue({
+        data: { login: "holedev", name: "Hole Dev", email: "hole@example.com" },
+        headers: { "x-oauth-scopes": "repo, read:org" }
+      })
+    );
 
-const mockOctokit = (getAuthenticated: jest.Mock) => {
-  const { Octokit } = require("@octokit/rest");
-  Octokit.mockImplementation(() => ({
-    rest: { users: { getAuthenticated } }
-  }));
-  return Octokit;
-};
+    const result = await checkGithubToken({ token: TOKEN });
 
-describe("GitHub Actions", () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
+    expect(MockOctokit).toHaveBeenCalledWith({ auth: TOKEN });
+    expect(result.data?.payload).toEqual({
+      outcome: "valid",
+      summary: [
+        { key: "login", value: "holedev" },
+        { key: "name", value: "Hole Dev" },
+        { key: "tokenType", value: "classic", enumKey: "tokenTypes" },
+        { key: "scopes", value: ["repo", "read:org"] }
+      ]
+    });
+    expect(JSON.stringify(result)).not.toContain("hole@example.com");
   });
 
-  describe("checkGithubToken", () => {
-    it("should return the authenticated user payload when the token is valid", async () => {
-      const user = { login: "octocat", type: "User" };
-      mockOctokit(jest.fn().mockResolvedValue({ data: user }));
+  it("recognises fine-grained tokens, which have no x-oauth-scopes", async () => {
+    respondWith(jest.fn().mockResolvedValue({ data: { login: "bot", name: null }, headers: {} }));
 
-      const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
-      handleErrorServerNoAuth.mockImplementation(passThrough);
+    const result = await checkGithubToken({ token: "github_pat_abc" });
 
-      const result = await checkGithubToken({ token: "ghp_valid" });
-
-      expect(result.error).toBeNull();
-      expect(result.data?.payload).toEqual(user);
+    expect(result.data?.payload).toEqual({
+      outcome: "valid",
+      summary: [
+        { key: "login", value: "bot" },
+        { key: "tokenType", value: "fineGrained", enumKey: "tokenTypes" }
+      ]
     });
+  });
 
-    it("should return an error when the token is unauthorized", async () => {
-      mockOctokit(jest.fn().mockRejectedValue(new Error("Bad credentials")));
+  it("is invalid on 401, without echoing the token", async () => {
+    respondWith(jest.fn().mockRejectedValue(Object.assign(new Error(`Bad credentials for ${TOKEN}`), { status: 401 })));
 
-      const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
-      handleErrorServerNoAuth.mockImplementation(catchError);
+    const result = await checkGithubToken({ token: TOKEN });
 
-      const result = await checkGithubToken({ token: "ghp_bad" });
+    expect(result.data).toBeNull();
+    expect(result.error?.message).toBe("Bad credentials for ***");
+  });
 
-      expect(result.data).toBeNull();
-      expect(result.error?.message).toBe("Bad credentials");
-    });
+  it("is restricted on 403", async () => {
+    respondWith(
+      jest.fn().mockRejectedValue(Object.assign(new Error("Resource not accessible by integration"), { status: 403 }))
+    );
 
-    it("should return an error on network failure", async () => {
-      mockOctokit(jest.fn().mockRejectedValue(new Error("getaddrinfo ENOTFOUND api.github.com")));
+    const result = await checkGithubToken({ token: TOKEN });
 
-      const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
-      handleErrorServerNoAuth.mockImplementation(catchError);
-
-      const result = await checkGithubToken({ token: "ghp_any" });
-
-      expect(result.data).toBeNull();
-      expect(result.error?.message).toBe("getaddrinfo ENOTFOUND api.github.com");
-    });
-
-    it("should construct Octokit with the provided token", async () => {
-      const Octokit = mockOctokit(jest.fn().mockResolvedValue({ data: {} }));
-
-      const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
-      handleErrorServerNoAuth.mockImplementation(passThrough);
-
-      await checkGithubToken({ token: "ghp_secret" });
-
-      expect(Octokit).toHaveBeenCalledWith({ auth: "ghp_secret" });
+    expect(result.data?.payload).toEqual({
+      outcome: "restricted",
+      reason: "Resource not accessible by integration",
+      summary: [{ key: "tokenType", value: "classic", enumKey: "tokenTypes" }]
     });
   });
 });
