@@ -594,6 +594,25 @@
           "modelsCount": "Models available",
           "models": "Models"
         }
+      },
+      "mistral": {
+        "name": "Mistral",
+        "description": "Mistral API key",
+        "form": {
+          "apiKey": {
+            "label": "API Key",
+            "placeholder": "Enter your Mistral API key",
+            "description": "Create a key at https://console.mistral.ai/api-keys."
+          },
+          "submit": "Check API Key"
+        },
+        "validCredentials": "Mistral API key is valid",
+        "restrictedCredentials": "Key is valid but can't list models",
+        "invalidCredentials": "Mistral API key is invalid",
+        "summary": {
+          "modelsCount": "Models available",
+          "models": "Models"
+        }
       }
     },
     "progress": {

@@ -220,13 +220,21 @@ export const _TOOL_LIST = defineToolList([
     libInfo: {
       packageName: "fetch"
     }
+  },
+  {
+    icon: "mistralai",
+    path: "mistral",
+    progress: "completed",
+    libInfo: {
+      packageName: "fetch"
+    }
   }
 ] as const);
 
 export const _TOOL_GROUP_LIST: ToolGroupType[] = [
   {
     path: "ai",
-    tools: ["google-gemini", "openai", "anthropic", "groq", "deepseek"]
+    tools: ["google-gemini", "openai", "anthropic", "groq", "deepseek", "mistral"]
   },
   {
     path: "cloud",

@@ -594,6 +594,25 @@
           "modelsCount": "Số model khả dụng",
           "models": "Model"
         }
+      },
+      "mistral": {
+        "name": "Mistral",
+        "description": "API key của Mistral",
+        "form": {
+          "apiKey": {
+            "label": "API Key",
+            "placeholder": "Enter your Mistral API key",
+            "description": "Tạo key tại https://console.mistral.ai/api-keys."
+          },
+          "submit": "Kiểm tra API Key"
+        },
+        "validCredentials": "API key của Mistral hợp lệ",
+        "restrictedCredentials": "Key hợp lệ nhưng không có quyền liệt kê model",
+        "invalidCredentials": "API key của Mistral không hợp lệ",
+        "summary": {
+          "modelsCount": "Số model khả dụng",
+          "models": "Model"
+        }
       }
     },
     "progress": {
