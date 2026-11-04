@@ -738,6 +738,25 @@
           "Full": "Full (upgraded)",
           "Trial": "Trial"
         }
+      },
+      "netlify": {
+        "name": "Netlify",
+        "description": "Netlify personal access token",
+        "form": {
+          "token": {
+            "label": "Personal Access Token",
+            "placeholder": "nfp_...",
+            "description": "Create a token at https://app.netlify.com/user/applications#personal-access-tokens."
+          },
+          "submit": "Check Token"
+        },
+        "validCredentials": "Netlify token is valid",
+        "restrictedCredentials": "Token is valid but restricted",
+        "invalidCredentials": "Netlify token is invalid",
+        "summary": {
+          "name": "Name",
+          "siteCount": "Sites"
+        }
       }
     },
     "progress": {

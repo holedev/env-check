@@ -738,6 +738,25 @@
           "Full": "Full (đã nâng cấp)",
           "Trial": "Dùng thử"
         }
+      },
+      "netlify": {
+        "name": "Netlify",
+        "description": "Personal access token của Netlify",
+        "form": {
+          "token": {
+            "label": "Personal Access Token",
+            "placeholder": "nfp_...",
+            "description": "Tạo token tại https://app.netlify.com/user/applications#personal-access-tokens."
+          },
+          "submit": "Kiểm tra token"
+        },
+        "validCredentials": "Token Netlify hợp lệ",
+        "restrictedCredentials": "Token hợp lệ nhưng bị giới hạn",
+        "invalidCredentials": "Token Netlify không hợp lệ",
+        "summary": {
+          "name": "Tên",
+          "siteCount": "Số site"
+        }
       }
     },
     "progress": {
