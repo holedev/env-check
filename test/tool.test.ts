@@ -20,6 +20,18 @@ describe("Tools", () => {
       }
     });
 
+    it("should declare a Probe and what it never returns for every tool", () => {
+      const items = enMessages.tools.items as Record<string, { never?: unknown }>;
+      for (const tool of _TOOL_LIST) {
+        expect(tool.probe.method.length).toBeGreaterThan(0);
+        expect(tool.probe.target.length).toBeGreaterThan(0);
+        const never = items[tool.path]?.never;
+        if (!(Array.isArray(never) && never.length > 0)) {
+          throw new Error(`Tool '${tool.path}' is missing tools.items.${tool.path}.never in en.json`);
+        }
+      }
+    });
+
     it("should have unique path values for each tool", () => {
       const paths = _TOOL_LIST.map((tool) => tool.path);
       const uniquePaths = new Set(paths);

@@ -35,8 +35,9 @@ Edit [constants/tool.ts](constants/tool.ts):
 **In `_TOOL_LIST`**, add an entry:
 ```ts
 {
-  icon: "<simpleicons-slug>",  // from simpleicons.org
+  icon: "<simpleicons-slug>",  // from simpleicons.org; omit if simpleicons has none (letter tile)
   path: "<service-path>",
+  probe: { method: "GET", target: "api.example.com/v1/me" }, // the single read-only request
   progress: "completed",       // or "inProgress"
   libInfo: {                   // omit if using only fetch/built-ins
     packageName: "<npm-package>",
@@ -74,6 +75,8 @@ Add extra keys as needed for result display (e.g., `"availableModels"`, `"detail
 Vietnamese translation should be natural — don't just transliterate English. Keep technical terms (API Key, Token, etc.) in English.
 
 ## Step 5: Create the Tool Files
+
+> **Current pattern (prefer this over the hand-written form below):** `form.client.tsx` declares a zod schema and renders `<ValidationForm>`; `actions.ts` returns `valid()` / `restricted()` / `summarize()` from `lib/validation.ts` and uses `requestService()` + `redact()`. Copy an existing tool such as `app/tools/cloud/vercel/` as the template. i18n also needs `summary.*`, `never` (list) and `restrictedCredentials`; see CLAUDE.md.
 
 Create directory: `app/tools/<category>/<service-path>/`
 

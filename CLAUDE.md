@@ -45,9 +45,9 @@ All server actions wrap their logic in `handleErrorServerNoAuth` from `utils/han
 
 ### Adding a new tool
 
-1. Register in `constants/tool.ts` — add to `_TOOL_LIST` with `icon`, `path`, `progress`, and optional `libInfo`. Add the path to the relevant group in `_TOOL_GROUP_LIST`.
+1. Register in `constants/tool.ts` — add to `_TOOL_LIST` with `path`, `progress`, `probe` (`{ method, target }`: the single read-only request, shown to users before they paste), optional `icon` and `libInfo`. Add the path to the relevant group in `_TOOL_GROUP_LIST`.
 2. Create `app/tools/[category]/[service-path]/page.tsx` and `actions.ts`.
-3. Add i18n keys to `configs/messages/en.json` and `configs/messages/vi.json` under `tools.items.<service-path>`.
+3. Add i18n keys to `configs/messages/en.json` and `configs/messages/vi.json` under `tools.items.<service-path>`: name, description, form fields, the three outcome messages, `summary.*` labels (these double as the "Shown to you" list), `never` (a list of what the tool never returns) and optional `probeNote`.
 4. Write tests (see below). `progress: "completed"` requires both page and actions tests.
 
 Icons come from simpleicons.org — use the icon slug as the `icon` value.

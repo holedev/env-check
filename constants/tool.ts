@@ -23,6 +23,7 @@ export const _TOOL_LIST = defineToolList([
   {
     icon: "minio",
     path: "s3-compatible",
+    probe: { method: "S3", target: "ListBuckets · your endpoint or AWS" },
     progress: "completed",
     libInfo: {
       packageName: "@aws-sdk/client-s3",
@@ -33,6 +34,7 @@ export const _TOOL_LIST = defineToolList([
   {
     icon: "cloudflare",
     path: "cloudflare",
+    probe: { method: "GET", target: "api.cloudflare.com/client/v4/user/tokens/verify" },
     progress: "completed",
     libInfo: {
       packageName: "fetch"
@@ -41,6 +43,7 @@ export const _TOOL_LIST = defineToolList([
   {
     icon: "supabase",
     path: "supabase",
+    probe: { method: "GET", target: "<project>/auth/v1/admin/users?per_page=1" },
     progress: "completed",
     libInfo: {
       packageName: "@supabase/supabase-js",
@@ -51,6 +54,7 @@ export const _TOOL_LIST = defineToolList([
   {
     icon: "firebase",
     path: "firebase",
+    probe: { method: "SDK", target: "Auth · listUsers(1)" },
     progress: "completed",
     libInfo: {
       packageName: "firebase-admin",
@@ -61,6 +65,7 @@ export const _TOOL_LIST = defineToolList([
   {
     icon: "mongodb",
     path: "mongodb",
+    probe: { method: "MONGO", target: "listCollections · listDatabases" },
     progress: "completed",
     libInfo: {
       packageName: "mongodb",
@@ -71,6 +76,7 @@ export const _TOOL_LIST = defineToolList([
   {
     icon: "postgresql",
     path: "postgresql",
+    probe: { method: "SQL", target: "SELECT table_name FROM information_schema.tables" },
     progress: "completed",
     libInfo: {
       packageName: "pg",
@@ -81,6 +87,7 @@ export const _TOOL_LIST = defineToolList([
   {
     icon: "googlegemini",
     path: "google-gemini",
+    probe: { method: "GET", target: "generativelanguage.googleapis.com/v1beta/openai/models" },
     progress: "completed",
     libInfo: {
       packageName: "fetch"
@@ -89,6 +96,7 @@ export const _TOOL_LIST = defineToolList([
   {
     icon: "gmail",
     path: "gmail-smtp",
+    probe: { method: "SMTP", target: "AUTH on <host>:465 / 587" },
     progress: "completed",
     libInfo: {
       packageName: "nodemailer",
@@ -99,6 +107,7 @@ export const _TOOL_LIST = defineToolList([
   {
     icon: "discord",
     path: "discord",
+    probe: { method: "GET", target: "discord.com/api/v10/users/@me" },
     progress: "completed",
     libInfo: {
       packageName: "fetch"
@@ -107,6 +116,7 @@ export const _TOOL_LIST = defineToolList([
   {
     icon: "googleanalytics",
     path: "google-analytics",
+    probe: { method: "POST", target: "www.google-analytics.com/debug/mp/collect" },
     progress: "completed",
     libInfo: {
       packageName: "fetch"
@@ -115,6 +125,7 @@ export const _TOOL_LIST = defineToolList([
   {
     icon: "github",
     path: "github",
+    probe: { method: "GET", target: "api.github.com/user" },
     progress: "completed",
     libInfo: {
       packageName: "@octokit/rest",
@@ -124,6 +135,7 @@ export const _TOOL_LIST = defineToolList([
   },
   {
     path: "openai",
+    probe: { method: "GET", target: "api.openai.com/v1/models" },
     progress: "completed",
     libInfo: {
       packageName: "fetch"
@@ -132,6 +144,7 @@ export const _TOOL_LIST = defineToolList([
   {
     icon: "anthropic",
     path: "anthropic",
+    probe: { method: "GET", target: "api.anthropic.com/v1/models" },
     progress: "completed",
     libInfo: {
       packageName: "fetch"
@@ -140,6 +153,7 @@ export const _TOOL_LIST = defineToolList([
   {
     icon: "stripe",
     path: "stripe",
+    probe: { method: "GET", target: "api.stripe.com/v1/balance" },
     progress: "completed",
     libInfo: {
       packageName: "fetch"
@@ -147,6 +161,7 @@ export const _TOOL_LIST = defineToolList([
   },
   {
     path: "slack",
+    probe: { method: "POST", target: "slack.com/api/auth.test" },
     progress: "completed",
     libInfo: {
       packageName: "fetch"
@@ -155,6 +170,7 @@ export const _TOOL_LIST = defineToolList([
   {
     icon: "telegram",
     path: "telegram",
+    probe: { method: "GET", target: "api.telegram.org/bot<token>/getMe" },
     progress: "completed",
     libInfo: {
       packageName: "fetch"
@@ -163,6 +179,7 @@ export const _TOOL_LIST = defineToolList([
   {
     icon: "resend",
     path: "resend",
+    probe: { method: "GET", target: "api.resend.com/domains" },
     progress: "completed",
     libInfo: {
       packageName: "fetch"
@@ -171,6 +188,7 @@ export const _TOOL_LIST = defineToolList([
   {
     icon: "vercel",
     path: "vercel",
+    probe: { method: "GET", target: "api.vercel.com/v2/user" },
     progress: "completed",
     libInfo: {
       packageName: "fetch"
@@ -179,6 +197,7 @@ export const _TOOL_LIST = defineToolList([
   {
     icon: "sentry",
     path: "sentry",
+    probe: { method: "GET", target: "sentry.io/api/0/ · de.sentry.io/api/0/" },
     progress: "completed",
     libInfo: {
       packageName: "fetch"
@@ -187,6 +206,7 @@ export const _TOOL_LIST = defineToolList([
   {
     icon: "mysql",
     path: "mysql",
+    probe: { method: "SQL", target: "SELECT VERSION(), DATABASE(), CURRENT_USER()" },
     progress: "completed",
     libInfo: {
       packageName: "mysql2",
@@ -197,6 +217,7 @@ export const _TOOL_LIST = defineToolList([
   {
     icon: "redis",
     path: "redis",
+    probe: { method: "REDIS", target: "PING · INFO server" },
     progress: "completed",
     libInfo: {
       packageName: "redis",
@@ -206,6 +227,7 @@ export const _TOOL_LIST = defineToolList([
   },
   {
     path: "groq",
+    probe: { method: "GET", target: "api.groq.com/openai/v1/models" },
     progress: "completed",
     libInfo: {
       packageName: "fetch"
@@ -214,6 +236,7 @@ export const _TOOL_LIST = defineToolList([
   {
     icon: "deepseek",
     path: "deepseek",
+    probe: { method: "GET", target: "api.deepseek.com/models" },
     progress: "completed",
     libInfo: {
       packageName: "fetch"
@@ -222,6 +245,7 @@ export const _TOOL_LIST = defineToolList([
   {
     icon: "mistralai",
     path: "mistral",
+    probe: { method: "GET", target: "api.mistral.ai/v1/models" },
     progress: "completed",
     libInfo: {
       packageName: "fetch"
@@ -230,6 +254,7 @@ export const _TOOL_LIST = defineToolList([
   {
     icon: "openrouter",
     path: "openrouter",
+    probe: { method: "GET", target: "openrouter.ai/api/v1/key" },
     progress: "completed",
     libInfo: {
       packageName: "fetch"
@@ -238,6 +263,7 @@ export const _TOOL_LIST = defineToolList([
   {
     icon: "huggingface",
     path: "huggingface",
+    probe: { method: "GET", target: "huggingface.co/api/whoami-v2" },
     progress: "completed",
     libInfo: {
       packageName: "fetch"
@@ -245,6 +271,7 @@ export const _TOOL_LIST = defineToolList([
   },
   {
     path: "sendgrid",
+    probe: { method: "GET", target: "api.sendgrid.com/v3/scopes · api.eu.sendgrid.com" },
     progress: "completed",
     libInfo: {
       packageName: "fetch"
@@ -252,6 +279,7 @@ export const _TOOL_LIST = defineToolList([
   },
   {
     path: "twilio",
+    probe: { method: "GET", target: "api.twilio.com/2010-04-01/Accounts/{SID}.json" },
     progress: "completed",
     libInfo: {
       packageName: "fetch"
@@ -260,6 +288,7 @@ export const _TOOL_LIST = defineToolList([
   {
     icon: "netlify",
     path: "netlify",
+    probe: { method: "GET", target: "api.netlify.com/api/v1/user" },
     progress: "completed",
     libInfo: {
       packageName: "fetch"
@@ -268,6 +297,7 @@ export const _TOOL_LIST = defineToolList([
   {
     icon: "digitalocean",
     path: "digitalocean",
+    probe: { method: "GET", target: "api.digitalocean.com/v2/account" },
     progress: "completed",
     libInfo: {
       packageName: "fetch"
@@ -276,6 +306,7 @@ export const _TOOL_LIST = defineToolList([
   {
     icon: "notion",
     path: "notion",
+    probe: { method: "GET", target: "api.notion.com/v1/users/me" },
     progress: "completed",
     libInfo: {
       packageName: "fetch"
