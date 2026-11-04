@@ -144,17 +144,27 @@
       },
       "mongodb": {
         "name": "MongoDB",
-        "description": "MongoDB",
+        "description": "Connection string của MongoDB / Atlas",
         "form": {
           "connectionString": {
-            "label": "Chuỗi kết nối",
-            "placeholder": "mongodb+srv://user:pass@host/db",
-            "description": "Chuỗi kết nối MongoDB của bạn"
+            "label": "Connection string",
+            "placeholder": "mongodb+srv://user:password@cluster.example.net/db",
+            "description": "Atlas: Connect → Drivers. Bản online chặn địa chỉ private và local.",
+            "errors": {
+              "format": "Connection string bắt đầu bằng mongodb:// hoặc mongodb+srv://"
+            }
           },
           "submit": "Kiểm tra kết nối"
         },
-        "validCredentials": "Kết nối MongoDB thành công!",
-        "invalidCredentials": "Kết nối MongoDB thất bại!"
+        "validCredentials": "Kết nối MongoDB thành công",
+        "restrictedCredentials": "Kết nối được nhưng user này không liệt kê được database",
+        "invalidCredentials": "Không kết nối được MongoDB",
+        "summary": {
+          "database": "Database",
+          "collectionsCount": "Số collection",
+          "collections": "Tên collection",
+          "databasesCount": "Số database"
+        }
       },
       "google-gemini": {
         "name": "Gemini",

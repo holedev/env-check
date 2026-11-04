@@ -1,146 +1,91 @@
+/**
+ * @jest-environment node
+ */
+import { MongoClient } from "mongodb";
+import { assertPublicConnectionString } from "@/utils/network-guard";
 import { checkMongoDbConnection } from "../actions";
 
-// Mock the mongodb MongoClient
-jest.mock("mongodb", () => ({
-  MongoClient: jest.fn()
-}));
+jest.mock("mongodb", () => ({ MongoClient: jest.fn() }));
+jest.mock("@/utils/network-guard", () => ({ assertPublicConnectionString: jest.fn() }));
 
-// Mock the error handler
-jest.mock("@/utils/handle-error-server", () => ({
-  handleErrorServerNoAuth: jest.fn()
-}));
+const MockMongoClient = MongoClient as unknown as jest.Mock;
+const guard = assertPublicConnectionString as jest.Mock;
+const URI = "mongodb+srv://app:s3cr3t-pass@cluster0.example.net/shop";
 
-jest.mock("@/utils/network-guard", () => ({
-  assertPublicHost: jest.fn(),
-  assertPublicConnectionString: jest.fn()
-}));
-
-type Cb = { cb: () => Promise<object> };
-
-const passThrough = async ({ cb }: Cb) => {
-  const result = await cb();
-  return { error: null, data: { payload: result } };
+const fakeClient = ({ connect, listDatabases }: { connect?: jest.Mock; listDatabases?: jest.Mock } = {}) => {
+  const client = {
+    connect: connect ?? jest.fn().mockResolvedValue(undefined),
+    close: jest.fn().mockResolvedValue(undefined),
+    db: () => ({
+      databaseName: "shop",
+      listCollections: () => ({ toArray: jest.fn().mockResolvedValue([{ name: "orders" }, { name: "carts" }]) }),
+      admin: () => ({
+        listDatabases:
+          listDatabases ?? jest.fn().mockResolvedValue({ databases: [{ name: "shop" }, { name: "admin" }] })
+      })
+    })
+  };
+  MockMongoClient.mockImplementation(() => client);
+  return client;
 };
 
-const catchError = async ({ cb }: Cb) => {
-  try {
-    await cb();
-    return { error: null, data: { payload: {} } };
-  } catch (error) {
-    return { error: { message: error instanceof Error ? error.message : "Unknown error" }, data: null };
-  }
-};
-
-const buildClient = ({
-  connect = jest.fn().mockResolvedValue(undefined),
-  close = jest.fn().mockResolvedValue(undefined),
-  collections = [{ name: "users" }, { name: "posts" }],
-  databases = [{ name: "admin" }, { name: "app" }]
-}: {
-  connect?: jest.Mock;
-  close?: jest.Mock;
-  collections?: { name: string }[];
-  databases?: { name: string }[];
-} = {}) => {
-  const db = jest.fn(() => ({
-    listCollections: () => ({ toArray: jest.fn().mockResolvedValue(collections) }),
-    admin: () => ({ listDatabases: jest.fn().mockResolvedValue({ databases }) })
-  }));
-  return { connect, close, db };
-};
-
-describe("MongoDB Actions", () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-
-  describe("checkMongoDbConnection", () => {
-    it("should return collections and databases when the connection is valid", async () => {
-      const client = buildClient();
-      const { MongoClient } = require("mongodb");
-      MongoClient.mockImplementation(() => client);
-
-      const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
-      handleErrorServerNoAuth.mockImplementation(passThrough);
-
-      const result = await checkMongoDbConnection({ connectionString: "mongodb+srv://user:pass@host/db" });
-
-      expect(result.error).toBeNull();
-      expect(result.data?.payload).toMatchObject({
-        success: true,
-        collections: ["users", "posts"],
-        databases: ["admin", "app"],
-        collectionsCount: 2,
-        databasesCount: 2
-      });
-      expect(client.close).toHaveBeenCalled();
-    });
-
-    it("should return an error when the connection fails", async () => {
-      const client = buildClient({ connect: jest.fn().mockRejectedValue(new Error("Authentication failed")) });
-      const { MongoClient } = require("mongodb");
-      MongoClient.mockImplementation(() => client);
-
-      const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
-      handleErrorServerNoAuth.mockImplementation(catchError);
-
-      const result = await checkMongoDbConnection({ connectionString: "mongodb+srv://user:wrong@host/db" });
-
-      expect(result.data).toBeNull();
-      expect(result.error?.message).toBe("Authentication failed");
-      expect(client.close).toHaveBeenCalled();
-    });
-
-    it("should return an error on network failure", async () => {
-      const client = buildClient({
-        connect: jest.fn().mockRejectedValue(new Error("getaddrinfo ENOTFOUND unknown-host"))
-      });
-      const { MongoClient } = require("mongodb");
-      MongoClient.mockImplementation(() => client);
-
-      const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
-      handleErrorServerNoAuth.mockImplementation(catchError);
-
-      const result = await checkMongoDbConnection({ connectionString: "mongodb+srv://user:pass@unknown-host/db" });
-
-      expect(result.data).toBeNull();
-      expect(result.error?.message).toBe("getaddrinfo ENOTFOUND unknown-host");
-    });
-
-    it("should instantiate MongoClient with the provided connection string", async () => {
-      const client = buildClient();
-      const { MongoClient } = require("mongodb");
-      MongoClient.mockImplementation(() => client);
-
-      const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
-      handleErrorServerNoAuth.mockImplementation(passThrough);
-
-      const connectionString = "mongodb+srv://admin:secret@cluster.example.com/mydb";
-      await checkMongoDbConnection({ connectionString });
-
-      expect(MongoClient).toHaveBeenCalledWith(connectionString);
-    });
-  });
+beforeEach(() => {
+  jest.resetAllMocks();
+  jest.spyOn(console, "error").mockImplementation(() => undefined);
 });
 
-describe("private network guard", () => {
-  it("refuses private hosts before connecting", async () => {
-    const guard = require("@/utils/network-guard").assertPublicConnectionString as jest.Mock;
-    guard.mockRejectedValueOnce(new Error("Connections to private or internal network addresses are blocked."));
-    const { handleErrorServerNoAuth } = require("@/utils/handle-error-server");
-    handleErrorServerNoAuth.mockImplementation(async ({ cb }: { cb: () => Promise<object> }) => {
-      try {
-        return { error: null, data: { payload: await cb() } };
-      } catch (error) {
-        return { error: { message: (error as Error).message }, data: null };
-      }
+describe("checkMongoDbConnection", () => {
+  it("is valid and summarises the default database", async () => {
+    const client = fakeClient();
+
+    const result = await checkMongoDbConnection({ connectionString: URI });
+
+    expect(guard).toHaveBeenCalledWith(URI);
+    expect(MockMongoClient).toHaveBeenCalledWith(URI, { serverSelectionTimeoutMS: 10_000 });
+    expect(result.data?.payload).toEqual({
+      outcome: "valid",
+      summary: [
+        { key: "database", value: "shop" },
+        { key: "collectionsCount", value: 2 },
+        { key: "collections", value: ["carts", "orders"] },
+        { key: "databasesCount", value: 2 }
+      ]
     });
-    const driver = require("mongodb").MongoClient as jest.Mock;
-    driver.mockClear();
+    expect(client.close).toHaveBeenCalled();
+  });
 
-    const result = await checkMongoDbConnection({ connectionString: "mongodb://user:pass@127.0.0.1:27017/db" });
+  it("is restricted when the user may not list databases", async () => {
+    fakeClient({
+      listDatabases: jest
+        .fn()
+        .mockRejectedValue(Object.assign(new Error("not authorized on admin to execute command"), { code: 13 }))
+    });
 
+    const result = await checkMongoDbConnection({ connectionString: URI });
+
+    expect(result.data?.payload).toMatchObject({
+      outcome: "restricted",
+      reason: "not authorized on admin to execute command",
+      summary: [{ key: "database", value: "shop" }, { key: "collectionsCount" }, { key: "collections" }]
+    });
+  });
+
+  it("is invalid on bad auth, without leaking the password", async () => {
+    fakeClient({ connect: jest.fn().mockRejectedValue(new Error(`bad auth : Authentication failed (${URI})`)) });
+
+    const result = await checkMongoDbConnection({ connectionString: URI });
+
+    expect(result.data).toBeNull();
+    expect(result.error?.message).toContain("Authentication failed");
+    expect(result.error?.message).not.toContain("s3cr3t-pass");
+  });
+
+  it("does not connect when the host is private", async () => {
+    guard.mockRejectedValue(new Error("Connections to private or internal network addresses are blocked."));
+
+    const result = await checkMongoDbConnection({ connectionString: "mongodb://127.0.0.1:27017" });
+
+    expect(MockMongoClient).not.toHaveBeenCalled();
     expect(result.error?.message).toContain("private or internal network");
-    expect(driver).not.toHaveBeenCalled();
   });
 });

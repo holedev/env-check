@@ -144,17 +144,27 @@
       },
       "mongodb": {
         "name": "MongoDB",
-        "description": "MongoDB",
+        "description": "MongoDB / Atlas connection string",
         "form": {
           "connectionString": {
-            "label": "Connection String",
-            "placeholder": "mongodb+srv://user:pass@host/db",
-            "description": "Your MongoDB connection string"
+            "label": "Connection string",
+            "placeholder": "mongodb+srv://user:password@cluster.example.net/db",
+            "description": "Atlas: Connect → Drivers. Private and local addresses are blocked on the hosted site.",
+            "errors": {
+              "format": "Connection strings start with mongodb:// or mongodb+srv://"
+            }
           },
-          "submit": "Test Connection"
+          "submit": "Check Connection"
         },
-        "validCredentials": "MongoDB connection successful!",
-        "invalidCredentials": "MongoDB connection failed!"
+        "validCredentials": "Connected to MongoDB",
+        "restrictedCredentials": "Connected, but this user can't list databases",
+        "invalidCredentials": "Could not connect to MongoDB",
+        "summary": {
+          "database": "Database",
+          "collectionsCount": "Collections",
+          "collections": "Collection names",
+          "databasesCount": "Databases"
+        }
       },
       "postgresql": {
         "name": "PostgreSQL",
