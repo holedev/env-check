@@ -98,23 +98,30 @@
       },
       "supabase": {
         "name": "Supabase",
-        "description": "Supabase",
+        "description": "Project URL và service_role key của Supabase",
         "form": {
           "projectUrl": {
             "label": "Project URL",
             "placeholder": "https://your-project.supabase.co",
-            "description": "Project Settings -> API -> Project URL"
+            "description": "Project Settings → API → Project URL.",
+            "errors": {
+              "format": "Nhập URL https:// của project"
+            }
           },
           "serviceRoleKey": {
             "label": "Service Role Key",
-            "placeholder": "Nhập service_role key của bạn",
-            "description": "Project Settings -> API -> service_role secret. Không để lộ key này trong ứng dụng chạy trên trình duyệt."
+            "placeholder": "Nhập service_role key",
+            "description": "Project Settings → API → service_role secret. Anon key sẽ được báo là bị giới hạn."
           },
-          "submit": "Kiểm tra thông tin"
+          "submit": "Kiểm tra"
         },
-        "validCredentials": "Thông tin Supabase hợp lệ",
-        "invalidCredentials": "Thông tin Supabase không hợp lệ!",
-        "details": "Chi tiết"
+        "validCredentials": "Service_role key của Supabase hợp lệ",
+        "restrictedCredentials": "Key dùng được nhưng không có quyền admin (anon key?)",
+        "invalidCredentials": "Thông tin Supabase không hợp lệ",
+        "summary": {
+          "project": "Project",
+          "adminAccess": "Quyền admin"
+        }
       },
       "firebase": {
         "name": "Firebase",
