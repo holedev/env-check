@@ -370,46 +370,52 @@
       },
       "gmail-smtp": {
         "name": "Gmail SMTP",
-        "description": "Gmail SMTP for sending emails",
+        "description": "SMTP login with a Gmail app password (or any SMTP server)",
         "form": {
           "host": {
-            "label": "SMTP Host",
+            "label": "SMTP host",
             "placeholder": "smtp.gmail.com",
-            "description": "Gmail SMTP server hostname"
+            "description": "Gmail uses smtp.gmail.com. Private and local addresses are blocked on the hosted site."
           },
-          "port": {
-            "label": "SMTP Port",
-            "placeholder": "465",
-            "description": "SMTP port (587 for TLS, 465 for SSL)"
+          "security": {
+            "label": "Security",
+            "description": "Gmail supports both.",
+            "options": {
+              "ssl": "SSL/TLS · port 465",
+              "starttls": "STARTTLS · port 587"
+            }
           },
           "username": {
             "label": "Username",
-            "placeholder": "your-email@gmail.com",
-            "description": "Your Gmail email address"
+            "placeholder": "you@gmail.com",
+            "description": "Your full email address.",
+            "errors": {
+              "format": "Enter an email address"
+            }
           },
           "password": {
-            "label": "App Password",
-            "placeholder": "Enter your Gmail App Password",
-            "description": "Generate an App Password at https://myaccount.google.com/apppasswords (2FA must be enabled)"
-          },
-          "secure": {
-            "label": "Use SSL/TLS",
-            "description": "Enable secure connection (recommended)"
+            "label": "App password",
+            "placeholder": "Enter your app password",
+            "description": "Generate one at https://myaccount.google.com/apppasswords (2-Step Verification required)."
           },
           "testType": {
-            "label": "Test Type",
+            "label": "Check",
+            "description": "Sending writes one email to your own inbox.",
             "options": {
-              "verify": "Verify Connection Only",
-              "sendEmail": "Send Test Email"
-            },
-            "description": "Choose whether to only verify the connection or send a test email"
+              "verify": "Verify login only",
+              "sendEmail": "Verify and send a test email to myself"
+            }
           },
-          "submit": "Test Connection"
+          "submit": "Check SMTP"
         },
-        "validCredentials": "Gmail SMTP connection successful!",
-        "invalidCredentials": "Gmail SMTP connection failed!",
-        "connectionDetails": "Connection Details",
-        "testEmailSent": "Test email sent successfully!"
+        "validCredentials": "SMTP login works",
+        "restrictedCredentials": "Logged in, but restricted",
+        "invalidCredentials": "SMTP login failed",
+        "summary": {
+          "server": "Server",
+          "username": "Logged in as",
+          "testEmail": "Test email sent"
+        }
       },
       "google-analytics": {
         "name": "Google Analytics",
